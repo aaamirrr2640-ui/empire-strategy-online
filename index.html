@@ -313,6 +313,34 @@ button{cursor:pointer;border:0;background:none}
 .mtv{direction:ltr;display:flex;align-items:center;gap:5px;font-family:'Orbitron','Arial Black',system-ui,sans-serif;font-weight:800;font-size:17px;letter-spacing:-.03em;color:var(--gold)}
 .mtv .usd{margin:0;font-family:'Vazirmatn',sans-serif;text-shadow:none}
 
+
+/* ---------- private messages ---------- */
+.pm-wrap{height:calc(100dvh - 88px);min-height:520px;display:flex;flex-direction:column;overflow:hidden;
+  border:1px solid rgba(214,174,53,.28);border-top:3px solid var(--gold);border-radius:22px;
+  background:linear-gradient(180deg,#15140e,#0b0b08);box-shadow:0 8px 28px rgba(0,0,0,.45)}
+.pm-head{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid rgba(214,174,53,.18);background:linear-gradient(180deg,#1b1910,#121109)}
+.pm-head h1{font-size:18px;font-weight:800;color:var(--gold);flex:1}
+.pm-back{width:38px;height:38px;border-radius:12px;background:#18160e;border:1px solid rgba(214,174,53,.3);font-size:20px;color:var(--gold)}
+.pm-status{font-size:11px;color:var(--muted)}
+.pm-users{padding:10px 12px;display:flex;gap:8px;overflow-x:auto;border-bottom:1px solid rgba(214,174,53,.14);min-height:74px}
+.pm-user{flex:none;min-width:92px;padding:7px 8px;border-radius:14px;background:#111009;border:1px solid rgba(214,174,53,.18);color:var(--cream);text-align:center}
+.pm-user.on{border-color:var(--gold);background:#1c180b}
+.pm-user img,.pm-user .pm-flag{width:34px;height:34px;border-radius:50%;display:block;margin:0 auto 4px;object-fit:cover;border:2px solid rgba(214,174,53,.5);background:#0b0b08}
+.pm-user b{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pm-thread{flex:1;min-height:0;overflow-y:auto;padding:14px 12px}
+.pm-empty{height:100%;display:grid;place-content:center;text-align:center;color:var(--muted);line-height:2;font-size:13px}
+.pm-msg{display:flex;margin:0 0 12px;gap:8px}.pm-msg.own{justify-content:flex-start;direction:ltr}.pm-msg:not(.own){justify-content:flex-end;direction:rtl}
+.pm-bub{max-width:82%;padding:10px 12px;border-radius:15px;background:#17150e;border:1px solid rgba(214,174,53,.18);color:var(--cream);font-size:13px;line-height:1.9;direction:auto;word-break:break-word}
+.pm-msg.own .pm-bub{background:linear-gradient(180deg,#3a3015,#251e0d);border-color:rgba(214,174,53,.4)}
+.pm-time{display:block;margin-top:3px;font-size:10px;color:#817b6d;direction:rtl}
+.pm-compose{padding:9px 10px 11px;border-top:1px solid rgba(214,174,53,.18);background:#111009}
+.pm-to{font-size:11px;color:var(--muted);margin:0 5px 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pm-to b{color:var(--gold)}
+.pm-in{display:flex;gap:7px}.pm-in input{flex:1;min-width:0;height:46px;padding:0 13px;border-radius:13px;background:#0b0b08;border:1px solid rgba(255,255,255,.08);color:var(--cream);outline:none;direction:auto}
+.pm-in input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(214,174,53,.1)}
+.pm-send{width:48px;height:46px;border-radius:13px;background:linear-gradient(180deg,#ecd582,#c9a233);color:var(--ink);font-size:20px;font-weight:900}
+.pm-send:disabled{opacity:.45}
+.pm-name{cursor:pointer;text-decoration:underline;text-decoration-color:rgba(214,174,53,.35);text-underline-offset:3px}
+
 /* ---------- chat ---------- */
 .sheet-panel{max-height:92dvh;overflow-y:auto}
 .chat{height:calc(100dvh - 200px);min-height:430px;display:flex;flex-direction:column;overflow:hidden;
@@ -374,6 +402,9 @@ button{cursor:pointer;border:0;background:none}
 .bdg{position:absolute;top:-6px;left:-6px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:#e0455a;font-size:11px;font-weight:800;line-height:20px;text-align:center;color:#fff}
 .wcard{position:relative;margin-top:16px;padding:20px 18px 18px;border-radius:22px;background:linear-gradient(180deg,#171710,#0e0e09);border:1px solid rgba(214,174,53,.3);box-shadow:0 8px 28px rgba(0,0,0,.5)}
 .wcard.atk{border-top:3px solid #c0392b}
+.wrules-btn{margin-top:10px;width:100%;height:46px;border-radius:14px;background:linear-gradient(180deg,#211d0e,#151208);border:1px solid rgba(214,174,53,.45);color:var(--gold);font-size:15px;font-weight:800}
+.wrules{margin-top:14px;padding:16px;border-radius:18px;background:linear-gradient(180deg,#171710,#0e0e09);border:1px solid rgba(214,174,53,.35);box-shadow:0 8px 28px rgba(0,0,0,.45)}
+.wrules h3{margin:0 0 12px;color:var(--gold);font-size:21px}.wrules .rline{padding:9px 0;border-bottom:1px solid rgba(214,174,53,.13);font-size:14px;line-height:1.9;color:#d8d1bd}.wrules .rline:last-child{border-bottom:0}.wrules .rline b{color:var(--cream)}.wrules .note{margin-top:12px;padding:11px 12px;border-radius:12px;background:rgba(214,174,53,.07);color:#aaa291;font-size:13px;line-height:2}.wu.locked{opacity:.48}.wu.transport{border-color:rgba(214,174,53,.5);background:rgba(214,174,53,.06)}
 .wcard::after{content:"";position:absolute;top:-1px;right:-1px;width:34px;height:34px;border-top:1.5px solid rgba(214,174,53,.6);border-right:1.5px solid rgba(214,174,53,.6);border-top-right-radius:22px;pointer-events:none}
 .wcard h2{font-size:24px;font-weight:800;color:var(--cream);line-height:1.5}
 .wdesc{margin-top:8px;font-size:14px;line-height:2;color:#a8a293}
@@ -446,10 +477,6 @@ button{cursor:pointer;border:0;background:none}
 .ovl{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:2;font-size:0}
 #avPrevBox{display:grid;place-items:center;width:100%;height:100%}
 .avcam{position:absolute;right:-2px;bottom:-2px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:14px;background:#15130c;border:1px solid var(--gold-dim);pointer-events:none}
-.flagE{font-size:38px;line-height:1}
-.flags{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.fb{height:56px;border-radius:14px;font-size:30px;line-height:1;background:#1a1810;border:1px solid rgba(214,174,53,.3)}
-.fb.on{border-color:var(--gold);background:rgba(214,174,53,.15)}
 .row.lab{display:grid;place-items:center;cursor:pointer}
 .cav{overflow:hidden}.cav img{width:100%;height:100%;object-fit:cover;display:block}
 .rka{width:40px;height:40px;flex:none;border-radius:50%;object-fit:cover;border:1px solid var(--gold-dim)}
@@ -516,10 +543,9 @@ button{cursor:pointer;border:0;background:none}
       <div class="ring"><svg width="46" height="50" aria-hidden="true"><use href="#crown"/></svg></div>
     </div>
 
-    <div class="avatar-wrap" id="avOpen" role="button" tabindex="0" aria-label="تغییر پرچم یا عکس پروفایل">
+    <div class="avatar-wrap" id="avOpen" role="button" tabindex="0" aria-label="تغییر عکس پروفایل">
       <div class="avatar">
         <img id="avImg" alt="عکس پروفایل" hidden>
-        <span id="flagE" class="flagE" role="img" aria-label="پرچم"></span>
       </div>
       <span class="avcam" aria-hidden="true">📷</span>
     </div>
@@ -622,6 +648,24 @@ button{cursor:pointer;border:0;background:none}
   </section>
 </main>
 
+<!-- ================= PRIVATE MESSAGES ================= -->
+<main class="app" id="pm" hidden>
+  <div class="pm-wrap">
+    <header class="pm-head">
+      <button class="pm-back" id="pmBack" type="button" aria-label="بازگشت">→</button>
+      <h1>💌 پیام‌ها</h1>
+      <span class="pm-status" id="pmStatus">سرور آنلاین</span>
+    </header>
+    <div class="pm-users" id="pmUsers"></div>
+    <div class="pm-thread" id="pmThread"></div>
+    <div class="pm-compose">
+      <div class="pm-to" id="pmTo">💙 گفتگوی پشتیبانی VAIK</div>
+      <div style="display:flex;justify-content:flex-start;padding:6px 10px 0"><button id="pmBlockBtn" type="button" class="buy" style="height:34px;width:auto;padding:0 12px;font-size:12px">🚫 بلاک</button></div>
+      <div class="pm-in"><input id="pmInput" type="text" maxlength="500" autocomplete="off" placeholder="پیام خصوصی بنویسید…"><button class="pm-send" id="pmSend" type="button">➤</button></div>
+    </div>
+  </div>
+</main>
+
 <!-- ================= WAR ================= -->
 <main class="app" id="war" hidden>
   <button class="top-btn" id="warBell" type="button" aria-label="اعلان‌ها">🔔<span class="bdg" hidden></span></button>
@@ -631,6 +675,18 @@ button{cursor:pointer;border:0;background:none}
       <button class="buy" id="warBack" type="button" style="height:38px;width:auto;padding:0 16px;display:inline-flex">→ بازگشت</button>
       <section class="wcard atk" style="margin-top:22px">
         <h2>⚔️ حمله لحظه‌ای</h2>
+<div class="rline">🧱 <b>پدافند زمینی</b> ضد <b>تانک</b></div>
+          <div class="rline">📡 <b>پدافند هوایی</b> ضد <b>موشک</b></div>
+          <div class="rline">🚀 <b>موشک</b> ضد <b>جنگنده</b></div>
+          <div class="rline">✈️ <b>جنگنده</b> ضد <b>بمب‌افکن</b></div>
+          <div class="rline">💣 <b>بمب‌افکن</b> ضد <b>پدافند هوایی و زمینی</b></div>
+          <div class="rline">🌊 <b>زیردریایی</b> ضد <b>ناوجنگی و ناو هواپیمابر</b></div>
+          <div class="rline">🛰️ <b>ماهواره هوایی</b> ضد <b>زیردریایی</b></div>
+          <div class="rline">🚢 هر <b>ناو جنگی = حمل ۵ یگان</b>. ابتدا تعداد ناو جنگی را انتخاب کنید، سپس یگان‌های قابل حمل را انتخاب کنید.</div>
+          <div class="rline">⚓ هر <b>ناو هواپیمابر = حمل ۵ بمب‌افکن + ۵ جنگنده</b>. ابتدا ناو هواپیمابر را انتخاب کنید، سپس جنگنده و بمب‌افکن را انتخاب کنید.</div>
+          <div class="rline">📈 <b>قابلیت یگان:</b> افزایش قدرت برای پیروزی در نبرد.</div>
+          <div class="note">✨ قابلیت ویژه برای یگان‌ها به‌زودی اضافه خواهد شد.</div>
+        </div>
         <p class="wdesc">حمله مستقیم به کشور با نتیجه فوری.<br>در صورت پیروزی، <b>۱۵٪</b> منابع دشمن غارت می‌شود.<br>تلفات نظامی هر دو طرف به‌صورت دقیق نمایش داده می‌شود.</p>
         <input class="winp" id="wSearch" type="text" dir="auto" autocomplete="off" maxlength="16" placeholder="🔍 نام بازیکن را بنویسید…" style="margin-top:14px">
         <button class="wrand" id="wRand" type="button">🎲 حریف شانسی</button>
@@ -724,6 +780,7 @@ button{cursor:pointer;border:0;background:none}
     <button class="row" id="gotoMarket" type="button">🏪 بازار</button>
     <button class="row" id="gotoWar" type="button">⚔️ جنگ</button>
     <button class="row" id="gotoChat" type="button">💬 گفتگوی جهانی</button>
+    <button class="row" id="gotoPm" type="button">💌 پیام‌ها <span id="pmBadge" style="float:left;color:var(--gold)"></span></button>
     <button class="row" id="gotoRank" type="button">🏆 رتبه‌بندی</button>
     <button class="row" id="gotoAlly" type="button">🤝 اتحاد</button>
     <button class="row danger" id="logout" type="button">خروج از حساب</button>
@@ -733,9 +790,7 @@ button{cursor:pointer;border:0;background:none}
 
 <div class="sheet" id="avSheet" hidden>
   <div class="sheet-bg" data-close></div>
-  <div class="sheet-panel" role="dialog" aria-label="پرچم و عکس پروفایل">
-    <div class="who">پرچم کشور خود را انتخاب کنید</div>
-    <div class="flags" id="flagGrid"></div>
+  <div class="sheet-panel" role="dialog" aria-label="عکس پروفایل">
     <div class="row lab" style="position:relative;overflow:hidden">📷 انتخاب عکس از گالری<input type="file" id="avFile2" class="ovl" accept="image/*" aria-label="انتخاب عکس از گالری"></div>
     <button class="row" type="button" data-close>بستن</button>
   </div>
@@ -754,7 +809,6 @@ button{cursor:pointer;border:0;background:none}
   const NEXT_XP = 1000;
   const SHIELD_PRICE = 5e6;
   const ccOf = a => (a && /^[A-Z]{2}$/.test(a.cc)) ? a.cc : 'US';
-  const COUNTRY_PICK = ['US', 'CN', 'RU', 'IN', 'JP', 'DE', 'GB', 'FR', 'KR', 'IR'];  // ۱۰ پرچم قابل انتخاب
 
   // زیرساخت (بالانس‌شده با قیمت ارتش): هزینهٔ ارتقا از سطح L به L+1 برابر c×L دلار است (خطی تا سطح ۱۰۰) و تولید در ساعت r×L.
   // c = هزینهٔ ارتقا از سطح ۱ ؛ r = تولید در ساعت در سطح ۱. نرخ بانک مرکزی طوری کالیبره شده که ارتقای پیوستهٔ بانک با درآمد خودش تا سطح ۱۰۰ حدود ۱ سال طول بکشد.
@@ -878,11 +932,41 @@ button{cursor:pointer;border:0;background:none}
   // فهرست مرکزی نام بازیکنان برای پیدا کردن همهٔ حساب‌ها روی دستگاه‌های جدید
   const MQTT_PLAYERS_INDEX = MQTT_NS + '/players-index';
   const MQTT_CHAT = MQTT_NS + '/chat/messages/';
+  // پیام خصوصی: هر پیام روی مسیر فرستنده و گیرندهٔ خودش retained می‌شود تا هر دو نفر
+  // حتی اگر آفلاین بوده باشند، تاریخچهٔ گفتگوی خودشان را بعداً دریافت کنند.
+  const MQTT_DM = MQTT_NS + '/dm/';
+  const MQTT_BLOCKS = MQTT_NS + '/dm-blocks/';
   const MQTT_CHAT_HISTORY = MQTT_NS + '/chat/history';
   const MQTT_PRESENCE = MQTT_NS + '/presence/';
+  // آواتار ثابت پشتیبانی VAIK؛ روی MQTT هم retained می‌شود تا بعد از آپدیت/ورود دستگاه جدید باقی بماند.
+  const VAIK_SUPPORT_AVATAR = 'data:image/jpeg;base64,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';
+  const VAIK_SUPPORT = 'vaik';
+  const DM_CACHE = 'game:dm-cache:v1';
   let mqttClient = null, mqttReady = null, mqttPlayers = Object.create(null);
   let mqttPresence = Object.create(null), mqttChatReady = false;
   let mqttChatHistory = [];
+  let dmMessages = new Map();
+  let dmTarget = null;
+  let dmBusy = false;
+  let mqttBlocks = Object.create(null);
+
+  function loadDmCache(){
+    try {
+      const raw = JSON.parse(store.get(DM_CACHE) || '[]');
+      if (Array.isArray(raw)) raw.forEach(m => { if (m && m.id && m.from && m.to && m.text) dmMessages.set(String(m.id), m); });
+    } catch(e){}
+  }
+  function saveDmCache(){
+    try {
+      const arr = [...dmMessages.values()].filter(Boolean).sort((a,b)=>(a.t||0)-(b.t||0)).slice(-300);
+      store.set(DM_CACHE, JSON.stringify(arr));
+    } catch(e){}
+  }
+  function publishVAIKSupportAvatar(){
+    if (!mqttClient || !mqttClient.connected) return;
+    try { mqttClient.publish(MQTT_AVATARS + mqttKey(VAIK_SUPPORT), VAIK_SUPPORT_AVATAR, { qos: 1, retain: true }); } catch(e){}
+  }
+  loadDmCache();
   const mqttKey = key => encodeURIComponent(String(key).toLowerCase());
   const mqttTopic = key => MQTT_PLAYERS + mqttKey(key);
   // داده‌ای که از سرور عمومی می‌رسد را در کش محلی هم نگه می‌داریم تا بخش جنگ
@@ -892,7 +976,13 @@ button{cursor:pointer;border:0;background:none}
       if (!key || !acc || !acc.name) return;
       const accounts = loadAcc();
       const old = accounts[key] || {};
-      accounts[key] = { ...old, ...acc };
+      const merged = { ...old, ...acc };
+      // نسخهٔ عمومی عکس اصلی را ندارد؛ هیچ‌وقت عکس/پرچم محلی را با دادهٔ ناقص جایگزین نکن.
+      if (!acc.avatar && old.avatar) merged.avatar = old.avatar;
+      if (!acc.avS && old.avS) merged.avS = old.avS;
+      if (!merged.avatar && merged.avS) merged.avatar = merged.avS;
+      if (!acc.cc && old.cc) merged.cc = old.cc;
+      accounts[key] = merged;
       store.set(ACC, JSON.stringify(accounts));
     }catch(e){}
   }
@@ -912,10 +1002,30 @@ button{cursor:pointer;border:0;background:none}
   const isVerifiedPlayer = acc => !!acc && String(acc.name || '').trim().toLowerCase() === 'vaik';
   const verifiedMark = acc => isVerifiedPlayer(acc) ? '<span class="verified-badge" title="تأییدشده" aria-label="تأییدشده">✓</span>' : '';
   function ensureVAIKVerified(key, acc){
-    if (!acc || !isVerifiedPlayer(acc) || acc.verified === true) return false;
-    acc.verified = true;
-    mqttPlayers[key] = acc;
-    return true;
+    if (!acc || !isVerifiedPlayer(acc)) return false;
+    let changed = false;
+    if (acc.verified !== true) {
+      acc.verified = true;
+      changed = true;
+    }
+    // VAIK به‌عنوان ادمین/پشتیبان، از هر نوع یگان ۱۰۰۰ عدد دارد؛
+    // با فلگ جداگانه فقط یک‌بار این هدیه اعمال می‌شود.
+    acc.army = acc.army || {};
+    if (acc.vaikAdminArmyGranted !== true) {
+      UNITS.forEach(u => { acc.army[u.k] = Math.max(1000, Number(acc.army[u.k]) || 0); });
+      acc.vaikAdminArmyGranted = true;
+      changed = true;
+    }
+    if (changed) {
+      mqttPlayers[key] = acc;
+      try {
+        const accounts = loadAcc();
+        accounts[key] = { ...(accounts[key] || {}), ...acc };
+        store.set(ACC, JSON.stringify(accounts));
+      } catch(e){}
+      try { if (mqttClient && mqttClient.connected) mqttPublishAccount(key, acc).catch(()=>{}); } catch(e){}
+    }
+    return changed;
   }
 
   function mqttConnect(){
@@ -929,10 +1039,15 @@ button{cursor:pointer;border:0;background:none}
           keepalive: 30, clientId: 'game-' + Math.random().toString(16).slice(2)
         });
         mqttClient.on('connect', () => {
-          mqttClient.subscribe([MQTT_PLAYERS + '#', MQTT_PLAYERS_INDEX, MQTT_AVATARS + '#', MQTT_CHAT + '#', MQTT_CHAT_HISTORY, MQTT_PRESENCE + '#'], { qos: 0 }, () => {
+          mqttClient.subscribe([MQTT_PLAYERS + '#', MQTT_PLAYERS_INDEX, MQTT_AVATARS + '#', MQTT_BLOCKS + '#', MQTT_CHAT + '#', MQTT_CHAT_HISTORY, MQTT_PRESENCE + '#'], { qos: 0 }, () => {
             mqttStatus('', true);
             mqttChatReady = true;
-            if (currentKey) mqttPresenceOnline(currentKey);
+            publishVAIKSupportAvatar();
+            if (currentKey) {
+              mqttPresenceOnline(currentKey);
+              mqttSubscribeDM(currentKey);
+              try { if (mqttClient && mqttClient.connected) mqttClient.subscribe(MQTT_BLOCKS + mqttKey(currentKey), { qos: 1 }); } catch(e){}
+            }
             // اینجا فهرست مرکزی را overwrite نکن؛ چون دستگاه جدید ممکن است هنوز
             // retained index/پروفایل‌های قبلی را دریافت نکرده باشد و در نتیجه
             // با آرایهٔ خالی، فهرست همهٔ بازیکنان را پاک کند.
@@ -1009,6 +1124,13 @@ button{cursor:pointer;border:0;background:none}
               }
               return;
             }
+            if (topic.startsWith(MQTT_BLOCKS)) {
+              const blocker = decodeURIComponent(topic.slice(MQTT_BLOCKS.length)).toLowerCase();
+              const list = JSON.parse(payload.toString());
+              mqttBlocks[blocker] = Array.isArray(list) ? list.map(x => String(x).toLowerCase()) : [];
+              if (!$('#pm').hidden) renderPm();
+              return;
+            }
             if (topic === MQTT_CHAT_HISTORY) {
               const h = JSON.parse(payload.toString());
               if (Array.isArray(h)) {
@@ -1024,6 +1146,19 @@ button{cursor:pointer;border:0;background:none}
                 if (!mqttChatHistory.some(x => x.id === m.id)) {
                   mqttChatHistory.push(m);
                   mqttChatHistory = mqttChatHistory.slice(-CHAT_KEEP);
+                }
+              }
+              return;
+            }
+            if (topic.startsWith(MQTT_DM)) {
+              const m = JSON.parse(payload.toString());
+              if (m && m.id && m.from && m.to && m.text) {
+                const me = String(currentKey || '').toLowerCase();
+                if (String(m.from).toLowerCase() === me || String(m.to).toLowerCase() === me) {
+                  dmMessages.set(String(m.id), m);
+                  saveDmCache();
+                  updatePmBadge();
+                  if (!$('#pm').hidden) renderPm();
                 }
               }
               return;
@@ -1044,6 +1179,206 @@ button{cursor:pointer;border:0;background:none}
       } catch(e) { mqttStatus(''); resolve(false); }
     });
     return mqttReady;
+  }
+
+
+  function mqttSubscribeDM(key){
+    if (!mqttClient || !mqttClient.connected || !key) return;
+    try { mqttClient.subscribe(MQTT_DM + mqttKey(key) + '/#', { qos: 1 }); } catch(e){}
+  }
+
+  function dmTopic(key, id){ return MQTT_DM + mqttKey(key) + '/' + encodeURIComponent(String(id)); }
+
+  function dmConversations(){
+    const me = String(currentKey || '').toLowerCase();
+    const map = new Map();
+    for (const m of dmMessages.values()) {
+      if (!m) continue;
+      const from = String(m.from || '').toLowerCase(), to = String(m.to || '').toLowerCase();
+      if (from !== me && to !== me) continue;
+      const otherKey = from === me ? to : from;
+      if (!otherKey) continue;
+      const old = map.get(otherKey);
+      if (!old || (m.t || 0) > (old.t || 0)) map.set(otherKey, m);
+    }
+    // پشتیبانی VAIK برای همهٔ بازیکنان همیشه یک گفتگوی آماده دارد، حتی قبل از اولین پیام.
+    if (me !== VAIK_SUPPORT && !map.has(VAIK_SUPPORT)) {
+      map.set(VAIK_SUPPORT, { id:'support-placeholder', from:VAIK_SUPPORT, to:me, text:'', t:0, support:true });
+    }
+    return [...map.entries()].sort((a,b) => {
+      if (a[0] === VAIK_SUPPORT) return -1;
+      if (b[0] === VAIK_SUPPORT) return 1;
+      return (b[1].t||0) - (a[1].t||0);
+    });
+  }
+
+  function dmPlayer(key){
+    const k = String(key || '').toLowerCase();
+    if (k === VAIK_SUPPORT) {
+      const all = { ...loadAcc(), ...mqttPlayers };
+      return { name: all[k]?.name || 'VAIK', verified: true, cc: all[k]?.cc || 'US', avS: all[k]?.avS || VAIK_SUPPORT_AVATAR, support: true };
+    }
+    const all = { ...loadAcc(), ...mqttPlayers };
+    const p = all[k] || null;
+    // اگر پروفایل از سرور رسیده ولی عکس هنوز retained نشده، دریافت عکس را جداگانه
+    // دنبال می‌کنیم؛ ترتیب پیام‌های MQTT تضمین‌شده نیست.
+    if (k && mqttClient && mqttClient.connected) {
+      try { mqttClient.subscribe(MQTT_PLAYERS + mqttKey(k), { qos: 0 }); } catch(e){}
+      try { mqttClient.subscribe(MQTT_AVATARS + mqttKey(k), { qos: 0 }); } catch(e){}
+    }
+    return p;
+  }
+
+  async function ensureRemotePlayer(key, waitMs=2500){
+    const k = String(key || '').toLowerCase();
+    if (!k) return null;
+    await mqttConnect();
+    if (mqttClient && mqttClient.connected) {
+      try { mqttClient.subscribe([MQTT_PLAYERS + mqttKey(k), MQTT_AVATARS + mqttKey(k)], { qos: 0 }); } catch(e){}
+    }
+    const start = Date.now();
+    while (Date.now() - start < waitMs) {
+      const p = dmPlayer(k);
+      if (p && (p.avS || p.avatar || p.name)) return p;
+      await new Promise(r => setTimeout(r, 100));
+    }
+    return dmPlayer(k);
+  }
+
+  function dmBlockedBy(blocker, target){
+    const b = String(blocker || '').toLowerCase(), t = String(target || '').toLowerCase();
+    if (!b || !t) return false;
+    return Array.isArray(mqttBlocks[b]) && mqttBlocks[b].includes(t);
+  }
+
+  function myBlockedUsers(){
+    const me = String(currentKey || '').toLowerCase();
+    const a = loadAcc()[me];
+    return Array.from(new Set([...(Array.isArray(a?.dmBlocked) ? a.dmBlocked : []), ...(mqttBlocks[me] || [])].map(x => String(x).toLowerCase()).filter(Boolean)));
+  }
+
+  function isBlockedForMe(target){
+    return dmBlockedBy(target, currentKey);
+  }
+
+  function isBlockedByMe(target){
+    return myBlockedUsers().includes(String(target || '').toLowerCase());
+  }
+
+  function dmPublishBlocks(){
+    const me = String(currentKey || '').toLowerCase();
+    if (!me || !mqttClient || !mqttClient.connected) return false;
+    const list = myBlockedUsers();
+    mqttBlocks[me] = list;
+    try { mqttClient.publish(MQTT_BLOCKS + mqttKey(me), JSON.stringify(list), { qos: 1, retain: true }); return true; } catch(e){ return false; }
+  }
+
+  async function dmToggleBlock(){
+    if (!dmTarget || !currentKey) return;
+    if (String(dmTarget).toLowerCase() === VAIK_SUPPORT) {
+      toast('🛡️ پشتیبانی VAIK قابل بلاک کردن نیست.');
+      return;
+    }
+    await mqttConnect();
+    const me = String(currentKey).toLowerCase(), target = String(dmTarget).toLowerCase();
+    const a = loadAcc()[me]; if (!a) return;
+    const list = myBlockedUsers().filter(x => x !== VAIK_SUPPORT);
+    const i = list.indexOf(target);
+    if (i >= 0) { list.splice(i, 1); toast('🔓 بلاک بازیکن برداشته شد.'); }
+    else { list.push(target); toast('🚫 بازیکن بلاک شد و دیگر نمی‌تواند به شما پیام بدهد.'); }
+    a.dmBlocked = list;
+    saveAcc(loadAcc());
+    mqttBlocks[me] = list;
+    dmPublishBlocks();
+    renderPm();
+  }
+
+  function updatePmBadge(){
+    const me = String(currentKey || '').toLowerCase(); let n = 0;
+    for (const m of dmMessages.values()) if (String(m.to || '').toLowerCase() === me && !m.seen) n++;
+    const b = $('#pmBadge'); if (b) b.textContent = n ? `(${toFa(n)} جدید)` : '';
+  }
+
+  function renderPmUsers(){
+    const box = $('#pmUsers'); if (!box) return;
+    const rows = dmConversations();
+    box.innerHTML = rows.length ? rows.map(([k,m]) => {
+      const p = dmPlayer(k), name = k === VAIK_SUPPORT ? 'VAIK · پشتیبانی' : (p?.name || m.from || m.to || k), av = p?.avS || m.av || '';
+      const img = av ? `<img src="${esc(av)}" alt="" onerror="this.style.display='none'">` : (k === VAIK_SUPPORT ? `<span class="pm-flag" style="display:none"></span>` : `<span class="pm-flag">${flagOf(p?.cc || m.cc)}</span>`);
+      return `<button class="pm-user${dmTarget === k ? ' on' : ''}" data-dm-target="${esc(k)}" type="button">${img}<b>${esc(name)}</b></button>`;
+    }).join('') : '<div style="color:var(--muted);font-size:12px;padding:10px">هنوز گفتگوی خصوصی ندارید.</div>';
+  }
+
+  function renderPmThread(){
+    const box = $('#pmThread'); if (!box) return;
+    if (!dmTarget) { box.innerHTML = '<div class="pm-empty">💌<br>برای شروع پیام خصوصی، روی نام یک بازیکن در رتبه‌بندی یا چت بزنید.</div>'; return; }
+    const me = String(currentKey || '').toLowerCase();
+    const blockedByTarget = isBlockedForMe(dmTarget);
+    const blockedByMe = isBlockedByMe(dmTarget);
+    const list = [...dmMessages.values()].filter(m => {
+      const f=String(m.from||'').toLowerCase(), t=String(m.to||'').toLowerCase();
+      return (f===me && t===dmTarget) || (f===dmTarget && t===me);
+    }).sort((a,b)=>(a.t||0)-(b.t||0));
+    if (!list.length) box.innerHTML = '<div class="pm-empty">💬<br>هنوز پیامی بین شما رد و بدل نشده است.</div>';
+    else box.innerHTML = list.map(m => {
+      const own = String(m.from).toLowerCase() === me;
+      return `<div class="pm-msg${own?' own':''}"><div class="pm-bub">${esc(m.text)}<span class="pm-time">${relTime(m.t)}</span></div></div>`;
+    }).join('');
+    box.scrollTop = box.scrollHeight;
+    for (const m of list) if (String(m.to||'').toLowerCase()===me) m.seen = true;
+    const btn = $('#pmBlockBtn'), input = $('#pmInput'), send = $('#pmSend');
+    const isSupport = String(dmTarget).toLowerCase() === VAIK_SUPPORT;
+    if (btn) {
+      if (isSupport) { btn.hidden = true; }
+      else { btn.hidden = false; btn.textContent = blockedByMe ? '🔓 رفع بلاک' : '🚫 بلاک'; btn.title = blockedByMe ? 'رفع بلاک' : 'بلاک کردن بازیکن'; }
+    }
+    if (input) { input.disabled = blockedByTarget; input.placeholder = blockedByTarget ? 'این بازیکن شما را بلاک کرده است.' : 'پیام خصوصی بنویسید…'; }
+    if (send) send.disabled = blockedByTarget;
+    if (blockedByTarget) {
+      const n = document.createElement('div'); n.className = 'pm-empty'; n.textContent = '🚫 این بازیکن شما را بلاک کرده است و نمی‌توانید برای او پیام بفرستید.'; box.appendChild(n);
+    }
+    updatePmBadge();
+  }
+
+  function renderPm(){ renderPmUsers(); renderPmThread(); }
+
+  async function showPm(target){
+    const acc = loadAcc()[currentKey]; if (!acc) return showLogin();
+    go('pm'); $('#fabLayer').hidden = false; window.scrollTo(0,0);
+    dmTarget = target ? String(target).toLowerCase() : (dmTarget || VAIK_SUPPORT);
+    $('#pmStatus').textContent = mqttClient && mqttClient.connected ? 'سرور آنلاین' : 'در حال اتصال…';
+    await mqttConnect();
+    mqttSubscribeDM(currentKey);
+    try { if (mqttClient && mqttClient.connected) mqttClient.subscribe(MQTT_BLOCKS + mqttKey(currentKey), { qos: 1 }); } catch(e){}
+    if (dmTarget) await ensureRemotePlayer(dmTarget, 3000);
+    renderPm();
+    if (dmTarget) {
+      const p = dmPlayer(dmTarget), name = p?.name || target;
+      $('#pmTo').innerHTML = dmTarget === VAIK_SUPPORT ? `💙 گفتگو با <b>VAIK</b> · پشتیبانی` : `در حال گفتگو با <b>${esc(name || dmTarget)}</b>`;
+      $('#pmInput').focus();
+      // یک بار دیگر بعد از رسیدن retained avatar رندر کن تا پرچم جای عکس نماند.
+      setTimeout(() => { try { renderPm(); } catch(e){} }, 700);
+    } else $('#pmTo').textContent = 'یک گفتگوی قبلی را انتخاب کنید یا از رتبه‌بندی/چت روی بازیکن بزنید.';
+    $('#pmStatus').textContent = mqttClient && mqttClient.connected ? 'سرور آنلاین' : 'اتصال برقرار نیست';
+  }
+
+  function pmSend(){
+    const inp=$('#pmInput'), text=inp.value.replace(/\s+/g,' ').trim().slice(0,500);
+    if(!text || !dmTarget || dmBusy) return;
+    if(isBlockedForMe(dmTarget)) return toast('🚫 این بازیکن شما را بلاک کرده است و نمی‌توانید پیام بدهید.');
+    if(!mqttClient || !mqttClient.connected) return toast('اتصال سرور برقرار نیست.');
+    const a=loadAcc()[currentKey]; if(!a) return;
+    dmBusy=true; $('#pmSend').disabled=true;
+    const id=Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);
+    const m={id,from:String(currentKey).toLowerCase(),to:String(dmTarget).toLowerCase(),fromName:a.name,fromCc:ccOf(a),fromAv:a.avS||'',text,t:Date.now(),seen:false};
+    try{
+      // برای هر دو طرف یک retained message جداگانه منتشر می‌کنیم؛ بنابراین هر دو
+      // دستگاه حتی پس از آفلاین بودن، تاریخچهٔ پیام را دریافت می‌کنند.
+      mqttClient.publish(dmTopic(currentKey,id),JSON.stringify(m),{qos:1,retain:true});
+      mqttClient.publish(dmTopic(dmTarget,id),JSON.stringify(m),{qos:1,retain:true});
+      dmMessages.set(id,m); saveDmCache(); inp.value=''; renderPm();
+    }catch(e){ toast('پیام ارسال نشد.'); }
+    finally{dmBusy=false;$('#pmSend').disabled=false;}
   }
 
   function mqttPresenceOnline(key){
@@ -1186,17 +1521,17 @@ button{cursor:pointer;border:0;background:none}
 
   /* ======== عکس پروفایل ======== */
   let pendingAv = '', pendingAvS = '';
-  const thumbOf = src => new Promise(r => { const im = new Image(); im.onload = () => { const t = document.createElement('canvas'); t.width = t.height = 72; t.getContext('2d').drawImage(im, 0, 0, 72, 72); r(t.toDataURL('image/jpeg', .7)); }; im.onerror = () => r(''); im.src = src; });
+  const thumbOf = src => new Promise(r => { const im = new Image(); im.onload = () => { const t = document.createElement('canvas'); t.width = t.height = 256; t.getContext('2d').drawImage(im, 0, 0, 256, 256); r(t.toDataURL('image/jpeg', .95)); }; im.onerror = () => r(''); im.src = src; });
   function readAvatar(file){
     return new Promise((res, rej) => {
       if (!file || !/^image\//.test(file.type)) return rej(new Error('bad'));
       const url = URL.createObjectURL(file), im = new Image();
       im.onload = () => {
-        const S = 160, c = document.createElement('canvas'); c.width = c.height = S;
+        const S = 512, c = document.createElement('canvas'); c.width = c.height = S;
         const m = Math.min(im.width, im.height);
         c.getContext('2d').drawImage(im, (im.width - m) / 2, (im.height - m) / 2, m, m, 0, 0, S, S);
-        const t = document.createElement('canvas'); t.width = t.height = 72; t.getContext('2d').drawImage(c, 0, 0, 72, 72);
-        URL.revokeObjectURL(url); res({ a: c.toDataURL('image/jpeg', .85), s: t.toDataURL('image/jpeg', .7) });
+        const t = document.createElement('canvas'); t.width = t.height = 256; t.getContext('2d').drawImage(c, 0, 0, 256, 256);
+        URL.revokeObjectURL(url); res({ a: c.toDataURL('image/jpeg', .95), s: t.toDataURL('image/jpeg', .95) });
       };
       im.onerror = () => { URL.revokeObjectURL(url); rej(new Error('bad')); };
       im.src = url;
@@ -1213,16 +1548,12 @@ button{cursor:pointer;border:0;background:none}
   });
   const openAv = () => {
     const a = loadAcc()[currentKey]; if (!a) return;
-    $('#flagGrid').innerHTML = COUNTRY_PICK.map(c => `<button class="fb${!a.avatar && ccOf(a) === c ? ' on' : ''}" type="button" data-cc="${c}" aria-label="${COUNTRY_FA[c] || c}">${flagOf(c)}</button>`).join('');
     $('#avSheet').hidden = false;
   };
   $('#avOpen').addEventListener('click', openAv);
   $('#avOpen').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openAv(); } });
   $('#avSheet').addEventListener('click', e => {
     if (e.target.closest('[data-close]')) { $('#avSheet').hidden = true; return; }
-    const b = e.target.closest('[data-cc]'); if (!b) return;
-    const accs = loadAcc(), a = accs[currentKey]; if (!a) return;
-    a.cc = b.dataset.cc; a.avatar = ''; a.avS = ''; a.avDirty = true; saveAcc(accs); $('#avSheet').hidden = true; render(a); syncMe(); toast('پرچم تغییر کرد');
   });
   $('#avFile2').addEventListener('change', async e => {
     const f = e.target.files[0]; e.target.value = ''; if (!f) return;
@@ -1255,12 +1586,21 @@ button{cursor:pointer;border:0;background:none}
     try {
       const key = name.toLocaleLowerCase('en');
       let accounts = loadAcc();
+      const localAcc = accounts[key] || null;
       // ابتدا نسخهٔ ذخیره‌شدهٔ حساب را بررسی می‌کنیم و در صورت وجود، اطلاعات همگام‌شده را بازیابی می‌کنیم.
       const remoteAcc = await mqttGetAccount(key, 5000);
       // ورود دستی همیشه باید قبل از بازیابی خودکار نشست تصمیم‌گیری شود.
       if (myFlow !== authFlowId) return;
 
-      let acc = remoteAcc || accounts[key];
+      // سرور عمومی برای کم شدن حجم پیام، عکس اصلی پروفایل را داخل حساب منتشر نمی‌کند
+      // و فقط avS (thumbnail) را نگه می‌دارد. بنابراین نباید در هر ورود، عکس محلی
+      // با نسخهٔ عمومیِ بدون avatar جایگزین و حذف شود.
+      let acc = remoteAcc ? { ...(localAcc || {}), ...remoteAcc } : localAcc;
+      if (remoteAcc && localAcc) {
+        if (!remoteAcc.avatar && localAcc.avatar) acc.avatar = localAcc.avatar;
+        if (!remoteAcc.avS && localAcc.avS) acc.avS = localAcc.avS;
+        if (!remoteAcc.avDirty && localAcc.avDirty) acc.avDirty = localAcc.avDirty;
+      }
       if (!acc) return setErr('این حساب پیدا نشد. برای ساخت حساب، «ثبت‌نام بازیکن جدید» را بزنید.');
 
       // هر حساب معتبر باید salt/hash داشته باشد؛ اگر دادهٔ سرور ناقص بود،
@@ -1425,7 +1765,7 @@ button{cursor:pointer;border:0;background:none}
     renderInfra(acc);
   }
 
-  const go = id => ['login', 'profile', 'infra', 'army', 'research', 'market', 'war', 'chat', 'rank', 'ally'].forEach(x => { $('#' + x).hidden = x !== id; });
+  const go = id => ['login', 'profile', 'infra', 'army', 'research', 'market', 'war', 'chat', 'pm', 'rank', 'ally'].forEach(x => { $('#' + x).hidden = x !== id; });
 
   function renderArmy(acc){
     tickInfra(acc); acc.army = acc.army || {};
@@ -1682,10 +2022,10 @@ button{cursor:pointer;border:0;background:none}
     const own = !!me && String(m.name).toLowerCase() === String(me).toLowerCase();
     const row = mk('div', 'cmsg' + (own ? ' own' : '')); row.dataset.id = m.id;
     const av = avUrl(m.name, m.av), cav = mk('div', 'cav');
-    if (av) { const im = mk('img'); im.alt = ''; im.src = av; im.onerror = () => { cav.textContent = flagOf(m.cc); }; cav.append(im); } else cav.textContent = flagOf(m.cc);
+    cav.classList.add('pm-name'); cav.dataset.pmTarget = String(m.name || '').toLowerCase(); if (av) { const im = mk('img'); im.alt = ''; im.src = av; im.onerror = () => { cav.textContent = flagOf(m.cc); }; cav.append(im); } else cav.textContent = flagOf(m.cc);
     row.append(cav);
     const col = mk('div', 'ccol'), bub = mk('div', 'cbub');
-    const nm = mk('div', 'cname'); if (!av) nm.append(mk('span', null, flagOf(m.cc))); nm.append(mk('span', null, m.name)); if (String(m.name || '').trim().toLowerCase() === 'vaik') { const badge = mk('span', 'verified-badge', '✓'); badge.title = 'تأییدشده'; badge.setAttribute('aria-label', 'تأییدشده'); nm.append(badge); }
+    const nm = mk('div', 'cname'); nm.classList.add('pm-name'); nm.dataset.pmTarget = String(m.name || '').toLowerCase(); if (!av) nm.append(mk('span', null, flagOf(m.cc))); nm.append(mk('span', null, m.name)); if (String(m.name || '').trim().toLowerCase() === 'vaik') { const badge = mk('span', 'verified-badge', '✓'); badge.title = 'تأییدشده'; badge.setAttribute('aria-label', 'تأییدشده'); nm.append(badge); }
     bub.append(nm, mk('div', 'ccn', COUNTRY_FA[m.cc] || m.cc || ''));
     if (m.re && m.re.text) { const q = mk('div', 'cquote'); q.append(mk('b', null, m.re.name || ''), mk('span', null, m.re.text)); bub.append(q); }
     const tx = mk('div', 'ctxt', m.text); tx.dir = 'auto'; bub.append(tx);
@@ -1859,7 +2199,10 @@ button{cursor:pointer;border:0;background:none}
 /* ======== جنگ ========
      همهٔ داده‌ها فعلاً در حافظهٔ مرورگر است (accounts). برای سرور، فقط warAttack() و loadAcc/saveAcc را با API عوض کنید. */
   const WAR_LOOT = 0.15, WAR_CD = 120 * 60000;
-  const AIR = ['fighter', 'bomber', 'missile'], LAND = ['soldier', 'elite', 'tank', 'destroyer', 'carrier', 'sub'];
+  const AIR = ['fighter', 'bomber', 'missile', 'sat'], LAND = ['soldier', 'elite', 'tank', 'ground'], SEA = ['destroyer', 'carrier', 'sub'];
+  const TRANSPORT_UNITS = ['destroyer', 'carrier'];
+  const AIRCRAFT = ['fighter', 'bomber'];
+  const BATTLESHIP_GROUND = ['soldier', 'elite'];
   const LOOT_KEYS = ['treasury', 'oil', 'food', 'steel', 'electricity', 'production'];
   const RES_NAME = { treasury:'💰 خزانه', oil:'🛢️ نفت', food:'🌾 غذا', steel:'🔩 فولاد', electricity:'⚡ برق', production:'📊 تولید ملی' };
   const ATK_UNITS = UNITS.filter(u => !u.def);
@@ -1878,43 +2221,16 @@ button{cursor:pointer;border:0;background:none}
     a.reports.forEach(r => { r.seen = true; }); saveAcc(accs); bellUpd(); lastUnread = 0;
   }
 
-  // قدرت مهاجم بعد از پدافند مدافع، و قدرت مدافع
-  function warCalc(att, sent, def){
-    const Ma = milMult(att), Md = milMult(def), dArmy = def.army || {};
-    let air = 0, land = 0, other = 0;
-    ATK_UNITS.forEach(u => { const p = (sent[u.k] || 0) * u.w * Ma; if (AIR.includes(u.k)) air += p; else if (LAND.includes(u.k)) land += p; else other += p; });
-    const ds = f => UNITS.reduce((t, u) => t + (dArmy[u.k] || 0) * (f(u) || 0), 0) * Md;
-    return { A: air + land + other - Math.min(air, ds(u => u.aa)) - Math.min(land, ds(u => u.gr)), D: ds(u => u.w) };
-  }
+  const WAR_COUNTERS = { tank:{ground:2.5}, ground:{tank:2.5}, aa:{missile:3}, missile:{fighter:3}, fighter:{bomber:3}, bomber:{aa:2.5,ground:2.2}, sub:{destroyer:3,carrier:3}, sat:{sub:3} };
+  const warBonus=(a,d)=>(WAR_COUNTERS[a]&&WAR_COUNTERS[a][d])||1;
+  const payloadCount=sel=>Object.keys(sel||{}).reduce((n,k)=>TRANSPORT_UNITS.includes(k)?n:n+(+sel[k]||0),0);
+  const unitMax=(k,acc)=>{const have=acc.army[k]||0;if(TRANSPORT_UNITS.includes(k))return have;if(AIRCRAFT.includes(k))return Math.min(have,(+wSel.carrier||0)*5);if(!BATTLESHIP_GROUND.includes(k))return have;const used=BATTLESHIP_GROUND.reduce((n,x)=>n+(+wSel[x]||0),0);return Math.min(have,Math.max(0,(+wSel.destroyer||0)*5-used+(+wSel[k]||0)));};
+  const warSelectionError=sel=>{const d=+sel.destroyer||0,c=+sel.carrier||0,payload=payloadCount(sel);if(!payload)return'حداقل یک یگان رزمی را انتخاب کنید.';const ground=BATTLESHIP_GROUND.reduce((n,k)=>n+(+sel[k]||0),0);if(ground>0&&d<=0)return'برای اعزام سرباز عادی یا سرباز ویژه، ابتدا حداقل ۱ ناو جنگی انتخاب کنید.';if(ground>d*5)return`ظرفیت ناوهای جنگی کافی نیست؛ هر ناو جنگی فقط ۵ سرباز عادی/ویژه حمل می‌کند.`;const f=+sel.fighter||0,b=+sel.bomber||0;if((f||b)&&c<=0)return'برای اعزام جنگنده یا بمب‌افکن، ابتدا ناو هواپیمابر انتخاب کنید.';if(f>c*5)return`ظرفیت جنگنده ناوهای هواپیمابر کافی نیست؛ حداکثر ${c*5} جنگنده.`;if(b>c*5)return`ظرفیت بمب‌افکن ناوهای هواپیمابر کافی نیست؛ حداکثر ${c*5} بمب‌افکن.`;return'';};
+  function warCalc(att,sent,def){const Ma=milMult(att),Md=milMult(def),da=def.army||{};let A=0,D=0;Object.keys(sent).forEach(k=>{const q=sent[k]||0,u=uOf(k);if(!u||TRANSPORT_UNITS.includes(k))return;let p=q*u.w*Ma;const best=Object.keys(da).reduce((m,dk)=>Math.max(m,warBonus(k,dk)),1);A+=p*best;});UNITS.forEach(u=>{const q=da[u.k]||0;if(!q)return;let p=q*u.w*Md;const best=Object.keys(sent).reduce((m,sk)=>Math.max(m,warBonus(u.k,sk)),1);D+=p*best;});const aa=(da.aa||0)*9*Md,gr=(da.ground||0)*7*Md,hasMissile=!!sent.missile,hasGround=!!(sent.tank||sent.bomber||sent.soldier||sent.elite);A-=Math.min(A*.45,aa*(hasMissile?1:.15));A-=Math.min(A*.35,gr*(hasGround?.35:0));return{A:Math.max(0,A),D:Math.max(0,D)};}
 
-  function renderPlayers(){
-    const local = loadAcc();
-    // نسخهٔ دریافتی از سرور اولویت دارد؛ کش محلی ممکن است نسخهٔ قدیمیِ بدون عکس باشد.
-    const all = { ...local, ...mqttPlayers };
-    const q = $('#wSearch').value.trim().toLocaleLowerCase('en');
-    const keys = Object.keys(all).filter(k => k !== currentKey && all[k] && all[k].name && all[k].name.toLocaleLowerCase('en').includes(q));
-    $('#wList').innerHTML = keys.length ? keys.map(k => { const p = all[k];
-      const shieldLeft = shieldTimeLeft(p);
-      const av = p.avS || p.avatar || '';
-      const avatarHtml = av ? `<img class="wpav" src="${esc(av)}" alt="" onerror="this.outerHTML='<span class=\"wpflag\">${flagOf(ccOf(p))}</span>'">` : `<span class="wpflag">${flagOf(ccOf(p))}</span>`;
-      return `<button class="wp${k === wTarget ? ' sel' : ''}" type="button" data-p="${esc(k)}">${avatarHtml}<span class="wn">${esc(p.name)}${verifiedMark(p)}</span><span class="wt">${shieldLeft ? '🛡️ ' + shieldLeft : '🎯 قابل حمله'}</span></button>`; }).join('')
-      : `<div class="wnone">${Object.keys(all).length < 2 ? 'هنوز بازیکن دیگری ثبت‌نام نکرده است.' : 'بازیکنی با این نام پیدا نشد.'}</div>`;
-  }
-
-  function renderUnits(acc){
-    const rows = ATK_UNITS.filter(u => (acc.army[u.k] || 0) > 0);
-    $('#wUnits').innerHTML = rows.length ? rows.map(u => `<div class="wu"><div class="wui">${u.e} ${u.n}<small>موجود: ${fmt(acc.army[u.k])} · قدرت هر واحد: ${fmt(u.w * milMult(acc))}</small></div>
-      <input type="text" inputmode="numeric" autocomplete="off" value="${wSel[u.k] || ''}" placeholder="0" data-u="${u.k}" aria-label="تعداد ${u.n}"><button class="mmax" type="button" data-all="${u.k}">حداکثر</button></div>`).join('')
-      : '<div class="wnone">هیچ یگان تهاجمی ندارید. از بخش «ارتش» یگان بخرید.</div>';
-    wSumUpd();
-  }
-
-  function wSumUpd(){
-    const a = loadAcc()[currentKey]; if (!a) return;
-    let n = 0, pw = 0; ATK_UNITS.forEach(u => { const q = wSel[u.k] || 0; n += q; pw += q * u.w * milMult(a); });
-    const t = wTarget && loadAcc()[wTarget];
-    $('#wSum').innerHTML = `🎯 هدف: <b>${t ? esc(t.name) : 'انتخاب نشده'}</b> · 🪖 <b>${toFa(fmt(n))}</b> یگان · ⚔️ قدرت انتخابی: <b>${toFa(fmt(pw))}</b>`;
-  }
+  function renderPlayers(){const local=loadAcc(),all={...local,...mqttPlayers},q=$('#wSearch').value.trim().toLocaleLowerCase('en');const keys=Object.keys(all).filter(k=>k!==currentKey&&all[k]&&all[k].name&&String(all[k].name).trim().toLowerCase()!=='vaik'&&all[k].name.toLocaleLowerCase('en').includes(q));$('#wList').innerHTML=keys.length?keys.map(k=>{const p=all[k],shieldLeft=shieldTimeLeft(p),av=p.avS||p.avatar||'',avatarHtml=av?`<img class="wpav" src="${esc(av)}" alt="" onerror="this.outerHTML='<span class="wpflag">${flagOf(ccOf(p))}</span>'">`:`<span class="wpflag">${flagOf(ccOf(p))}</span>`;return`<button class="wp${k===wTarget?' sel':''}" type="button" data-p="${esc(k)}">${avatarHtml}<span class="wn">${esc(p.name)}${verifiedMark(p)}</span><span class="wt">${shieldLeft?'🛡️ '+shieldLeft:'🎯 قابل حمله'}</span></button>`}).join(''):`<div class="wnone">${Object.keys(all).length<2?'هنوز بازیکن دیگری ثبت‌نام نکرده است.':'بازیکنی با این نام پیدا نشد.'}</div>`;}
+  function renderUnits(acc){const order=['destroyer','carrier',...ATK_UNITS.map(u=>u.k).filter(k=>!TRANSPORT_UNITS.includes(k))],rows=order.map(k=>uOf(k)).filter(Boolean).filter(u=>(acc.army[u.k]||0)>0);$('#wUnits').innerHTML=rows.length?rows.map(u=>{const lock=TRANSPORT_UNITS.includes(u.k)?false:(u.k==='fighter'||u.k==='bomber'?!(+wSel.carrier>0):(BATTLESHIP_GROUND.includes(u.k)?!(+wSel.destroyer>0):false)),max=unitMax(u.k,acc),value=Math.min(+wSel[u.k]||0,max);wSel[u.k]=value;const hint=u.k==='destroyer'?'ظرفیت: ۵ سرباز عادی/ویژه به ازای هر ناو':u.k==='carrier'?'ظرفیت: ۵ جنگنده + ۵ بمب‌افکن به ازای هر ناو':u.k==='fighter'||u.k==='bomber'?'فقط با ناو هواپیمابر':BATTLESHIP_GROUND.includes(u.k)?'فقط با ناو جنگی':'بدون نیاز به ناو جنگی';return`<div class="wu${TRANSPORT_UNITS.includes(u.k)?' transport':''}${lock?' locked':''}"><div class="wui">${u.e} ${u.n}<small>موجود: ${fmt(acc.army[u.k])} · ${hint} · قدرت: ${fmt(u.w*milMult(acc))}</small></div><input type="text" inputmode="numeric" autocomplete="off" value="${value||''}" placeholder="0" data-u="${u.k}" ${lock?'disabled':''}><button class="mmax" type="button" data-all="${u.k}" ${lock?'disabled':''}>حداکثر</button></div>`}).join(''):'<div class="wnone">هیچ یگان تهاجمی ندارید. از بخش «ارتش» یگان بخرید.</div>';wSumUpd();}
+  function wSumUpd(){const a=loadAcc()[currentKey];if(!a)return;const err=warSelectionError(wSel),t=wTarget&&loadAcc()[wTarget];let n=0,pw=0;Object.keys(wSel).forEach(k=>{const q=+wSel[k]||0,u=uOf(k);if(u){n+=q;if(!TRANSPORT_UNITS.includes(k))pw+=q*u.w*milMult(a);}});const msg=err?'<br><span style="color:#e88b8b">⚠️ '+esc(err)+'</span>':'<br><span style="color:#7fd1a8">✓ ترکیب نیرو آماده است</span>';$('#wSum').innerHTML=`🎯 هدف: <b>${t?esc(t.name):'انتخاب نشده'}</b> · 🚢 ناو جنگی: <b>${toFa(+wSel.destroyer||0)}</b> · ⚓ ناو هواپیمابر: <b>${toFa(+wSel.carrier||0)}</b> · 🪖 <b>${toFa(fmt(n))}</b> یگان · ⚔️ قدرت رزمی: <b>${toFa(fmt(pw))}</b>${msg}`;}
 
   function repHtml(r){
     const att = r.type === 'att', good = att ? r.win : !r.win;
@@ -1944,7 +2260,9 @@ button{cursor:pointer;border:0;background:none}
     if (shieldHoursLeft(a)) return toast('سپر شما فعال است؛ با سپر نمی‌توانید حمله کنید.');
     if (shieldHoursLeft(d)) return toast('این بازیکن سپر فعال دارد.');
     const sent = {}; let n = 0;
-    ATK_UNITS.forEach(u => { const q = Math.min(a.army[u.k] || 0, wSel[u.k] || 0); if (q > 0) { sent[u.k] = q; n += q; } });
+    ATK_UNITS.forEach(u => { const q = Math.min(a.army[u.k] || 0, +wSel[u.k] || 0); if (q > 0) { sent[u.k] = q; n += q; } });
+    const selErr = warSelectionError(sent);
+    if (selErr) return toast(selErr);
     if (!n) return toast('حداقل یک یگان انتخاب کنید.');
     const { A, D } = warCalc(a, sent, d), win = A > D, pA = A / (A + D || 1);
     const aLoss = {}, dLoss = {}, loot = {};
@@ -1995,14 +2313,10 @@ button{cursor:pointer;border:0;background:none}
   });
   $('#wList').addEventListener('click', e => { const b = e.target.closest('[data-p]'); if (!b) return; wTarget = b.dataset.p; renderPlayers(); wSumUpd(); });
   $('#wUnits').addEventListener('input', e => {
-    const i = e.target.closest('[data-u]'); if (!i) return;
-    const a = loadAcc()[currentKey], raw = digits(i.value), v = Math.min(+raw || 0, a.army[i.dataset.u] || 0);
-    wSel[i.dataset.u] = v; i.value = raw === '' ? '' : String(v); wSumUpd();
+    const i=e.target.closest('[data-u]'); if(!i)return; const a=loadAcc()[currentKey],raw=digits(i.value),k=i.dataset.u,max=unitMax(k,a); wSel[k]=Math.min(+raw||0,max); renderUnits(a);
   });
   $('#wUnits').addEventListener('click', e => {
-    const b = e.target.closest('[data-all]'); if (!b) return;
-    const a = loadAcc()[currentKey], k = b.dataset.all; wSel[k] = a.army[k] || 0;
-    b.parentElement.querySelector('input').value = String(wSel[k]); wSumUpd();
+    const b=e.target.closest('[data-all]'); if(!b)return; const a=loadAcc()[currentKey],k=b.dataset.all; wSel[k]=unitMax(k,a); renderUnits(a);
   });
   $('#wRand').addEventListener('click', () => {
     const accs = loadAcc();
@@ -2042,7 +2356,7 @@ button{cursor:pointer;border:0;background:none}
   function render(acc){
     tickInfra(acc); const accs = loadAcc(); accs[currentKey] = acc; saveAcc(accs);
     $('#pname').innerHTML = esc(acc.name) + verifiedMark(acc);
-    { const im = $('#avImg'), fe = $('#flagE'); fe.textContent = flagOf(ccOf(acc)); if (acc.avatar) { im.src = acc.avatar; im.hidden = false; fe.style.display = 'none'; } else { im.hidden = true; fe.style.display = ''; } }
+    { const im = $('#avImg'); if (acc.avatar) { im.src = acc.avatar; im.hidden = false; } else { im.removeAttribute('src'); im.hidden = true; } }
     $('#sheetWho').innerHTML = esc(acc.name) + verifiedMark(acc);
     $('#xp').textContent = fmt(acc.xp);
     $('#nextxp').textContent = fmt(NEXT_XP);
@@ -2101,8 +2415,13 @@ button{cursor:pointer;border:0;background:none}
     const seq = ++rkSeq; let rows = null, note = '';
     document.querySelectorAll('.rkb').forEach(b => b.classList.toggle('on', b.dataset.t === rankTab));
 
-    await mqttConnect();
-    const remoteRows = Object.values(mqttPlayers).filter(a => a && a.name).map(a => {
+    // رتبه‌بندی نباید منتظر اتصال MQTT بماند؛ اول از کش/داده‌های موجود رندر می‌شود
+    // و اتصال در پس‌زمینه انجام می‌گیرد. با رسیدن retained playerها، پیام MQTT خودش
+    // دوباره رتبه‌بندی را رندر می‌کند. این کار لگ ورود به صفحه را حذف می‌کند.
+    mqttConnect().then(() => {
+      setTimeout(() => { try { if (!$('#rank').hidden) renderRank(); } catch(e){} }, 900);
+    }).catch(()=>{});
+    const remoteRows = Object.values({ ...loadAcc(), ...mqttPlayers }).filter(a => a && a.name && String(a.name).trim().toLowerCase() !== 'vaik').map(a => {
       const copy = JSON.parse(JSON.stringify(a));
       try { tickInfra(copy); } catch(e){}
       return {
@@ -2114,7 +2433,7 @@ button{cursor:pointer;border:0;background:none}
     if (remoteRows.length) rows = remoteRows;
     if (!rows || !rows.length) {
       if (SRV) {
-        try { rows = (await fetch(SRV + '/rank', { cache:'no-store' }).then(r => r.json()))[rankTab]; } catch(e){}
+        try { rows = (await fetch(SRV + '/rank', { cache:'no-store' }).then(r => r.json()))[rankTab]; if (Array.isArray(rows)) rows = rows.filter(r => String(r?.name || '').trim().toLowerCase() !== 'vaik'); } catch(e){}
       }
     }
     if (seq !== rkSeq) return;
@@ -2123,8 +2442,9 @@ button{cursor:pointer;border:0;background:none}
       note = 'هنوز بازیکنی برای نمایش ثبت نشده است.';
       rows = Object.values(loadAcc()).map(a => {
         tickInfra(a);
+        if (String(a.name || '').trim().toLowerCase() === 'vaik') return null;
         return { name:a.name, cc:ccOf(a), av:a.avS || '', v:Math.round(rankTab === 'power' ? myPower(a) : (a.res.treasury || 0)) };
-      }).sort((x, y) => y.v - x.v).slice(0, 10);
+      }).filter(Boolean).sort((x, y) => y.v - x.v).slice(0, 10);
     } else {
       note = 'رتبه‌بندی از اطلاعات ذخیره‌شدهٔ بازیکنان.';
     }
@@ -2134,8 +2454,8 @@ button{cursor:pointer;border:0;background:none}
     $('#rkList').innerHTML = rows.length ? rows.map((r, i) =>
       `<div class="rk${String(r.name).toLowerCase() === me ? ' me' : ''}">
         <span class="rkm">${M[i] || toFa(i + 1)}</span>
-        ${(() => { const u = avUrl(r.name, r.av); return u ? `<img class="rka" src="${esc(u)}" alt="">` : `<span style="font-size:26px">${flagOf(r.cc)}</span>`; })()}
-        <span class="rkn">${esc(r.name)}${verifiedMark(r)}</span>
+        ${(() => { const u = avUrl(r.name, r.av); return u ? `<img class="rka pm-name" data-pm-target="${esc(String(r.name).toLowerCase())}" src="${esc(u)}" alt="">` : `<span class="pm-name" data-pm-target="${esc(String(r.name).toLowerCase())}" style="font-size:26px">${flagOf(r.cc)}</span>`; })()}
+        <span class="rkn pm-name" data-pm-target="${esc(String(r.name).toLowerCase())}">${esc(r.name)}${verifiedMark(r)}</span>
         <span class="rkv">${rankTab === 'power' ? '⚔️ ' + fmt(r.v) : '$' + fmt(r.v)}</span>
       </div>`).join('') : '<div class="wnone">هنوز بازیکنی ثبت نشده است.</div>';
   }
@@ -2143,7 +2463,10 @@ button{cursor:pointer;border:0;background:none}
   async function showRank(){
     if (!loadAcc()[currentKey]) return showLogin();
     go('rank'); $('#fabLayer').hidden = false; window.scrollTo(0, 0);
-    $('#rkList').innerHTML = ''; await srvInit(); renderRank();
+    $('#rkList').innerHTML = '';
+    // صفحه بلافاصله باز شود؛ دریافت آنلاین در پس‌زمینه ادامه پیدا می‌کند.
+    try { srvInit(); } catch(e){}
+    renderRank();
   }
   document.querySelectorAll('.rkb').forEach(b => b.addEventListener('click', () => { rankTab = b.dataset.t; renderRank(); }));
   setInterval(() => { if (!$('#rank').hidden) renderRank(); }, 15000);
@@ -2354,6 +2677,27 @@ button{cursor:pointer;border:0;background:none}
   $('#mktBack').addEventListener('click', () => { go('profile'); render(loadAcc()[currentKey]); });
   $('#gotoWar').addEventListener('click', () => { sheet.hidden = true; showWar(); });
   $('#warBack').addEventListener('click', () => { go('profile'); render(loadAcc()[currentKey]); });
+  $('#chatList').addEventListener('click', e => {
+    const p = e.target.closest('[data-pm-target]');
+    if (p && p.dataset.pmTarget && p.dataset.pmTarget !== String(currentKey||'').toLowerCase()) { e.stopPropagation(); showPm(p.dataset.pmTarget); }
+  });
+  $('#rkList').addEventListener('click', e => {
+    const p = e.target.closest('[data-pm-target]');
+    if (p && p.dataset.pmTarget && p.dataset.pmTarget !== String(currentKey||'').toLowerCase()) showPm(p.dataset.pmTarget);
+  });
+  $('#pmUsers').addEventListener('click', e => {
+    const b=e.target.closest('[data-dm-target]'); if(!b) return;
+    dmTarget=b.dataset.dmTarget; renderPm();
+    const p=dmPlayer(dmTarget); $('#pmTo').innerHTML=`در حال گفتگو با <b>${esc(p?.name || dmTarget)}</b>`;
+    $('#pmInput').focus();
+  });
+  $('#pmSend').addEventListener('click', pmSend);
+  $('#pmBlockBtn').addEventListener('click', dmToggleBlock);
+  $('#pmInput').addEventListener('keydown', e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();pmSend();}});
+  $('#pmBack').addEventListener('click',()=>{go('profile');$('#fabLayer').hidden=false;render(loadAcc()[currentKey]);});
+  $('#gotoPm').addEventListener('click',()=>{sheet.hidden=true;showPm();});
+  setInterval(()=>{if(!$('#pm').hidden){mqttSubscribeDM(currentKey); try { if (mqttClient && mqttClient.connected) mqttClient.subscribe(MQTT_BLOCKS + mqttKey(currentKey), { qos: 1 }); } catch(e){} renderPm();}},3000);
+
   $('#chatBack').addEventListener('click', () => { go('profile'); $('#fabLayer').hidden = false; render(loadAcc()[currentKey]); });
   $('#gotoChat').addEventListener('click', () => { sheet.hidden = true; showChat(); });
   $('#gotoRank').addEventListener('click', () => { sheet.hidden = true; showRank(); });
@@ -2365,26 +2709,31 @@ button{cursor:pointer;border:0;background:none}
 
   /* ======== شروع ======== */
   mqttConnect();
-  // ورود خودکار: سرور عمومی منبع اصلی پروفایل است؛ localStorage فقط کش است.
+  // ورود خودکار سریع: نشست محلی فوراً صفحه را باز می‌کند و همگام‌سازی MQTT در پس‌زمینه انجام می‌شود.
+  // اینجا عمداً ۵ ثانیه برای اتصال سرور منتظر نمی‌مانیم تا شروع بازی روی موبایل لگ نداشته باشد.
   (async function bootSession(){
     const bootFlow = authFlowId;
     const saved = store.get(SES);
     if (!saved) return showLogin();
-    try {
-      const remote = await mqttGetAccount(saved, 5000);
-      // اگر کاربر در این فاصله خودش فرم ورود/ثبت‌نام را شروع کرده،
-      // نشست قبلی حق ندارد دوباره صفحهٔ بازی را باز کند.
-      if (manualAuthStarted || bootFlow !== authFlowId) return;
-      const accounts = loadAcc();
-      if (remote && typeof remote.salt === 'string' && typeof remote.hash === 'string') {
-        accounts[saved] = remote;
-        store.set(ACC, JSON.stringify(accounts));
-        return showProfile(saved);
-      }
-      if (accounts[saved] && typeof accounts[saved].salt === 'string' && typeof accounts[saved].hash === 'string') return showProfile(saved);
+    const accounts = loadAcc();
+    const local = accounts[saved];
+    if (!local || typeof local.salt !== 'string' || typeof local.hash !== 'string') {
       store.del(SES);
+      return showLogin();
+    }
+    if (!manualAuthStarted && bootFlow === authFlowId) showProfile(saved);
+
+    // همگام‌سازی سرور بدون متوقف کردن رابط کاربری.
+    try {
+      const remote = await mqttGetAccount(saved, 2500);
+      if (manualAuthStarted || bootFlow !== authFlowId) return;
+      if (remote && typeof remote.salt === 'string' && typeof remote.hash === 'string') {
+        const latest = loadAcc();
+        latest[saved] = remote;
+        store.set(ACC, JSON.stringify(latest));
+        if (currentKey === saved && !$('#profile').hidden) render(remote);
+      }
     } catch(e){}
-    if (!manualAuthStarted && bootFlow === authFlowId) showLogin();
   })();
 })();
 </script>
