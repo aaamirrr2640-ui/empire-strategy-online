@@ -1056,10 +1056,11 @@ button{cursor:pointer;border:0;background:none}
   };
 
   const saveAcc = a => {
+    // localStorage فقط کش است؛ هر ذخیرهٔ بازی به سرور عمومی نیز منتشر می‌شود.
     store.set(ACC, JSON.stringify(a));
     try {
       if (typeof currentKey !== 'undefined' && currentKey && a[currentKey]) {
-        mqttPublishAccount(currentKey, a[currentKey]);
+        mqttPublishAccount(currentKey, a[currentKey]).catch(()=>{});
       }
     } catch(e){}
   };
@@ -2221,8 +2222,22 @@ button{cursor:pointer;border:0;background:none}
 
   /* ======== شروع ======== */
   mqttConnect();
-  const saved = store.get(SES);
-  if (saved && loadAcc()[saved]) showProfile(saved);
+  // ورود خودکار: سرور عمومی منبع اصلی پروفایل است؛ localStorage فقط کش است.
+  (async function bootSession(){
+    const saved = store.get(SES);
+    if (!saved) return showLogin();
+    try {
+      const remote = await mqttGetAccount(saved, 3500);
+      const accounts = loadAcc();
+      if (remote) {
+        accounts[saved] = remote;
+        saveAcc(accounts);
+        return showProfile(saved);
+      }
+      if (accounts[saved]) return showProfile(saved);
+    } catch(e){}
+    showLogin();
+  })();
 })();
 </script>
 </body>
