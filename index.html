@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -465,6 +468,10 @@ button{cursor:pointer;border:0;background:none}
 .ain button{flex:none;width:52px;height:52px;border-radius:50%;font-size:20px;color:#fff;background:linear-gradient(180deg,#b165ff,#8a3fe0)}
 .am{display:flex;align-items:center;gap:10px;margin-top:10px;padding:10px 12px;border-radius:14px;background:#100f0a;border:1px solid rgba(214,174,53,.2)}
 .am .sm{width:auto;height:38px;padding:0 14px;font-size:13px}
+.am .king-role-player{flex:0 0 auto;min-width:62px;max-width:92px;margin:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;text-align:center}
+.am .king-role-player img,.am .king-role-player>div{width:44px!important;height:44px!important;border-radius:50%!important;object-fit:cover!important;flex:none}
+.am .king-role-player span{display:block;max-width:92px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;font-weight:800;color:var(--gold-2)}
+.am .king-role-empty{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#222;border:1px solid #555;font-size:20px}
 .gbtn{color:#fff;background:#1f9d55;border:0}
 
 /* ---------- avatar picker ---------- */
@@ -480,9 +487,42 @@ button{cursor:pointer;border:0;background:none}
 .row.lab{display:grid;place-items:center;cursor:pointer}
 .cav{overflow:hidden}.cav img{width:100%;height:100%;object-fit:cover;display:block}
 .rka{width:40px;height:40px;flex:none;border-radius:50%;object-fit:cover;border:1px solid var(--gold-dim)}
+
+/* ---------- declarations ---------- */
+.decl-wrap{padding:18px 12px 30px}.decl-card{background:linear-gradient(180deg,#15150f,#0d0e0a);border:1px solid rgba(214,174,53,.28);border-radius:18px;padding:16px;margin-top:12px}.decl-title{font-size:20px;color:var(--gold);font-weight:900}.decl-sub{font-size:12px;color:var(--muted);line-height:1.9;margin-top:6px}.decl-field{width:100%;box-sizing:border-box;margin-top:10px;min-height:46px;padding:11px 13px;border-radius:13px;background:#0b0c09;border:1px solid rgba(214,174,53,.22);color:var(--cream);font:inherit}.decl-field:focus{outline:none;border-color:var(--gold)}textarea.decl-field{min-height:125px;resize:vertical;line-height:1.9}.decl-list{display:grid;gap:12px;margin-top:14px}.decl-item{background:#12130e;border:1px solid rgba(214,174,53,.22);border-radius:17px;overflow:hidden}.decl-banner{padding:14px 15px;background:linear-gradient(135deg,#2b250e,#11120d);border-bottom:1px solid rgba(214,174,53,.18)}.decl-who{display:flex;align-items:center;gap:9px;font-weight:900}.decl-avatar{width:44px;height:44px;border-radius:12px;object-fit:cover;background:#242217;border:1px solid rgba(214,174,53,.35);display:grid;place-items:center;font-size:25px;flex:none}.decl-body{padding:14px 15px}.decl-text{font-size:14px;line-height:2;white-space:pre-wrap;word-break:break-word}.decl-meta{margin-top:8px;font-size:11px;color:var(--muted)}.decl-empty{padding:25px;text-align:center;color:var(--muted);line-height:2}.decl-target{margin-top:10px;padding:10px 12px;border-radius:12px;background:#10110c;border:1px solid rgba(214,174,53,.18);color:var(--cream)}
+
+
+/* ---------- VAIK global text editor ---------- */
+#vaikTextEditBar{
+  position:fixed;left:50%;bottom:calc(74px + env(safe-area-inset-bottom));
+  transform:translateX(-50%);z-index:40;width:min(94%,420px);
+  padding:10px 12px;border-radius:16px;background:#17140a;
+  border:1px solid rgba(214,174,53,.55);box-shadow:0 8px 28px rgba(0,0,0,.65);
+  display:flex;align-items:center;gap:9px;color:var(--cream);font-size:12px;
+}
+#vaikTextEditBar button{
+  flex:1;height:38px;border-radius:11px;font-weight:800;
+  background:linear-gradient(180deg,#ecd582,#c9a233);color:var(--ink);
+}
+#vaikTextEditBar .vte-status{flex:1.4;line-height:1.45;color:var(--gold-2)}
+body.vaik-edit-mode [data-vtext-editable]{
+  outline:1px dashed rgba(214,174,53,.75)!important;
+  outline-offset:3px!important;cursor:text!important;
+}
+body.vaik-edit-mode [data-vtext-editable]:hover{
+  background:rgba(214,174,53,.08)!important;border-radius:4px;
+}
+
 </style>
 </head>
 <body>
+<!-- ================= VAIK GLOBAL TEXT EDITOR ================= -->
+<div id="vaikTextEditBar" hidden>
+  <span class="vte-status" id="vaikTextEditStatus">✏️ حالت ویرایش متن خاموش است</span>
+  <button id="vaikTextEditToggle" type="button">✏️ فعال‌کردن ویرایش</button>
+</div>
+
+
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -634,6 +674,7 @@ button{cursor:pointer;border:0;background:none}
       <span class="cdot local" id="chatDot"></span>
       <h1>گفتگوی جهانی</h1>
       <span class="chat-on" id="chatOn">تاریخچه پیام‌ها محفوظ است</span>
+      <button class="buy" id="chatToggle" type="button" hidden style="height:34px;padding:0 10px;font-size:11px">🔒 بستن چت</button>
     </header>
     <div class="chat-list" id="chatList" aria-live="polite"></div>
     <div class="chat-f">
@@ -665,6 +706,9 @@ button{cursor:pointer;border:0;background:none}
     </div>
   </div>
 </main>
+
+<!-- ================= WORLD MAP ================= -->
+
 
 <!-- ================= WAR ================= -->
 <main class="app" id="war" hidden>
@@ -760,6 +804,40 @@ button{cursor:pointer;border:0;background:none}
   </div></div>
 </main>
 
+<!-- ================= KINGDOM ================= -->
+<main class="app" id="kingdom" hidden>
+  <div class="frame"><div class="body" style="padding-top:18px">
+    <button class="buy" id="kingdomBack" type="button" style="height:38px;width:auto;padding:0 16px;display:inline-flex">→ بازگشت</button>
+    <h1 class="login-title" style="margin-top:16px">👑 پادشاهی</h1>
+    <p class="login-sub">در این بخش اعضای اتحاد برای فتح پادشاهی نیرو احضار می‌کنند.</p>
+    <div class="kingdom-battle-time" style="margin:10px 12px 14px;padding:11px 12px;border:1px solid #b89422;border-radius:12px;text-align:center;font-weight:700;color:#f5d35b;background:rgba(184,148,34,.08);">هر هفته یکشنبه ساعت ۱۲ تا ۲۲ زمان نبرد برای پادشاهی</div>
+    <div class="wnone" id="kingdomNote">
+
+در حال آماده‌سازی پادشاهی…</div>
+    <section class="wcard" id="kingCard"></section>
+    <section class="wcard">
+      <h2>⚔️ احضار نیرو برای فتح پادشاهی</h2>
+      <p class="wdesc">نیروهایی که هنوز در درگیری پادشاهی از بین نرفته‌اند، در پادشاهی باقی می‌مانند. سهم هر بازیکن بر اساس نیرویی که در پادشاهی دارد محاسبه می‌شود؛ اولین احضارکننده نیز به‌عنوان بنیان‌گذار پادشاهی ثبت می‌شود.</p>
+      <div id="kingSummonBox"></div>
+    </section>
+    <section class="wcard">
+      <h2>👥 نیروهای حاضر در پادشاهی</h2>
+      <div id="kingdomList"></div>
+    </section>
+  </div></div>
+</main>
+
+<main class="app" id="kingRoles" hidden>
+  <div class="frame"><div class="body" style="padding-top:18px">
+    <button class="buy" id="kingRolesBack" type="button" style="height:38px;width:auto;padding:0 16px;display:inline-flex">→ بازگشت</button>
+    <h1 class="login-title" style="margin-top:16px">🏛️ منوی مقام پادشاهی</h1>
+    <p class="login-sub">پادشاه، رهبر اتحادی است که بیشترین قدرت نیروهای حاضر در پادشاهی را دارد.</p>
+    <div class="wnone" id="kingRolesNote">در حال بررسی مقام‌ها…</div>
+    <section class="wcard" id="kingRolesCard"></section>
+    <section class="wcard" id="kingRolesManage" hidden></section>
+  </div></div>
+</main>
+
 <div class="fab-layer" id="fabLayer" hidden>
   <button class="fab" id="searchBtn" type="button" aria-label="جست‌وجو">🔍</button>
   <button class="fab" id="menuBtn" type="button" aria-label="منو">
@@ -783,6 +861,9 @@ button{cursor:pointer;border:0;background:none}
     <button class="row" id="gotoPm" type="button">💌 پیام‌ها <span id="pmBadge" style="float:left;color:var(--gold)"></span></button>
     <button class="row" id="gotoRank" type="button">🏆 رتبه‌بندی</button>
     <button class="row" id="gotoAlly" type="button">🤝 اتحاد</button>
+    <button class="row" id="gotoKingdom" type="button">👑 پادشاهی</button>
+    <button class="row" id="gotoKingRoles" type="button">🏛️ منوی مقام پادشاهی</button>
+    <button class="row" id="gotoVaikAdmin" type="button" hidden>🛡️ منوی مدیریت VAIK</button>
     <button class="row danger" id="logout" type="button">خروج از حساب</button>
     <button class="row" type="button" data-close>بستن</button>
   </div>
@@ -797,6 +878,92 @@ button{cursor:pointer;border:0;background:none}
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+
+<script>
+/* ===== ساعت مرکزی سرور =====
+   زمان بازی از هدر Date سروری که فایل بازی را سرو می‌کند گرفته می‌شود.
+   بعد از همگام‌سازی، زمان با performance.now() جلو می‌رود؛
+   بنابراین تغییر ساعت/تاریخ گوشی روی زمان بازی اثر نمی‌گذارد.
+*/
+(function(){
+  const nativeDateNow = Date.now.bind(Date);
+  const nativeDate = Date;
+  let serverBase = 0;
+  let perfBase = 0;
+  let ready = false;
+  let syncing = false;
+  let lastSync = 0;
+
+  window.gameServerClock = {
+    ready: () => ready,
+    now: () => {
+      if(!ready) return nativeDateNow();
+      return Math.floor(serverBase + (performance.now() - perfBase));
+    },
+    lastSync: () => lastSync
+  };
+
+  async function syncServerClock(){
+    if(syncing) return;
+    syncing = true;
+    try{
+      const url = location.href.split('#')[0] +
+        (location.href.includes('?') ? '&' : '?') +
+        '_server_clock=' + Math.random().toString(36).slice(2);
+
+      const t0 = nativeDateNow();
+      const p0 = performance.now();
+      const r = await fetch(url, {
+        method:'GET',
+        cache:'no-store',
+        credentials:'same-origin',
+        headers:{'Range':'bytes=0-0'}
+      });
+      const p1 = performance.now();
+      const dateHeader = r.headers.get('Date');
+
+      if(dateHeader){
+        const serverAtResponse = nativeDate(dateHeader).getTime();
+        // Approximate the server time at the midpoint of the request.
+        const midpoint = (p0+p1)/2;
+        const elapsed = (p1-p0)/2;
+        serverBase = serverAtResponse - elapsed;
+        perfBase = midpoint;
+        ready = true;
+        lastSync = nativeDateNow();
+        document.documentElement.dataset.serverClock = 'ready';
+      }
+    }catch(e){
+      // If this is a local content:// file, there is no server clock to read.
+      document.documentElement.dataset.serverClock = 'unavailable';
+    }finally{
+      syncing = false;
+    }
+  }
+
+  // Patch Date.now so every existing cooldown/production/timer calculation
+  // in the game uses the synchronized server clock automatically.
+  Date.now = function(){
+    return window.gameServerClock.now();
+  };
+
+  // Initial sync and periodic resync.
+  syncServerClock();
+  setInterval(syncServerClock, 60000);
+
+  window.addEventListener('online', syncServerClock);
+
+  window.requireServerClock = async function(timeoutMs=5000){
+    if(ready) return true;
+    const end = nativeDateNow() + timeoutMs;
+    while(!ready && nativeDateNow() < end){
+      await new Promise(r=>setTimeout(r,120));
+    }
+    return ready;
+  };
+})();
+</script>
 
 <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 <script>
@@ -880,12 +1047,19 @@ button{cursor:pointer;border:0;background:none}
   const rCost = (r, L) => L >= r.max ? 0 : Math.round(r.base * Math.pow(r.g, L - 1) / 1e5) * 1e5;
   const rLvl = (a, k) => Math.min(RESEARCH.find(r => r.k === k).max, (a.research && a.research[k]) || 1);
   const allyM = a => 1 + (a.eff || 0) / 100;
-  const milMult = a => (1 + 0.02 * rLvl(a, 'mil')) * allyM(a);
+  let KINGDOM = { kingKey:'', allianceId:null, allianceName:'', power:0, alliances:[], roles:{} };
+  const roleAssignedTo = role => String(KINGDOM.roles?.[role]||'').trim().toLowerCase();
+  const playerHasRole = (a, role) => { const v=roleAssignedTo(role); const ck=(a===loadAcc()[currentKey])?String(currentKey||'').trim().toLowerCase():''; return !!v && (v===String(a?.name||'').trim().toLowerCase() || v===String(a?._key||'').trim().toLowerCase() || v===ck); };
+  const isKingAccount = a => !!(a && KINGDOM.kingKey && (String(a.name||'').trim().toLowerCase()===String(KINGDOM.kingKey).trim().toLowerCase() || String(a._key||'').trim().toLowerCase()===String(KINGDOM.kingKey).trim().toLowerCase()));
+  const kingdomM = a => isKingAccount(a) ? 1.50 : (playerHasRole(a,'commander') || playerHasRole(a,'president')) ? 1.20 : 1;
+  const militaryBaseMult = a => (1 + 0.02 * rLvl(a, 'mil')) * allyM(a);
+  const milMult = a => militaryBaseMult(a) * kingdomM(a);
+  const baseMilitaryPower = a => UNITS.reduce((t,u)=>t+((a&&a.army&&a.army[u.k])||0)*u.w,0)*militaryBaseMult(a);
   const incMult = a => (1 + 0.03 * rLvl(a, 'eco')) * allyM(a);
   const indMult = a => 1 + 0.03 * rLvl(a, 'ind');
   const unitDisc = a => 1 - 0.015 * rLvl(a, 'tech');
   const satBonus = a => 2 * rLvl(a, 'tech');
-  const prodMult = (a, key) => key === 'treasury' ? incMult(a) : ['oil', 'food', 'steel', 'electricity', 'production'].includes(key) ? indMult(a) : 1;
+  const prodMult = (a, key) => { const base=key==='treasury'?incMult(a):['oil','food','steel','electricity','production'].includes(key)?indMult(a):1; const bonus=(isKingAccount(a)?0.10:0)+(playerHasRole(a,'president')?0.05:0); return base*(1+bonus); };
 
   const RES = [
     { k:'treasury',     label:'خزانه',     ico:'💰',  cls:'tre',  hl:true, f: v => `<span class="usd">$</span>${fmt(v)}` },
@@ -920,6 +1094,8 @@ button{cursor:pointer;border:0;background:none}
     del(k){ delete mem[k]; try { localStorage.removeItem(k); } catch(e){} }
   };
   const ACC = 'game:accounts', SES = 'game:session';
+  // تعریف زودهنگام نشست؛ ادیتور VAIK قبل از بخش ورود اجرا می‌شود و به currentKey نیاز دارد.
+  let currentKey = null;
 
   // ======== MQTT عمومی برای حساب و رتبه‌بندی ========
   // هشدار: این broker عمومی است؛ هر کسی که topic را بداند می‌تواند داده‌های بازی را بخواند.
@@ -937,7 +1113,216 @@ button{cursor:pointer;border:0;background:none}
   const MQTT_DM = MQTT_NS + '/dm/';
   const MQTT_BLOCKS = MQTT_NS + '/dm-blocks/';
   const MQTT_CHAT_HISTORY = MQTT_NS + '/chat/history';
+  const MQTT_CHAT_STATUS = MQTT_NS + '/chat/status';
   const MQTT_PRESENCE = MQTT_NS + '/presence/';
+  const MQTT_KINGDOM = MQTT_NS + '/kingdom';
+
+  // ======== ویرایشگر متن سراسری مخصوص VAIK ========
+  // مهم: ویرایشگر فقط برای VAIK فعال و DOM را فقط در حالت ویرایش لمس می‌کند.
+  // بازیکنان عادی فقط تغییرات retained را دریافت و روی متن‌های مربوط اعمال می‌کنند.
+  const VAIK_TEXT_EDITS = MQTT_NS + '/admin/text-edits';
+  const VAIK_TEXT_MODE = 'game:vaik:text-edit-mode';
+  let vaikTextEdits = {};
+  let vaikTextEditMode = false;
+  let vaikTextObserver = null;
+  let vaikTextObserverBusy = false;
+  let vaikApplyTimer = null;
+
+  function vaikIsAdmin(){
+    try{
+      const a = loadAcc()[currentKey];
+      return !!a && String(a.name||'').trim().toLowerCase() === 'vaik';
+    }catch(e){ return false; }
+  }
+
+  function vaikTextClean(s){ return String(s ?? '').replace(/\s+/g,' ').trim(); }
+
+  function vaikElementPath(el){
+    if(!el || !el.parentElement) return '';
+    const parts=[];
+    let n=el;
+    while(n && n.nodeType===1 && n.parentElement){
+      if(n.id){ parts.unshift('#'+n.id); break; }
+      let i=0, p=n.parentElement, c=p.firstElementChild;
+      while(c){ if(c===n) break; i++; c=c.nextElementSibling; }
+      parts.unshift(n.tagName.toLowerCase()+':'+i);
+      n=p;
+      if(n.tagName==='BODY') break;
+    }
+    return parts.join('/');
+  }
+
+  function vaikTextNodeKey(node){
+    const p=node && node.parentElement;
+    if(!p) return '';
+    const ep=vaikElementPath(p);
+    if(!ep) return '';
+    let idx=0, n=p.firstChild;
+    while(n){ if(n===node) break; if(n.nodeType===Node.TEXT_NODE) idx++; n=n.nextSibling; }
+    return ep+'@text:'+idx;
+  }
+
+  function vaikSkipTextNode(node){
+    if(!node || node.nodeType!==Node.TEXT_NODE) return true;
+    if(!vaikTextClean(node.nodeValue).length) return true;
+    const p=node.parentElement;
+    if(!p) return true;
+    return !!p.closest('#vaikTextEditBar,[hidden],script,style,noscript,template,textarea,input,select,option,[data-vtext-node]');
+  }
+
+  function vaikCollectTextNodes(root=document){
+    const out=[];
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+    let n;
+    while((n=walker.nextNode())) if(!vaikSkipTextNode(n)) out.push(n);
+    return out;
+  }
+
+  function vaikResolvePath(path){
+    try{
+      const parts=String(path||'').split('/').filter(Boolean);
+      let cur=document.body;
+      for(const part of parts){
+        if(part[0]==='#'){
+          cur=document.getElementById(part.slice(1));
+          if(!cur) return null;
+          continue;
+        }
+        const m=part.match(/^([a-z0-9-]+):(\d+)$/i);
+        if(!m) return null;
+        const tag=m[1].toLowerCase(), idx=Number(m[2]);
+        let count=0, found=null;
+        for(const c of cur.children){
+          if(c.tagName.toLowerCase()===tag){
+            if(count===idx){ found=c; break; }
+            count++;
+          }
+        }
+        if(!found) return null;
+        cur=found;
+      }
+      return cur;
+    }catch(e){ return null; }
+  }
+
+  function vaikApplyTextEdits(){
+    const keys=Object.keys(vaikTextEdits||{});
+    if(!keys.length) return;
+    for(const key of keys){
+      const at=key.lastIndexOf('@text:');
+      if(at<0) continue;
+      const path=key.slice(0,at);
+      const idx=Number(key.slice(at+6));
+      if(!Number.isInteger(idx) || idx<0) continue;
+      const el=vaikResolvePath(path);
+      if(!el) continue;
+      let ti=0, target=null;
+      for(const n of el.childNodes){
+        if(n.nodeType===Node.TEXT_NODE){
+          if(ti===idx){ target=n; break; }
+          ti++;
+        }
+      }
+      if(target && String(target.nodeValue)!==String(vaikTextEdits[key])){
+        target.nodeValue=String(vaikTextEdits[key]);
+      }
+    }
+  }
+
+  function vaikScheduleApply(){
+    clearTimeout(vaikApplyTimer);
+    vaikApplyTimer=setTimeout(()=>{
+      vaikApplyTimer=null;
+      if(vaikIsAdmin() && vaikTextEditMode) vaikMarkEditable();
+      else vaikApplyTextEdits();
+    },120);
+  }
+
+  function vaikMarkEditable(){
+    if(!vaikIsAdmin() || !vaikTextEditMode || vaikTextObserverBusy) return;
+    vaikTextObserverBusy=true;
+    try{
+      const nodes=vaikCollectTextNodes();
+      for(const node of nodes){
+        const key=vaikTextNodeKey(node);
+        if(!key || !node.parentNode) continue;
+        const span=document.createElement('span');
+        span.dataset.vtextNode='1';
+        span.dataset.vtextKey=key;
+        span.textContent=node.nodeValue || '';
+        if(Object.prototype.hasOwnProperty.call(vaikTextEdits,key)) span.textContent=String(vaikTextEdits[key]);
+        node.parentNode.replaceChild(span,node);
+      }
+    }finally{ vaikTextObserverBusy=false; }
+  }
+
+  async function vaikPublishTextEdits(){
+    try{
+      const ok=await mqttConnect();
+      if(ok && mqttClient && mqttClient.connected){
+        mqttClient.publish(VAIK_TEXT_EDITS,JSON.stringify(vaikTextEdits),{qos:1,retain:true});
+      }
+    }catch(e){}
+  }
+
+  function vaikSetEditBar(){
+    const bar=$('#vaikTextEditBar'),btn=$('#vaikTextEditToggle'),st=$('#vaikTextEditStatus');
+    if(!bar||!btn||!st) return;
+    const admin=vaikIsAdmin();
+    bar.hidden=!admin;
+    document.body.classList.toggle('vaik-edit-mode',admin&&vaikTextEditMode);
+    btn.textContent=vaikTextEditMode?'✅ خاموش‌کردن ویرایش':'✏️ فعال‌کردن ویرایش';
+    st.textContent=vaikTextEditMode?'روی هر نوشته بزن؛ حتی متن‌های داخل دکمه‌ها. خالی = حذف برای همه.':'✏️ حالت ویرایش خاموش است';
+  }
+
+  function vaikStartTextEditor(){
+    // برای بازیکنان عادی هیچ span/observer سنگینی ساخته نمی‌شود.
+    try{ vaikTextEditMode=vaikIsAdmin() && store.get(VAIK_TEXT_MODE)==='1'; }catch(e){ vaikTextEditMode=false; }
+    vaikSetEditBar();
+    if(vaikIsAdmin() && vaikTextEditMode) vaikMarkEditable();
+    else vaikApplyTextEdits();
+  }
+
+  async function vaikLoadTextEdits(){
+    try{
+      const ok=await mqttConnect();
+      if(ok && mqttClient && mqttClient.connected) mqttClient.subscribe(VAIK_TEXT_EDITS,{qos:1});
+    }catch(e){}
+    if(vaikIsAdmin() && vaikTextEditMode) vaikMarkEditable();
+    else vaikApplyTextEdits();
+  }
+
+  document.addEventListener('click',e=>{
+    if(!vaikTextEditMode||!vaikIsAdmin()) return;
+    if(e.target.closest('#vaikTextEditBar,input,textarea,select,[contenteditable="true"]')) return;
+    const el=e.target.closest('[data-vtext-node][data-vtext-key]');
+    if(!el) return;
+    e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+    const old=el.textContent||'';
+    const next=prompt('متن جدید را وارد کنید.\nاگر خالی بگذاری، متن برای همه بازیکنان حذف می‌شود.',old);
+    if(next===null) return;
+    const key=el.dataset.vtextKey;
+    const clean=String(next).trim();
+    vaikTextEdits[key]=clean;
+    try{ store.set('game:vaik:text-edits',JSON.stringify(vaikTextEdits)); }catch(e){}
+    el.textContent=clean;
+    vaikPublishTextEdits();
+    toast(clean?'✏️ متن برای همه تغییر کرد.':'🗑️ متن برای همه حذف شد.');
+  },true);
+
+  // فقط در حالت ویرایش VAIK تغییرات DOM را مشاهده می‌کنیم.
+  function vaikEnableObserver(){
+    if(vaikTextObserver || !vaikIsAdmin() || !vaikTextEditMode) return;
+    vaikTextObserver=new MutationObserver(()=>{
+      if(vaikTextObserverBusy) return;
+      vaikScheduleApply();
+    });
+    vaikTextObserver.observe(document.body,{subtree:true,childList:true});
+  }
+  function vaikDisableObserver(){
+    if(vaikTextObserver){ try{ vaikTextObserver.disconnect(); }catch(e){} vaikTextObserver=null; }
+  }
+
   // آواتار ثابت پشتیبانی VAIK؛ روی MQTT هم retained می‌شود تا بعد از آپدیت/ورود دستگاه جدید باقی بماند.
   const VAIK_SUPPORT_AVATAR = 'data:image/jpeg;base64,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';
   const VAIK_SUPPORT = 'vaik';
@@ -971,6 +1356,20 @@ button{cursor:pointer;border:0;background:none}
   const mqttTopic = key => MQTT_PLAYERS + mqttKey(key);
   // داده‌ای که از سرور عمومی می‌رسد را در کش محلی هم نگه می‌داریم تا بخش جنگ
   // و رتبه‌بندی بتوانند همان پروفایل را استفاده کنند؛ این ذخیره، دوباره publish نمی‌شود.
+  function mergeWarReports(oldReports, remoteReports){
+    const map = new Map();
+    const add = (r) => {
+      if (!r || !r.id) return;
+      const id = String(r.id);
+      const prev = map.get(id);
+      if (!prev) map.set(id, { ...r });
+      else map.set(id, { ...prev, ...r, seen: !!(prev.seen || r.seen) });
+    };
+    (oldReports || []).forEach(add);
+    (remoteReports || []).forEach(add);
+    return [...map.values()].sort((a,b) => Number(b.t||0) - Number(a.t||0)).slice(0,40);
+  }
+
   function cacheRemoteAccount(key, acc){
     try{
       if (!key || !acc || !acc.name) return;
@@ -982,6 +1381,8 @@ button{cursor:pointer;border:0;background:none}
       if (!acc.avS && old.avS) merged.avS = old.avS;
       if (!merged.avatar && merged.avS) merged.avatar = merged.avS;
       if (!acc.cc && old.cc) merged.cc = old.cc;
+      // گزارش‌ها را با شناسه یکی کن و وضعیت «دیده شده» محلی را حفظ کن تا اعلان قدیمی دوباره برنگردد.
+      merged.reports = mergeWarReports(old.reports, acc.reports);
       accounts[key] = merged;
       store.set(ACC, JSON.stringify(accounts));
     }catch(e){}
@@ -1029,30 +1430,48 @@ button{cursor:pointer;border:0;background:none}
   }
 
   function mqttConnect(){
+    if (mqttClient && mqttClient.connected) return Promise.resolve(true);
     if (mqttReady) return mqttReady;
     mqttReady = new Promise(resolve => {
-      if (!window.mqtt) { mqttStatus(''); resolve(false); return; }
+      if (!window.mqtt) { mqttReady = null; resolve(false); return; }
+      let settled = false, connectedOnce = false;
+      const finish = ok => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(connectTimer);
+        if (!ok) mqttReady = null;
+        resolve(ok);
+      };
+      const connectTimer = setTimeout(() => {
+        try { if (mqttClient && !connectedOnce) mqttClient.end(true); } catch(e){}
+        finish(false);
+      }, 6000);
       try {
         mqttStatus('');
         mqttClient = window.mqtt.connect(MQTT_URL, {
-          clean: true, connectTimeout: 8000, reconnectPeriod: 2500,
-          keepalive: 30, clientId: 'game-' + Math.random().toString(16).slice(2)
+          clean: true, connectTimeout: 5000, reconnectPeriod: 1500,
+          keepalive: 45, clientId: 'game-' + Math.random().toString(16).slice(2)
         });
         mqttClient.on('connect', () => {
-          mqttClient.subscribe([MQTT_PLAYERS + '#', MQTT_PLAYERS_INDEX, MQTT_AVATARS + '#', MQTT_BLOCKS + '#', MQTT_CHAT + '#', MQTT_CHAT_HISTORY, MQTT_PRESENCE + '#'], { qos: 0 }, () => {
-            mqttStatus('', true);
-            mqttChatReady = true;
-            publishVAIKSupportAvatar();
+          connectedOnce = true;
+          mqttStatus('', true);
+          mqttChatReady = true;
+          // اتصال موفق را بلافاصله اعلام کن؛ منتظر callback اشتراک‌ها نمی‌مانیم
+          // تا ورود به بازی به خاطر کندی retained messages متوقف نشود.
+          finish(true);
+          try {
+            mqttClient.subscribe([MQTT_PLAYERS_INDEX, MQTT_BLOCKS + '#', MQTT_CHAT + '#', MQTT_CHAT_HISTORY, MQTT_CHAT_STATUS, MQTT_PRESENCE + '#', MQTT_KINGDOM], { qos: 0, rh: 2 });
+            // حساب و آواتار بازیکن فعلی را جداگانه می‌گیریم؛ از دریافت یک‌جای هزاران retained پیام جلوگیری می‌شود.
             if (currentKey) {
-              mqttPresenceOnline(currentKey);
-              mqttSubscribeDM(currentKey);
-              try { if (mqttClient && mqttClient.connected) mqttClient.subscribe(MQTT_BLOCKS + mqttKey(currentKey), { qos: 1 }); } catch(e){}
+              try { mqttClient.subscribe([MQTT_PLAYERS + mqttKey(currentKey), MQTT_AVATARS + mqttKey(currentKey)], { qos: 0 }); } catch(e){}
             }
-            // اینجا فهرست مرکزی را overwrite نکن؛ چون دستگاه جدید ممکن است هنوز
-            // retained index/پروفایل‌های قبلی را دریافت نکرده باشد و در نتیجه
-            // با آرایهٔ خالی، فهرست همهٔ بازیکنان را پاک کند.
-            resolve(true);
-          });
+          } catch(e){}
+          publishVAIKSupportAvatar();
+          if (currentKey) {
+            mqttPresenceOnline(currentKey);
+            mqttSubscribeDM(currentKey);
+            try { if (mqttClient && mqttClient.connected) mqttClient.subscribe(MQTT_BLOCKS + mqttKey(currentKey), { qos: 1 }); } catch(e){}
+          }
         });
         mqttClient.on('message', (topic, payload) => {
           try {
@@ -1124,11 +1543,47 @@ button{cursor:pointer;border:0;background:none}
               }
               return;
             }
+            if (topic === VAIK_TEXT_EDITS) {
+              try{
+                const ed=JSON.parse(payload.toString());
+                if(ed && typeof ed==='object'){
+                  vaikTextEdits=ed;
+                  store.set('game:vaik:text-edits',JSON.stringify(vaikTextEdits));
+                  vaikScheduleApply();
+                }
+              }catch(e){}
+              return;
+            }
+            if (topic === MQTT_KINGDOM) {
+              try {
+                const remoteKd = JSON.parse(payload.toString());
+                if (remoteKd && typeof remoteKd === 'object') {
+                  const localKd = kingdomData();
+                  const kd = (typeof kingdomMergeStates === 'function') ? kingdomMergeStates(localKd,remoteKd) : remoteKd;
+                  const remoteRaw=JSON.stringify(remoteKd), mergedRaw=JSON.stringify(kd);
+                  store.set('game:kingdom', mergedRaw);
+                  // اگر دو کلاینت هم‌زمان نوشته باشند، نسخهٔ ادغام‌شده دوباره retained می‌شود تا هیچ مشارکتی از بین نرود.
+                  if(mergedRaw!==remoteRaw && mqttClient && mqttClient.connected){
+                    try{ mqttClient.publish(MQTT_KINGDOM,mergedRaw,{qos:1,retain:true}); }catch(e){}
+                  }
+                  // بازگشت نیرو بلافاصله بعد از دریافت نتیجه هفتگی؛ منتظر باز شدن صفحه پادشاهی نمی‌ماند.
+                  try { if (typeof kingdomApplyMyReturn === 'function') kingdomApplyMyReturn(normalizeKingdom(kd)); } catch(e){}
+                  try { if (typeof kingdomApplyExpulsionReturn === 'function') kingdomApplyExpulsionReturn(normalizeKingdom(kd)); } catch(e){}
+                  try { if (!$('#kingdom').hidden && typeof buildKingdom === 'function') buildKingdom(); if (!$('#kingRoles').hidden && typeof renderKingRoles === 'function') renderKingRoles(); } catch(e){}
+                }
+              } catch(e){}
+              return;
+            }
             if (topic.startsWith(MQTT_BLOCKS)) {
               const blocker = decodeURIComponent(topic.slice(MQTT_BLOCKS.length)).toLowerCase();
               const list = JSON.parse(payload.toString());
               mqttBlocks[blocker] = Array.isArray(list) ? list.map(x => String(x).toLowerCase()) : [];
               if (!$('#pm').hidden) renderPm();
+              return;
+            }
+            if (topic === MQTT_CHAT_STATUS) {
+              const st = JSON.parse(payload.toString());
+              if (st && typeof st.open === 'boolean') { chatGlobalOpen = st.open; updateChatLockUI(); }
               return;
             }
             if (topic === MQTT_CHAT_HISTORY) {
@@ -1175,6 +1630,8 @@ button{cursor:pointer;border:0;background:none}
         mqttClient.on('close', () => {
           mqttChatReady = false;
           mqttStatus('');
+          // اگر اتصال اولیه هرگز موفق نشده، اجازه بده تلاش بعدی یک اتصال تازه بسازد.
+          if (!connectedOnce && !settled) finish(false);
         });
       } catch(e) { mqttStatus(''); resolve(false); }
     });
@@ -1475,15 +1932,23 @@ button{cursor:pointer;border:0;background:none}
   }
 
   async function mqttGetAccount(key, waitMs=1800){
+    const k = String(key || '').toLowerCase();
+    if (!k) return null;
+    if (mqttPlayers[k]) return mqttPlayers[k];
     const ok = await mqttConnect();
     if (!ok) return null;
-    if (mqttPlayers[key]) return mqttPlayers[key];
+    try {
+      if (mqttClient && mqttClient.connected) {
+        mqttClient.subscribe([MQTT_PLAYERS + mqttKey(k), MQTT_AVATARS + mqttKey(k)], { qos: 0 });
+      }
+    } catch(e){}
+    if (mqttPlayers[k]) return mqttPlayers[k];
     return new Promise(resolve => {
       const started = Date.now();
       const timer = setInterval(() => {
-        if (mqttPlayers[key]) { clearInterval(timer); resolve(mqttPlayers[key]); }
+        if (mqttPlayers[k]) { clearInterval(timer); resolve(mqttPlayers[k]); }
         else if (Date.now() - started >= waitMs) { clearInterval(timer); resolve(null); }
-      }, 80);
+      }, 50);
     });
   }
 
@@ -1587,9 +2052,42 @@ button{cursor:pointer;border:0;background:none}
       const key = name.toLocaleLowerCase('en');
       let accounts = loadAcc();
       const localAcc = accounts[key] || null;
-      // ابتدا نسخهٔ ذخیره‌شدهٔ حساب را بررسی می‌کنیم و در صورت وجود، اطلاعات همگام‌شده را بازیابی می‌کنیم.
-      const remoteAcc = await mqttGetAccount(key, 5000);
-      // ورود دستی همیشه باید قبل از بازیابی خودکار نشست تصمیم‌گیری شود.
+
+      // اگر همین دستگاه قبلاً با موفقیت وارد این حساب شده، ورود را از کش محلی
+      // بلافاصله انجام بده؛ اتصال MQTT فقط برای همگام‌سازی پس‌زمینه است. این کار
+      // باعث می‌شود قطعی/کندی broker مانع ورود بازیکن نشود.
+      if (localAcc && typeof localAcc.salt === 'string' && localAcc.salt && typeof localAcc.hash === 'string' && localAcc.hash) {
+        const localHash = await hash(localAcc.salt + pw);
+        if (localHash === localAcc.hash) {
+          if (myFlow !== authFlowId) return;
+          accounts[key] = localAcc;
+          store.set(ACC, JSON.stringify(accounts));
+          store.set(SES, key);
+          $('#pass').value = ''; pendingAv = ''; pendingAvS = ''; setPrev();
+          currentKey = key;
+          showProfile(key);
+
+          // همگام‌سازی حساب از MQTT در پس‌زمینه؛ هرگز صفحهٔ ورود را معطل نمی‌کند.
+          setTimeout(async () => {
+            try {
+              const remote = await mqttGetAccount(key, 1800);
+              if (!remote || myFlow !== authFlowId) return;
+              const latest = loadAcc();
+              const merged = { ...localAcc, ...remote };
+              if (!remote.avatar && localAcc.avatar) merged.avatar = localAcc.avatar;
+              if (!remote.avS && localAcc.avS) merged.avS = localAcc.avS;
+              merged.reports = mergeWarReports(localAcc.reports, remote.reports);
+              latest[key] = merged;
+              store.set(ACC, JSON.stringify(latest));
+              if (currentKey === key && !$('#profile').hidden) render(merged);
+            } catch(e){}
+          }, 0);
+          return;
+        }
+      }
+
+      // دستگاه جدید/کش ناقص: حالا حساب را از MQTT بگیر.
+      const remoteAcc = await mqttGetAccount(key, 3500);
       if (myFlow !== authFlowId) return;
 
       // سرور عمومی برای کم شدن حجم پیام، عکس اصلی پروفایل را داخل حساب منتشر نمی‌کند
@@ -1600,6 +2098,7 @@ button{cursor:pointer;border:0;background:none}
         if (!remoteAcc.avatar && localAcc.avatar) acc.avatar = localAcc.avatar;
         if (!remoteAcc.avS && localAcc.avS) acc.avS = localAcc.avS;
         if (!remoteAcc.avDirty && localAcc.avDirty) acc.avDirty = localAcc.avDirty;
+        acc.reports = mergeWarReports(localAcc.reports, remoteAcc.reports);
       }
       if (!acc) return setErr('این حساب پیدا نشد. برای ساخت حساب، «ثبت‌نام بازیکن جدید» را بزنید.');
 
@@ -1676,12 +2175,12 @@ button{cursor:pointer;border:0;background:none}
   }
 
   /* ======== پروفایل ======== */
-  let currentKey = null;
   let muted = false;
 
   function showLogin(){
     ++authFlowId;
     currentKey = null;
+    try{ vaikDisableObserver(); vaikSetEditBar(); }catch(e){}
     go('login'); $('#sheet').hidden = true; $('#fabLayer').hidden = true;
     window.scrollTo(0, 0);
   }
@@ -1730,7 +2229,7 @@ button{cursor:pointer;border:0;background:none}
   function renderInfra(acc){
     tickInfra(acc);
     $('#infraCard').innerHTML = BUILDINGS.map(b => {
-      const st = acc.buildings[b.key], L = st.level, maxed = L >= INFRA_MAX_LEVEL, cost = infraCost(b, L);
+      const st = acc.buildings[b.key], L = st.level, maxed = L >= INFRA_MAX_LEVEL, cost = Math.round(infraCost(b, L) * (playerHasRole(acc,'infra') ? 0.70 : 1));
       return `
       <div class="bcard">
         <div class="bicon">${b.icon}</div>
@@ -1749,7 +2248,7 @@ button{cursor:pointer;border:0;background:none}
         const key = btn.dataset.b;
         const accounts = loadAcc(), a = accounts[currentKey];
         tickInfra(a);
-        const b = BUILDINGS.find(x => x.key === key), st = a.buildings[key], c = infraCost(b, st.level);
+        const b = BUILDINGS.find(x => x.key === key), st = a.buildings[key], c0 = infraCost(b, st.level), c = Math.round(c0 * (playerHasRole(a,'infra') ? 0.70 : 1));
         if (a.res.treasury < c) return toast('موجودی خزانه برای ساخت کافی نیست.');
         a.res.treasury -= c; st.level++;
         saveAcc(accounts); render(a); renderInfra(a);
@@ -1765,7 +2264,7 @@ button{cursor:pointer;border:0;background:none}
     renderInfra(acc);
   }
 
-  const go = id => ['login', 'profile', 'infra', 'army', 'research', 'market', 'war', 'chat', 'pm', 'rank', 'ally'].forEach(x => { $('#' + x).hidden = x !== id; });
+  const go = id => ['login', 'profile', 'infra', 'army', 'research', 'market', 'war', 'chat', 'pm', 'rank', 'ally', 'kingdom', 'kingRoles'].forEach(x => { $('#' + x).hidden = x !== id; });
 
   function renderArmy(acc){
     tickInfra(acc); acc.army = acc.army || {};
@@ -1806,9 +2305,17 @@ button{cursor:pointer;border:0;background:none}
     tickInfra(a); a.army = a.army || {};
     const need = { treasury: Math.round(u.p * unitDisc(a) * n), oil: (u.oil || 0) * n, food: (u.food || 0) * n };
     const names = { treasury: 'موجودی خزانه', oil: 'نفت', food: 'غذا' };
-    const lack = Object.keys(need).find(k => need[k] > (a.res[k] || 0));
-    if (lack) return toast(`${names[lack]} کافی نیست. لازم: ${fmt(need[lack])}`);
-    Object.keys(need).forEach(k => { a.res[k] = Math.round((a.res[k] - need[k]) * 100) / 100; });
+    // پول همیشه شرط اصلی ساخت ارتش است؛ نفت و غذا در صورت موجود بودن مصرف می‌شوند.
+    // اگر بازیکن نفت/غذا نداشته باشد، با پرداخت پول هم می‌تواند یگان بسازد.
+    if (need.treasury > (a.res.treasury || 0)) {
+      return toast(`${names.treasury} کافی نیست. لازم: ${fmt(need.treasury)}`);
+    }
+    a.res.treasury = Math.round((a.res.treasury - need.treasury) * 100) / 100;
+    ['oil','food'].forEach(k => {
+      const have = a.res[k] || 0;
+      const take = Math.min(have, need[k] || 0);
+      a.res[k] = Math.round((have - take) * 100) / 100;
+    });
     a.army[u.k] = (a.army[u.k] || 0) + n;
     saveAcc(accounts); renderArmy(a); toast(`${toFa(n)} ${u.n} به ارتش اضافه شد`);
   });
@@ -1831,7 +2338,7 @@ button{cursor:pointer;border:0;background:none}
         <div class="rbody">
           <p class="rdesc">${r.d}</p>
           <div class="rbar"><i style="--p:${(L / r.max * 100).toFixed(1)}%"></i></div>
-          <div class="rcost"><span class="rlab">هزینه سطح بعد:</span>${maxed ? '<span class="rprice">—</span>' : `<span class="rprice">${fmt(rCost(r, L))} <span class="usd">$</span></span>`}</div>
+          <div class="rcost"><span class="rlab">هزینه سطح بعد:</span>${maxed ? '<span class="rprice">—</span>' : `<span class="rprice">${fmt(Math.round(rCost(r, L) * (playerHasRole(acc,'research') ? 0.70 : 1)))} <span class="usd">$</span></span>`}</div>
           <button class="upbtn rup" type="button" data-r="${r.k}" ${maxed ? 'disabled' : ''}>${maxed ? 'به حداکثر سطح رسید ✅' : `⬆️ ارتقا به سطح ${L + 1}`}</button>
         </div></article>`;
     }).join('');
@@ -1851,7 +2358,7 @@ button{cursor:pointer;border:0;background:none}
     tickInfra(a);
     const L = rLvl(a, r.k);
     if (L >= r.max) return;
-    const c = rCost(r, L);
+    const c0 = rCost(r, L), c = Math.round(c0 * (playerHasRole(a,'research') ? 0.70 : 1));
     if (a.res.treasury < c) return toast(`موجودی خزانه کافی نیست. لازم: ${fmt(c)}$`);
     a.res.treasury = Math.round((a.res.treasury - c) * 100) / 100;
     a.research[r.k] = L + 1;
@@ -1883,7 +2390,7 @@ button{cursor:pointer;border:0;background:none}
   const hourNow = () => Math.floor(Date.now() / 3.6e6);
   const mktRnd = (i, h) => { const x = Math.sin(h * 12.9898 + (i + 1) * 78.233) * 43758.5453; return x - Math.floor(x); };
   const mktMult = (m, h) => 1 + MKT_BAND * (2 * mktRnd(m.i, h) - 1);
-  const mktPrice = (m, h = hourNow()) => Math.max(1, Math.round(m.base * mktMult(m, h)));
+  const mktPrice = (m, h = hourNow(), a = null) => Math.max(1, Math.round(m.base * mktMult(m, h) * (a && playerHasRole(a,'merchant') ? 1.20 : 1)));
   const mktUp = m => mktPrice(m) >= mktPrice(m, hourNow() - 1);
 
   const digits = s => String(s).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/\D/g, '').slice(0, 12);
@@ -1916,7 +2423,7 @@ button{cursor:pointer;border:0;background:none}
   function refreshMarket(acc){
     const tre = $('#mktTre'); if (tre) tre.textContent = '$' + fmt(acc.res.treasury);
     document.querySelectorAll('#mktList .mcard').forEach(card => {
-      const m = MARKET.find(x => x.key === card.dataset.k), h = have(acc, m.key), price = mktPrice(m);
+      const m = MARKET.find(x => x.key === card.dataset.k), h = have(acc, m.key), price = mktPrice(m, hourNow(), acc);
       const q = +card.querySelector('[data-f=qty]').value || 0, up = mktUp(m);
       card.querySelector('[data-f=stock]').textContent = fmt(h);
       card.querySelector('[data-f=price]').textContent = fmt(price);
@@ -1950,7 +2457,7 @@ button{cursor:pointer;border:0;background:none}
     const n = +inp.value || 0, h = have(a, m.key);
     if (n < 1) return toast('تعداد را وارد کنید.');
     if (n > h) return toast(`موجودی ${m.name} کافی نیست. موجودی شما: ${fmt(h)}`);
-    const gain = n * mktPrice(m);
+    const gain = n * mktPrice(m, hourNow(), a);
     a.res[m.key] = Math.round((a.res[m.key] - n) * 100) / 100;
     a.res.treasury = Math.round((a.res.treasury + gain) * 100) / 100;
     saveAcc(accounts); inp.value = '1'; refreshMarket(a);
@@ -1990,8 +2497,39 @@ button{cursor:pointer;border:0;background:none}
   let probeN = 0, chatMode = null, chatUrl = '', chatLast = 0, chatBusy = false, chatFirst = true, chatReply = null, lastSend = 0;
   const chatById = new Map();
   let chatMqttActive = false;
+  let chatGlobalOpen = true;
   let chatCid = store.get('game:cid');
   if (!chatCid) { chatCid = Math.random().toString(36).slice(2, 12); store.set('game:cid', chatCid); }
+
+  function updateChatLockUI(){
+    const acc = currentKey ? loadAcc()[currentKey] : null;
+    const admin = typeof isVerifiedPlayer === 'function' && isVerifiedPlayer(acc);
+    const send = $('#chatSend'), inp = $('#chatInput'), emo = $('#chatEmo'), status = $('#chatOn'), btn = $('#chatToggle');
+    if (send) send.disabled = !chatGlobalOpen;
+    if (inp) { inp.disabled = !chatGlobalOpen; inp.placeholder = chatGlobalOpen ? 'پیام دیپلماتیک بنویسید…' : 'گفتگوی جهانی توسط پشتیبان بسته شده است'; }
+    if (emo) emo.style.pointerEvents = chatGlobalOpen ? '' : 'none';
+    if (status) { status.textContent = chatGlobalOpen ? 'تاریخچه پیام‌ها محفوظ است' : '🔒 گفتگوی جهانی بسته است'; status.style.color = chatGlobalOpen ? '' : '#ffcf7a'; }
+    if (btn) { btn.hidden = !admin; btn.textContent = chatGlobalOpen ? '🔒 بستن چت' : '🔓 باز کردن چت'; }
+  }
+
+  function mqttPublishChatStatus(open){
+    if (!mqttClient || !mqttClient.connected) return false;
+    try {
+      mqttClient.publish(MQTT_CHAT_STATUS, JSON.stringify({open:!!open, by:'VAIK', t:Date.now()}), {qos:1, retain:true});
+      chatGlobalOpen = !!open; updateChatLockUI(); return true;
+    } catch(e){ return false; }
+  }
+
+  async function chatToggle(){
+    const acc = loadAcc()[currentKey];
+    if (!(typeof isVerifiedPlayer === 'function' && isVerifiedPlayer(acc))) return;
+    const next = !chatGlobalOpen;
+    if (!mqttPublishChatStatus(next)) {
+      try { await mqttConnect(); } catch(e){}
+      if (!mqttPublishChatStatus(next)) return toast('اتصال به سرور برقرار نیست.');
+    }
+    toast(next ? 'گفتگوی جهانی باز شد.' : 'گفتگوی جهانی بسته شد.');
+  }
 
   const readLocal = () => { try { const a = JSON.parse(store.get('game:chat') || '[]'); return Array.isArray(a) ? a : []; } catch(e){ return []; } };
   const writeLocal = a => store.set('game:chat', JSON.stringify(a.slice(-CHAT_KEEP)));
@@ -2110,6 +2648,7 @@ button{cursor:pointer;border:0;background:none}
 
   async function chatOpen(){
     chatById.clear(); chatLast = 0; chatFirst = true; chatReply = null; chatBusy = false;
+    updateChatLockUI();
     $('#chatRe').hidden = true; chatEmptyState();
     $('#chatCnt').textContent = toFa($('#chatInput').value.length) + ' / ' + toFa(CHAT_MAX);
     $('#chatSound').textContent = muted ? '🔇' : '🔊';
@@ -2143,6 +2682,7 @@ button{cursor:pointer;border:0;background:none}
   }
 
   async function chatSend(){
+    if (!chatGlobalOpen) return toast('گفتگوی جهانی بسته است.');
     const inp = $('#chatInput'), text = inp.value.replace(/\s+/g, ' ').trim().slice(0, CHAT_MAX);
     if (!text) return;
     const acc = loadAcc()[currentKey]; if (!acc) return;
@@ -2172,6 +2712,7 @@ button{cursor:pointer;border:0;background:none}
   $('#chatEmo').append(...CHAT_EMOJI.map(e => { const b = mk('button', 'cemo', e); b.type = 'button'; b.dataset.e = e; return b; }));
   $('#chatEmo').addEventListener('click', e => {
     const b = e.target.closest('[data-e]'); if (!b) return;
+    if (!chatGlobalOpen) return;
     const inp = $('#chatInput'); inp.value = (inp.value + b.dataset.e).slice(0, CHAT_MAX);
     $('#chatCnt').textContent = toFa(inp.value.length) + ' / ' + toFa(CHAT_MAX);
   });
@@ -2290,6 +2831,7 @@ button{cursor:pointer;border:0;background:none}
     if (!$('#wList').hidden) renderPlayers();
   }
 
+
   function showWar(){
     const accs = loadAcc(), acc = accs[currentKey];
     if (!acc) return showLogin();
@@ -2348,13 +2890,42 @@ button{cursor:pointer;border:0;background:none}
     const acc = loadAcc()[key];
     if (!acc) return showLogin();
     currentKey = key;
-    go('profile'); $('#fabLayer').hidden = false;
+    try{ vaikSetEditBar(); if(vaikIsAdmin() && vaikTextEditMode) vaikEnableObserver(); else vaikDisableObserver(); vaikScheduleApply(); }catch(e){}
+    go('profile');
+    $('#profile').hidden = false;
+    $('#fabLayer').hidden = false;
     window.scrollTo(0, 0);
-    render(acc); bellUpd(); srvInit().then(syncMe); mqttPublishAccount(key, acc);
+    try{ render(acc); }
+    catch(e){
+      console.warn('Profile render recovered:', e);
+      // حتی در صورت خرابی بخشی از داده، صفحه پروفایل باید نمایش داده شود.
+      try{
+        $('#profile').hidden = false;
+        $('#pname').textContent = acc.name || key;
+        $('#xp').textContent = fmt(Number(acc.xp)||0);
+      }catch(_){}
+    }
+    try{ bellUpd(); }catch(e){}
+    try{ srvInit().then(syncMe).catch(()=>{}); }catch(e){}
+    try{ mqttPublishAccount(key, acc); }catch(e){}
   }
 
+  const DECL_COOLDOWN = 3 * 60 * 60 * 1000;
   function render(acc){
-    tickInfra(acc); const accs = loadAcc(); accs[currentKey] = acc; saveAcc(accs);
+    // نرمال‌سازی داده‌های حساب قبل از رندر؛ از سیاه ماندن پروفایل به‌خاطر داده ناقص جلوگیری می‌کند.
+    if(!acc || typeof acc !== 'object') return;
+    if(!acc.res || typeof acc.res !== 'object') acc.res = {};
+    if(typeof START === 'object' && START){
+      Object.keys(START).forEach(k => {
+        if(!Number.isFinite(Number(acc.res[k]))) acc.res[k] = Number(START[k]) || 0;
+      });
+    }
+    if(!Array.isArray(acc.reports)) acc.reports = [];
+    if(!acc.army || typeof acc.army !== 'object') acc.army = {};
+    if(!acc.research || typeof acc.research !== 'object') acc.research = {};
+    if(!acc.buildings || typeof acc.buildings !== 'object') acc.buildings = {};
+    try{ tickInfra(acc); }catch(e){ console.warn('tickInfra recovered:', e); }
+    const accs = loadAcc(); accs[currentKey] = acc; saveAcc(accs);
     $('#pname').innerHTML = esc(acc.name) + verifiedMark(acc);
     { const im = $('#avImg'); if (acc.avatar) { im.src = acc.avatar; im.hidden = false; } else { im.removeAttribute('src'); im.hidden = true; } }
     $('#sheetWho').innerHTML = esc(acc.name) + verifiedMark(acc);
@@ -2577,7 +3148,15 @@ button{cursor:pointer;border:0;background:none}
       $('#aTreV').textContent = '$' + fmt(m.treasury);
       $('#aLeft').textContent = '$' + fmt(m.left) + ' از $' + fmt(m.cap);
       $('#aMemT').textContent = `👥 اعضای اتحاد (${toFa(m.members.length)}/${toFa(15)})`;
-      $('#aMem').innerHTML = m.members.map(x => `<div class="am"><span style="font-size:28px">${flagOf(x.cc)}</span><div class="wui"><b>${esc(x.name)}</b>${x.role === 'leader' ? ' <span class="pill" style="display:inline-flex;height:24px;padding:0 10px">رهبر</span>' : ''}<small>${esc(COUNTRY_FA[x.cc] || x.cc)} · @${esc(x.name)}</small></div>${lead && x.role !== 'leader' ? `<button class="watk sm" data-kick="${esc(x.name)}" type="button">اخراج</button>` : ''}</div>`).join('');
+      const allProfiles = { ...loadAcc(), ...mqttPlayers };
+      $('#aMem').innerHTML = m.members.map(x => {
+        const px = allProfiles[String(x.name || '').toLowerCase()] || allProfiles[x.name] || {};
+        const av = px.avS || px.avatar || '';
+        const avatar = av
+          ? `<img class="wpav" src="${esc(av)}" alt="" style="width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid rgba(214,174,53,.45);flex:none" onerror="this.outerHTML='<span style=\"font-size:34px\">👤</span>'">`
+          : `<span style="font-size:34px">👤</span>`;
+        return `<div class="am">${avatar}<div class="wui"><b>${esc(x.name)}</b>${x.role === 'leader' ? ' <span class="pill" style="display:inline-flex;height:24px;padding:0 10px">رهبر</span>' : ''}<small>@${esc(x.name)}</small></div>${lead && x.role !== 'leader' ? `<button class="watk sm" data-kick="${esc(x.name)}" type="button">اخراج</button>` : ''}</div>`;
+      }).join('');
       const withdrawReqs = m.reqs.map(r => `<div class="am"><div class="wui"><b>${esc(r.name)}</b><small>${lead ? 'درخواست برداشت' : '⏳ در انتظار تأیید رهبر'}: $${fmt(r.amt)}</small></div>${lead ? `<button class="watk gbtn sm" data-ok="${r.id}" type="button">✅ تأیید</button><button class="watk sm" data-no="${r.id}" type="button">رد</button>` : ''}</div>`).join('');
       const joinReqs = (m.joinReqs || []).map(r => `<div class="am"><div class="wui"><b>${esc(r.name)}</b><small>🤝 درخواست عضویت در اتحاد</small></div>${lead ? `<button class="watk gbtn sm" data-joinok="${r.id}" type="button">✅ قبول</button><button class="watk sm" data-joinno="${r.id}" type="button">رد</button>` : ''}</div>`).join('');
       $('#aReqs').innerHTML = joinReqs + withdrawReqs;
@@ -2647,25 +3226,602 @@ button{cursor:pointer;border:0;background:none}
   $('#aIn').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); allySend(); } });
   ['#aDep', '#aWd'].forEach(s => $(s).addEventListener('input', e => { e.target.value = digits(e.target.value); }));
 
-  /* ======== دکمه‌ها ======== */
-  // با شروع تایپ، بازیابی خودکار نشست قبلی متوقف می‌شود.
-  ['#user','#pass'].forEach(sel => {
-    $(sel).addEventListener('input', () => { manualAuthStarted = true; ++authFlowId; });
-  });
-  $('#loginBtn').addEventListener('click', doLogin);
-  $('#registerBtn').addEventListener('click', doRegister);
-  ['#user', '#pass'].forEach(s => $(s).addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); }));
-  mqttConnect();
+  /* ======== پادشاهی ======== */
+  const KING = { busy:false, seq:0 };
+  function kingdomAccounts(){
+    const out = { ...loadAcc(), ...mqttPlayers };
+    Object.keys(out).forEach(k => { if (isVerifiedPlayer(out[k])) delete out[k]; });
+    return out;
+  }
+  function kingdomData(){ try { return JSON.parse(store.get('game:kingdom') || '{}') || {}; } catch(e){ return {}; } }
+  function kingdomMergeArmyOps(c){
+    if(!c || typeof c!=='object') return c;
+    c.ops=c.ops&&typeof c.ops==='object'?c.ops:{};
+    if(!Object.keys(c.ops).length && c.army && typeof c.army==='object' && Object.keys(c.army).length) c.ops.__legacy={...c.army};
+    const sum={};
+    Object.values(c.ops).forEach(op=>{ if(!op||typeof op!=='object') return; Object.entries(op).forEach(([k,v])=>{ const n=Math.max(0,Math.floor(Number(v)||0)); if(n) sum[k]=(sum[k]||0)+n; }); });
+    c.army=sum;
+    return c;
+  }
+  function kingdomMergeContribMaps(a,b){
+    const out={...((a&&typeof a==='object')?a:{})};
+    Object.entries((b&&typeof b==='object')?b:{}).forEach(([key,src])=>{
+      if(!src||typeof src!=='object') return;
+      const dst=out[key];
+      if(!dst){ out[key]=kingdomMergeArmyOps({...src,ops:src.ops&&typeof src.ops==='object'?{...src.ops}:{}}); return; }
+      const merged={...dst,...src,ops:{...(dst.ops&&typeof dst.ops==='object'?dst.ops:{}),...(src.ops&&typeof src.ops==='object'?src.ops:{})}};
+      kingdomMergeArmyOps(merged);
+      if(!merged.name) merged.name=dst.name||src.name;
+      if(!merged.allyId) merged.allyId=dst.allyId||src.allyId;
+      if(!merged.allyName) merged.allyName=dst.allyName||src.allyName;
+      if(!merged.leader) merged.leader=dst.leader||src.leader;
+      merged.firstAt=Math.min(+dst.firstAt||Infinity,+src.firstAt||Infinity); if(!isFinite(merged.firstAt)) merged.firstAt=+dst.firstAt||+src.firstAt||Date.now();
+      out[key]=merged;
+    });
+    Object.values(out).forEach(kingdomMergeArmyOps);
+    return out;
+  }
+  function kingdomMergeStates(base,incoming){
+    const a=normalizeKingdom({...((base&&typeof base==='object')?base:{})});
+    const b=normalizeKingdom({...((incoming&&typeof incoming==='object')?incoming:{})});
+    const out={...a,...b};
+    const aReset=+a._contributorsResetAt||0,bReset=+b._contributorsResetAt||0;
+    if(bReset>aReset){
+      out.contributors={...((b.contributors&&typeof b.contributors==='object')?b.contributors:{})};
+      out.attackers={...((b.attackers&&typeof b.attackers==='object')?b.attackers:{})};
+      out._contributorsResetAt=bReset;
+    }else if(aReset>bReset){
+      out.contributors={...((a.contributors&&typeof a.contributors==='object')?a.contributors:{})};
+      out.attackers={...((a.attackers&&typeof a.attackers==='object')?a.attackers:{})};
+      out._contributorsResetAt=aReset;
+    }else{
+      out.contributors=kingdomMergeContribMaps(a.contributors,b.contributors);
+      out.attackers=kingdomMergeContribMaps(a.attackers,b.attackers);
+    }
+    out.expelledContributors={...(a.expelledContributors||{}),...(b.expelledContributors||{})};
+    Object.keys(out.expelledContributors).forEach(key=>{
+      const mark=+out.expelledContributors[key]||0;
+      const c=out.contributors[key];
+      if(c && mark > (+c.updatedAt||+c.firstAt||0)) delete out.contributors[key];
+      else if(c && (+c.updatedAt||+c.firstAt||0) > mark) delete out.expelledContributors[key];
+    });
+    out.returnClaims={...(a.returnClaims||{})};
+    Object.entries(b.returnClaims||{}).forEach(([cycle,claims])=>{ out.returnClaims[cycle]={...(out.returnClaims[cycle]||{}),...(claims||{})}; });
+    out.settledCycles={...(a.settledCycles||{}),...(b.settledCycles||{})};
+    const aSet=+a._weeklySettledAt||0,bSet=+b._weeklySettledAt||0;
+    if(aSet>bSet){ ['winnerAllianceId','winnerAllianceName','kingAllianceId','kingKey','kingName','_weeklySettledAt'].forEach(k=>out[k]=a[k]); }
+    const ar=+a._rolesUpdatedAt||0,br=+b._rolesUpdatedAt||0;
+    if(ar>br) out.roles={...(a.roles||{})}; else out.roles={...(b.roles||{})};
+    out.cycleId=String(a.cycleId||b.cycleId||'');
+    if(String(b.cycleId||'')>String(a.cycleId||'')) out.cycleId=String(b.cycleId);
+    return normalizeKingdom(out);
+  }
+  function saveKingdomData(d, publish=false){
+    const merged=kingdomMergeStates(kingdomData(),d||{});
+    try { store.set('game:kingdom', JSON.stringify(merged)); } catch(e){}
+    if(publish){ try { if (mqttClient && mqttClient.connected) mqttClient.publish(MQTT_KINGDOM, JSON.stringify(merged), {qos:1, retain:true}); } catch(e){} }
+    return merged;
+  }
+  // امتیاز مشارکت پادشاهی: بر اساس تعداد یگان‌های ارسالی، نه قدرت نظامی.
+  function kingdomContributionScore(army){
+    return UNITS.reduce((t,u)=>t+Math.max(0,Math.floor(+((army&&army[u.k])||0))),0);
+  }
+  function normalizeKingdom(d){
+    d = d && typeof d === 'object' ? d : {};
+    d.allianceId = d.allianceId || null;
+    d.name = d.name || 'پادشاهی جهان';
+    d.startedAt = +d.startedAt || 0;
+    d.founder = d.founder || '';
+    d.contributors = d.contributors && typeof d.contributors === 'object' ? d.contributors : {};
+    d.attackers = d.attackers && typeof d.attackers === 'object' ? d.attackers : {};
+    d.battle = d.battle && typeof d.battle === 'object' ? d.battle : {};
+    d.roles = d.roles && typeof d.roles === 'object' ? d.roles : {};
+    d.returnClaims = d.returnClaims && typeof d.returnClaims === 'object' ? d.returnClaims : {};
+    d.settledCycles = d.settledCycles && typeof d.settledCycles === 'object' ? d.settledCycles : {};
+    d.expelledContributors = d.expelledContributors && typeof d.expelledContributors === 'object' ? d.expelledContributors : {};
+    d.kingAllianceId = d.kingAllianceId || null;
+    d.kingKey = d.kingKey || '';
+    d.kingName = d.kingName || '';
+    d.winnerAllianceId = d.winnerAllianceId || null;
+    d.winnerAllianceName = d.winnerAllianceName || '';
+    return d;
+  }
+  function kingdomName(){ return 'پادشاهی'; }
+  function renderKingdomMenus(){
+    const title = kingdomName();
+    document.querySelectorAll('#gotoKingdom, #kingdom .login-title').forEach(el => el.textContent = '👑 ' + title);
+  }
+  function kingAllianceId(data){ return data && data.allianceId ? String(data.allianceId) : ''; }
+  function kingdomOwnerRows(data, accounts){
+    return Object.entries(data.contributors||{}).map(([key,c])=>{ const a=accounts[key]||Object.values(accounts).find(x=>String(x?.name||'').trim().toLowerCase()===String(c.name||key).trim().toLowerCase())||{}; a._key=key; return {key,name:c.name||key,allyId:String(c.allyId||''),army:c.army||{},score:kingdomContributionScore(c.army||{}),firstAt:+c.firstAt||0}; }).filter(x=>x.score>0);
+  }
+  function kingdomAttackRows(data){
+    return Object.entries(data.attackers||{}).map(([key,c])=>({key,name:c.name||key,allyId:String(c.allyId||''),army:c.army||{},score:kingdomContributionScore(c.army||{}),firstAt:+c.firstAt||0})).filter(x=>x.score>0);
+  }
+  function isKingdomMember(alliance, me){
+    if(!alliance || !me) return false;
+    const nameLc=String(me.name||currentKey||'').trim().toLowerCase();
+    const myAlly=String(me.ally||'');
+    return String(myAlly)===String(alliance.id) || (Array.isArray(alliance.members) && alliance.members.some(m=>String(m?.name||m||'').trim().toLowerCase()===nameLc));
+  }
+  function unitInputs(me, attack=false){
+    /* در پادشاهی همه یگان‌ها، از جمله پدافند زمینی و هوایی، قابل اعزام‌اند. */
+    return UNITS.map(u=>`<label style="display:flex;justify-content:space-between;gap:8px;align-items:center;margin:7px 0"><span>${u.e||u.i||'🪖'} ${esc(u.n)}</span><input type="text" inputmode="numeric" class="king-summon-input" name="kingdom_${esc(u.k)}" data-unit="${esc(u.k)}" value="0" min="0" max="${Math.max(0,Math.floor(+((me.army&&me.army[u.k])||0)))}" style="width:110px"></label>`).join('');
+  }
+  async function getMyKingdomAlliance(me, arr){
+    if(!me) return null;
+    const nameLc=String(me.name||currentKey||'').trim().toLowerCase();
+    // در حالت آنلاین، منبع اصلی عضویت باید همان endpoint اتحاد باشد؛
+    // localAlly به‌تنهایی ممکن است وضعیت قدیمی همین گوشی را برگرداند.
+    try{
+      const j = await apost({act:'get'});
+      if(j?.mine?.id){
+        const m=j.mine;
+        const g=arr.find(x=>String(x.id)===String(m.id));
+        return g || {id:m.id,name:m.name||'اتحاد',leader:(m.members||[]).find(x=>x.role==='leader')?.name||'',members:m.members||[],total:0};
+      }
+    }catch(e){}
+    // پشتیبان مستقیم از game:lally؛ حتی اگر me.ally در پروفایل قدیمی/خالی باشد.
+    try{
+      const db=JSON.parse(store.get('game:lally')||'{}');
+      const pid=String(currentKey||'');
+      const pa=db.players?.[pid];
+      const aid=pa?.ally;
+      if(aid && db.allies?.[aid]){
+        const a=db.allies[aid];
+        const g=arr.find(x=>String(x.id)===String(a.id));
+        return g || {id:a.id,name:a.name||'اتحاد',leader:db.players?.[a.leader]?.name||'',members:(a.members||[]).map(k=>({name:db.players?.[k]?.name||k,role:k===a.leader?'leader':'member'})),total:0};
+      }
+      const found=Object.values(db.allies||{}).find(a=>Array.isArray(a.members)&&a.members.some(k=>String(k)===pid || String(db.players?.[k]?.name||'').trim().toLowerCase()===nameLc));
+      if(found) return arr.find(x=>String(x.id)===String(found.id)) || {id:found.id,name:found.name||'اتحاد',leader:db.players?.[found.leader]?.name||'',members:(found.members||[]).map(k=>({name:db.players?.[k]?.name||k,role:k===found.leader?'leader':'member'})),total:0};
+    }catch(e){}
+    return arr.find(g=>isKingdomMember(g,me)) || null;
+  }
 
-  $('#searchBtn').addEventListener('click', () => toast('جست‌وجو به‌زودی اضافه می‌شود'));
-  ['#soundBtn', '#chatSound', '#warSound'].forEach(sel => $(sel).addEventListener('click', () => {
-    muted = !muted;
-    ['#soundBtn', '#chatSound', '#warSound'].forEach(x => { $(x).textContent = muted ? '🔇' : '🔊'; });
-    toast(muted ? 'صدا خاموش شد' : 'صدا روشن شد');
-  }));
+  function kingdomReconcileExpulsions(data, liveAllyByKey, accounts, cycleId){
+    let changed=false;
+    data.expelledContributors=data.expelledContributors&&typeof data.expelledContributors==='object'?data.expelledContributors:{};
+    data.returnClaims=data.returnClaims&&typeof data.returnClaims==='object'?data.returnClaims:{};
+    data.returnClaims[cycleId]=data.returnClaims[cycleId]&&typeof data.returnClaims[cycleId]==='object'?data.returnClaims[cycleId]:{};
+    Object.entries(data.contributors||{}).forEach(([key,c])=>{
+      if(!c || !c.allyId) return;
+      const live=liveAllyByKey[String(key).toLowerCase()];
+      if(live===undefined) return;
+      const currentAlly=String(live||'');
+      if(currentAlly===String(c.allyId)) return;
+      const mark=Date.now();
+      data.expelledContributors[key]=mark;
+      if(!data.returnClaims[cycleId][key]) data.returnClaims[cycleId][key]={name:c.name||key,army:{...(c.army||{})},reason:'expelled',at:mark};
+      delete data.contributors[key];
+      changed=true;
+    });
+    return changed;
+  }
+
+  function kingdomApplyExpulsionReturn(data){
+    try{
+      const st=kingdomWeeklyState();
+      const claim=data?.returnClaims?.[st.cycleId];
+      if(!claim) return false;
+      const myKey=String(currentKey||'').trim();
+      const accounts=loadAcc();
+      const me=accounts[myKey];
+      if(!me) return false;
+      const claimKey=Object.keys(claim).find(k=>{
+        const a=claim[k];
+        return a?.reason==='expelled' && (String(k).toLowerCase()===myKey.toLowerCase() || String(a?.name||'').trim().toLowerCase()===String(me.name||myKey).trim().toLowerCase());
+      });
+      if(!claimKey) return false;
+      const onceKey='game:kingdom:expulsion-return:'+st.cycleId+':'+myKey.toLowerCase();
+      if(localStorage.getItem(onceKey)==='1') return false;
+      const army=claim[claimKey].army||{};
+      if(!returnArmyToAccount(me,army)) return false;
+      saveAcc(accounts);
+      localStorage.setItem(onceKey,'1');
+      try{ if(mqttClient && mqttClient.connected && typeof mqttPublishAccount==='function') mqttPublishAccount(myKey,me).catch(()=>{}); }catch(e){}
+      try{ if(typeof renderProfile==='function') renderProfile(); }catch(e){}
+      return true;
+    }catch(e){ console.warn('Kingdom expulsion return:',e); return false; }
+  }
+
+  async function buildKingdom(){
+    const seq=++KING.seq;
+    const accounts=kingdomAccounts();
+    const data=normalizeKingdom(kingdomData());
+    // هویت پادشاه فقط از «نتیجه قطعی هفته» خوانده می‌شود؛
+    // در زمان نبرد هیچ بازنویسی خودکاری روی پادشاه قبلی انجام نمی‌دهیم.
+    data.name='پادشاهی جهان';
+    data.allianceId=data.kingAllianceId||null;
+    data.ownerAllianceName=data.winnerAllianceName||'';
+
+    const groups=new Map();
+    const liveAllyByKey={};
+    const add=(id,name,leader,member)=>{
+      id=String(id||''); if(!id)return;
+      if(!groups.has(id)) groups.set(id,{id,name:name||'اتحاد',leader:leader||'',members:[]});
+      const g=groups.get(id); if(name)g.name=name;if(leader)g.leader=leader;
+      if(member){ const mn=String(member.name||'').trim().toLowerCase(); if(mn && !g.members.some(x=>String(x.name||'').trim().toLowerCase()===mn)) g.members.push(member); }
+    };
+    const localAllies=(()=>{try{return JSON.parse(store.get('game:lally')||'{}')}catch(e){return{}}})();
+    Object.values(localAllies.allies||{}).forEach(a=>(a.members||[]).forEach(m=>{ liveAllyByKey[String(m).toLowerCase()]=String(a.id); add(a.id,a.name,a.leader,{name:accounts[m]?.name||localAllies.players?.[m]?.name||m,role:m===a.leader?'leader':'member'}); }));
+    Object.keys(localAllies.players||{}).forEach(k=>{ if(!(String(k).toLowerCase() in liveAllyByKey)) liveAllyByKey[String(k).toLowerCase()]=String(localAllies.players[k]?.ally||''); });
+    // وضعیت عضویت اعضای حاضر در پادشاهی باید همیشه از سرور دوباره بررسی شود؛
+    // وگرنه اگر عضوی از اتحاد کیک شود، حافظهٔ محلی می‌تواند موقتاً امتیاز او را نگه دارد.
+    // اول فقط مشارکت‌کنندگان فعلی را بررسی می‌کنیم تا سبک و سریع بماند.
+    const verifyKeys=[...new Set(Object.keys(data.contributors||{}).concat(Object.keys(accounts)))];
+    if(verifyKeys.length && !AL.local){
+      let idx=0;
+      const worker=async()=>{
+        while(idx<verifyKeys.length){
+          const key=verifyKeys[idx++];
+          try{
+            const j=await apost({act:'getPlayer',key});
+            // فقط وقتی سرور واقعاً اطلاعات بازیکن را برگرداند، وضعیت عضویت را معتبر می‌دانیم.
+            // در حالت آفلاین getPlayer وجود ندارد و نباید باعث حذف همه مشارکت‌کنندگان شود.
+            if(j && j.ok!==false && ('ally' in j)){
+              liveAllyByKey[String(key).toLowerCase()]=String(j.ally||'');
+              if(j.ally) add(j.ally,j.allyName,j.allyLeader,{name:j.name||key,role:j.allyLeader===key?'leader':'member'});
+            }
+          }catch(e){}
+        }
+      };
+      await Promise.all(Array.from({length:Math.min(6,verifyKeys.length)},worker));
+    }
+    const cycleNow=(typeof kingdomWeeklyState==='function'?kingdomWeeklyState():{cycleId:String(data.cycleId||'')}).cycleId;
+    if(cycleNow && String(data.cycleId||'')===String(cycleNow)){
+      if(kingdomReconcileExpulsions(data,liveAllyByKey,accounts,cycleNow)){ saveKingdomData(data,true); }
+      kingdomApplyExpulsionReturn(data);
+    }
+    const arr=[...groups.values()].filter(g=>g.members.length);
+    const rows=kingdomOwnerRows(data,accounts);
+    arr.forEach(g=>{ g.total=g.members.reduce((sum,m)=>{ const a=Object.values(accounts).find(x=>String(x&&x.name||'').trim().toLowerCase()===String(m.name||'').trim().toLowerCase()); return sum+baseMilitaryPower(a||{}); },0); g.kingScore=rows.filter(r=>String(r.allyId)===String(g.id)).reduce((sum,r)=>sum+r.score,0); });
+    arr.sort((a,b)=>b.kingScore-a.kingScore);
+    rows.sort((a,b)=>(a.firstAt-b.firstAt)||String(a.key).localeCompare(String(b.key)));
+    const totalP=rows.reduce((t,x)=>t+x.score,0); rows.forEach(x=>x.share=totalP?x.score/totalP*100:0);
+    const previewWinner=arr.find(g=>g.kingScore>0)||null;
+    // فقط در نبرد، «پیشتاز فعلی» برای نمایش محاسبه می‌شود؛ پادشاه فقط توسط settlement هفتگی تعیین می‌شود.
+    const settledKingKey=String(data.kingKey||'').trim().toLowerCase();
+    const settledAllianceId=String(data.kingAllianceId||data.winnerAllianceId||'');
+    const settledAllianceName=String(data.winnerAllianceName||'');
+    data.roles=data.roles||{};
+    KINGDOM={
+      kingKey:settledKingKey,
+      allianceId:settledAllianceId||null,
+      allianceName:settledAllianceName,
+      power:totalP,
+      alliances:arr,
+      contributors:rows,
+      founder:'',
+      roles:data.roles
+    };
+    saveKingdomData(data,false); renderKingdomMenus();
+
+    const note=$('#kingdomNote'), me=loadAcc()[currentKey];
+    if(!arr.length){
+      note.textContent='هنوز اتحادی تشکیل نشده است.';
+      $('#kingCard').innerHTML='<div class="wnone">برای رقابت پادشاهی باید حداقل یک اتحاد وجود داشته باشد.</div>';
+      $('#kingSummonBox').innerHTML='<div class="wnone">ابتدا عضو یک اتحاد شوید.</div>';
+      $('#kingdomList').innerHTML='<div class="wnone">هنوز نیرویی وارد پادشاهی نشده است.</div>'; return;
+    }
+
+    const myAlliance=await getMyKingdomAlliance(me,arr);
+    note.innerHTML=settledKingKey?`👑 پادشاه فعلی: <b>${esc(data.kingName||settledKingKey)}</b> · اتحاد پادشاه: <b>${esc(settledAllianceName||'—')}</b>`:`<b>پادشاهی جهان</b> هنوز پادشاه قطعی ندارد؛ پادشاه در پایان نبرد هفتگی تعیین می‌شود.`;
+    $('#kingCard').innerHTML=`<div class="am" style="padding:14px 12px;margin:0;background:linear-gradient(180deg,#241d0b,#15130d);border-color:rgba(214,174,53,.45)"><span style="font-size:48px">👑</span><div class="wui"><b style="font-size:21px">پادشاهی جهان</b><small>👥 اتحادهای شرکت‌کننده: <b>${toFa(arr.length)}</b></small><small>🏆 امتیاز مشارکت اعضا: <b>${fmt(totalP)}</b></small><small>👑 پادشاه فعلی: <b>${esc(data.kingName||'—')}</b> · اتحاد: <b>${esc(settledAllianceName||'—')}</b></small><small>⚔️ پیشتاز این نبرد: <b>${previewWinner?esc(previewWinner.name):'—'}</b> · امتیاز: <b>${previewWinner?fmt(previewWinner.kingScore):'—'}</b></small></div></div>`;
+
+    if(myAlliance && !isVerifiedPlayer(me)){
+      const opts=unitInputs(me,false);
+      $('#kingSummonBox').innerHTML=`<div class="wcard" style="margin:0"><h3 style="margin-top:0">⚔️ احضار نیرو برای رقابت پادشاهی</h3><p class="wdesc">هر عضو اتحاد می‌تواند نیروهای خودش را برای رقابت وارد پادشاهی کند. <b>پدافند زمینی و پدافند هوایی</b> هم قابل ارسال هستند.</p>${opts}<button class="buy" id="kingSummonBtn" type="button">⚔️ احضار نیرو</button><small style="display:block;margin-top:8px;opacity:.8">اتحاد شما: ${esc(myAlliance.name)}</small></div>`;
+      $('#kingSummonBtn').onclick=(e)=>{ e.preventDefault(); kingdomSummon(myAlliance.id,false); };
+    }else if(isVerifiedPlayer(me)){
+      $('#kingSummonBox').innerHTML='<div class="wnone">حساب پشتیبانی در رقابت پادشاهی شرکت نمی‌کند.</div>';
+    }else{
+      $('#kingSummonBox').innerHTML='<div class="wnone">برای ارسال نیرو باید عضو یک اتحاد باشید.</div>';
+    }
+
+    $('#kingdomList').innerHTML=rows.length?rows.map((r,idx)=>{
+      const a=Object.values(accounts).find(x=>String(x&&x.name||'').trim().toLowerCase()===r.key)||{}; const av=a.avS||a.avatar||'';
+      const avatar=av?`<img class="wpav" src="${esc(av)}" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid rgba(214,174,53,.45);flex:none">`:'<span style="font-size:30px">👤</span>';
+      const alliance=arr.find(g=>String(g.id)===String(r.allyId));
+      return `<div class="am"><span>${avatar}</span><div class="wui"><b>${esc(r.name)}</b>${alliance?` <span class="pill">${esc(alliance.name)}</span>`:''}<small>سهم فعلی از نیروهای حاضر: <b>${r.share.toFixed(1)}٪</b> · امتیاز مشارکت: ${fmt(r.score)}</small></div></div>`;
+    }).join(''):'<div class="wnone">هنوز نیرویی برای پادشاهی احضار نشده است.</div>';
+    if(attacks.length){
+      const ap=attacks.reduce((t,x)=>t+x.power,0);
+      $('#kingdomList').innerHTML += `<div class="wnone" style="margin-top:10px">⚔️ نیروهای در حال رقابت: <b>${fmt(ap)}</b></div>`;
+    }
+    if(seq!==KING.seq) return;
+  }
+  async function kingdomSummon(allianceId,isAttack){
+    
+    try{
+      if(typeof kingdomCycleGuard==='function') kingdomCycleGuard();
+      if(typeof kingdomCanSummon==='function' && !kingdomCanSummon()){
+        return toast(kingdomShieldMessage());
+      }
+    }catch(e){
+      return toast('سپر پادشاهی فعال می‌باشد');
+    }
+const me=loadAcc()[currentKey];
+    if(!me) return;
+
+    // مقدارها را مستقیم از تمام کادرهای همین پنل می‌خوانیم؛
+    // به ترتیب DOM یا data-* وابسته نیستیم.
+    const fa='۰۱۲۳۴۵۶۷۸۹', ar='٠١٢٣٤٥٦٧٨٩';
+    const toCount=(value)=>{
+      let raw=String(value ?? '').trim();
+      raw=[...raw].map(ch=>{
+        const i=fa.indexOf(ch); if(i>=0) return String(i);
+        const j=ar.indexOf(ch); return j>=0 ? String(j) : ch;
+      }).join('');
+      const m=raw.match(/^\+?\s*(\d+)\s*$/);
+      return m ? Math.max(0,parseInt(m[1],10)||0) : 0;
+    };
+
+    const inputs=[...document.querySelectorAll('#kingSummonBox input.king-summon-input')];
+    const army={};
+    let total=0;
+    const problems=[];
+
+    for(const inp of inputs){
+      const raw=String(inp.value ?? '').trim();
+      const wanted=toCount(raw);
+      if(wanted<=0) continue;
+
+      let k=String(inp.getAttribute('data-unit')||'').trim();
+      if(!k){
+        const nm=String(inp.getAttribute('name')||'');
+        const m=nm.match(/^kingdom_(.+)$/);
+        if(m) k=m[1].trim();
+      }
+      if(!k) continue;
+
+      const u=UNITS.find(x=>String(x.k)===k);
+      if(!u) continue;
+
+      const have=Math.max(0,Math.floor(Number(me.army?.[k])||0));
+      if(wanted>have){
+        problems.push(`${u.n}: فقط ${toFa(have)} عدد دارید.`);
+        continue;
+      }
+      army[k]=(army[k]||0)+wanted;
+      total+=wanted;
+    }
+
+    if(total<=0){
+      // اگر مرورگر مقدار را به شکل دیگری نگه داشته باشد، یک بار دیگر
+      // مستقیماً textContent/value خام کادرها را بررسی می‌کنیم.
+      for(const inp of inputs){
+        const raw=String(inp.value ?? '').trim();
+        if(/[0-9۰-۹٠-٩]/.test(raw)){
+          const wanted=toCount(raw);
+          if(wanted>0){
+            let k=String(inp.getAttribute('data-unit')||'').trim();
+            if(!k){ const m=String(inp.name||'').match(/^kingdom_(.+)$/); if(m) k=m[1].trim(); }
+            const u=UNITS.find(x=>String(x.k)===k);
+            const have=Math.max(0,Math.floor(Number(me.army?.[k])||0));
+            if(u && wanted<=have){ army[k]=wanted; total=wanted; break; }
+          }
+        }
+      }
+    }
+
+    if(total<=0){
+      if(problems.length) return toast(problems.join(' | '));
+      return toast('تعداد نیرو را در یکی از کادرها وارد کنید؛ مثلاً ۱۰.');
+    }
+
+    // اول عضویت اتحاد را بررسی می‌کنیم، بدون اینکه مقدارهای خوانده‌شده از DOM دوباره گرفته شوند.
+    let memberOk=false, myAllyId=String(allianceId||'');
+    try{
+      const mine=(await apost({act:'get'}))?.mine;
+      if(mine?.id){
+        const sameId=String(mine.id)===String(allianceId);
+        const sameName=String(mine.name||'').trim().toLowerCase()===String((KINGDOM.alliances||[]).find(x=>String(x.id)===String(allianceId))?.name||'').trim().toLowerCase();
+        const listed=Array.isArray(mine.members)&&mine.members.some(m=>String(m?.name||m||'').trim().toLowerCase()===String(me.name||currentKey).trim().toLowerCase());
+        memberOk=!!(sameId||sameName||listed);
+        myAllyId=String(mine.id);
+      }
+    }catch(e){}
+    try{
+      const la=JSON.parse(store.get('game:lally')||'{}');
+      const pid=String(currentKey||'');
+      const pname=String(me.name||currentKey).trim().toLowerCase();
+      const pa=la.players?.[pid];
+      if(pa?.ally){
+        const paId=String(pa.ally);
+        if(paId===String(allianceId)) memberOk=true;
+        myAllyId=paId;
+      }
+      const target=la.allies?.[allianceId];
+      if(target){
+        const listed=Array.isArray(target.members)&&target.members.some(k=>String(k)===pid || String(la.players?.[k]?.name||'').trim().toLowerCase()===pname);
+        if(listed){ memberOk=true; myAllyId=String(target.id||allianceId); }
+      }
+      if(!memberOk){
+        for(const a of Object.values(la.allies||{})){
+          if(Array.isArray(a.members)&&a.members.some(k=>String(k)===pid || String(la.players?.[k]?.name||'').trim().toLowerCase()===pname)){
+            memberOk=true; myAllyId=String(a.id); break;
+          }
+        }
+      }
+    }catch(e){}
+    if(!memberOk) return toast('عضویت اتحاد شما تشخیص داده نشد؛ ابتدا صفحه اتحاد را یک‌بار باز کنید.');
+
+    const d=normalizeKingdom(kingdomData());
+    const _ks=typeof kingdomWeeklyState==='function'?kingdomWeeklyState():null;
+    if(_ks && !_ks.battle) return toast(kingdomShieldMessage());
+    if(_ks && String(d.cycleId||'')!==_ks.cycleId){
+      d.cycleId=_ks.cycleId;
+      d.contributors={};
+      d.attackers={};
+      d.roles={};
+      d.winnerAllianceId=null;
+      d.winnerAllianceName='';
+      d.kingKey='';
+    }
+    const key=String(me.name||currentKey).trim().toLowerCase();
+    d.contributors=d.contributors||{};
+    const old=d.contributors[key]||{name:me.name,allyId:myAllyId,army:{},firstAt:Date.now()};
+    old.name=me.name;
+    old.allyId=myAllyId;
+    // رهبر و نام اتحاد را از اطلاعات همین پادشاهی ذخیره می‌کنیم تا اعزام نیرو مستقل از محدودهٔ buildKingdom باشد.
+    const myAllianceInfo=(KINGDOM.alliances||[]).find(a=>String(a?.id||'')===String(myAllyId))||{};
+    old.leader=String(myAllianceInfo.leader||old.leader||'').trim();
+    old.allyName=String(myAllianceInfo.name||old.allyName||'').trim();
+    old.army=old.army||{};
+    old.ops=old.ops&&typeof old.ops==='object'?old.ops:{};
+    old.updatedAt=Date.now();
+    d.expelledContributors=d.expelledContributors||{};
+    delete d.expelledContributors[key];
+    if(!Object.keys(old.ops).length && Object.keys(old.army).length) old.ops.__legacy={...old.army};
+    const opId=String(currentKey||me.name||'player').toLowerCase()+'-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);
+    old.ops[opId]={...army};
+    Object.keys(army).forEach(k=>{
+      old.army[k]=(Number(old.army[k])||0)+army[k];
+      me.army[k]=Math.max(0,(Number(me.army?.[k])||0)-army[k]);
+    });
+    d.contributors[key]=old;
+    saveAcc({...loadAcc(),[currentKey]:me});
+    saveKingdomData(d,true);
+    toast('⚔️ نیروها وارد رقابت پادشاهی شدند.');
+    await buildKingdom();
+  }
+
+  function kingdomRoleAccounts(){ const out={...loadAcc(),...mqttPlayers}; Object.keys(out).forEach(k=>{if(isVerifiedPlayer(out[k]))delete out[k];else out[k]._key=k;}); return out; }
+  
+function kingdomRoleIdentityHtml(name, profile){
+  const p = profile || {};
+  const avatar = p.avatar || p.photo || p.profile || '';
+  const safeName = String(name||'بازیکن').replace(/[<>&"]/g,'');
+  return '<div class="king-role-player" style="display:flex;align-items:center;gap:10px;margin:6px 0;">' +
+    (avatar ? '<img src="'+String(avatar).replace(/"/g,'&quot;')+'" style="width:42px;height:42px;border-radius:50%;object-fit:cover;border:1px solid #555;">'
+            : '<div style="width:42px;height:42px;border-radius:50%;background:#222;border:1px solid #555;display:flex;align-items:center;justify-content:center;">👤</div>') +
+    '<span>'+safeName+'</span></div>';
+}
+
+
+function renderVaikPlayerAdmin(){
+  const manage=$('#kingRolesManage');
+  if(!manage)return;
+  const acc=loadAcc()||{};
+  const players={};
+  Object.values(acc.players||{}).forEach(p=>{ if(p&&p.name) players[p.name]=p; });
+  Object.values(acc).forEach(p=>{ if(p&&p.name) players[p.name]=p; });
+  const list=Object.values(players).sort((a,b)=>String(a.name).localeCompare(String(b.name),'fa')).map(p=>`<div class="am" data-set-king-player="${esc(p.name)}" style="cursor:pointer">👤 <div class="wui"><b>${esc(p.name)}</b><small>انتخاب به عنوان پادشاه</small></div></div>`).join('');
+  manage.hidden=false;
+  manage.innerHTML=`<h2>🛡️ منوی مدیریت VAIK</h2><p class="wdesc">بازیکن را انتخاب کن تا پادشاه شود.</p><div>${list||'<div class="wnone">هیچ بازیکنی پیدا نشد.</div>'}</div>`;
+  manage.querySelectorAll('[data-set-king-player]').forEach(el=>el.onclick=()=>{
+    const name=String(el.dataset.setKingPlayer||'').trim();
+    if(!name)return;
+    const nd=normalizeKingdom(kingdomData());
+    nd.kingName=name; nd.kingKey=name.toLowerCase(); nd.kingAllianceId=null; nd.winnerAllianceId=null; nd.winnerAllianceName='';
+    saveKingdomData(nd,true);
+    renderKingRoles();
+    toast('👑 پادشاه به '+name+' تغییر کرد.');
+  });
+}
+
+function renderKingRoles(){
+    const note=$('#kingRolesNote'),card=$('#kingRolesCard'),manage=$('#kingRolesManage'); const accounts=kingdomRoleAccounts(),data=normalizeKingdom(kingdomData()),rows=kingdomOwnerRows(data,accounts);
+    const groups={}; rows.forEach(r=>groups[r.allyId]=(groups[r.allyId]||0)+r.score);
+    let winnerId='',winnerPower=0; Object.entries(groups).forEach(([id,p])=>{if(p>winnerPower){winnerId=id;winnerPower=p;}});
+    // مقام پادشاه از settlement قطعی خوانده می‌شود و با باز کردن صفحه دوباره محاسبه نمی‌شود.
+    const members=Object.values(accounts).filter(a=>a&&a.name&&!isVerifiedPlayer(a));
+    const leader=String(data.kingName||data.kingKey||'').trim();
+    data.roles=data.roles||{}; KINGDOM.roles=data.roles; KINGDOM.kingKey=String(data.kingKey||leader).trim().toLowerCase();
+    KINGDOM.allianceId=data.kingAllianceId||data.winnerAllianceId||null;
+    KINGDOM.allianceName=data.winnerAllianceName||'';
+    const rr=[['commander','⚔️','فرمانده','۲۰٪ قدرت ارتش'],['research','🔬','وزیر تحقیقات','۳۰٪ کاهش هزینه تحقیق'],['infra','🏗️','وزیر زیرساخت','۳۰٪ کاهش هزینه ارتقای زیرساخت'],['president','🏛️','رئیس جمهور','۲۰٪ قدرت ارتش + ۵٪ تولید منابع'],['merchant','💰','تاجر','۲۰٪ افزایش قیمت فروش کالا']];
+    const accountFor=v=>accounts[v]||members.find(x=>String(x.name||'').trim().toLowerCase()===String(v||'').trim().toLowerCase())||null;
+    const nameFor=v=>{const a=accountFor(v);return a?.name||v||'آزاد'};
+    const rolePlayerHtml=v=>{
+      const a=accountFor(v), name=a?.name||v||'';
+      if(!name) return '<div class="king-role-player"><div class="king-role-empty">👤</div><span>آزاد</span></div>';
+      const src=avUrl(name,a?.avS||a?.avatarVersion||a?.avV||'');
+      return '<div class="king-role-player">'+(src?'<img src="'+String(src).replace(/"/g,'&quot;')+'" alt="پروفایل">':'<div class="king-role-empty">👤</div>')+'<span>'+esc(name)+'</span></div>';
+    };
+    note.innerHTML=leader?`👑 <b>پادشاه:</b> ${esc(leader)} · امتیاز مشارکت اتحاد: <b>${fmt(winnerPower)}</b>`:'هنوز پادشاهی قدرتی ندارد.';
+    card.innerHTML=`<div class="am"><span style="font-size:38px">👑</span><div class="wui"><b>پادشاه</b><small>${leader?esc(leader):'—'} · ۵۰٪ قدرت ارتش · ۱۰٪ تولید منابع</small></div>${rolePlayerHtml(leader)}</div>`+rr.map(([k,e,n,d])=>`<div class="am"><span style="font-size:30px">${e}</span><div class="wui"><b>${n}</b><small>${esc(nameFor(data.roles[k]))} · ${d}</small></div>${rolePlayerHtml(data.roles[k])}</div>`).join('');
+    const me=loadAcc()[currentKey],isAdmin=isVerifiedPlayer(me)||String(me?.name||currentKey||'').toLowerCase()==='vaik';
+    if(isAdmin){
+      const leaderMap=new Map();
+      (Array.isArray(data.alliances)?data.alliances:[]).forEach(a=>{const nm=String(a?.leader||a?.leaderName||'').trim();if(nm)leaderMap.set(nm.toLowerCase(),{name:nm,id:String(a.id||a.allyId||''),alliance:String(a.name||a.allianceName||'اتحاد')});});
+      Object.values(data.contributors||{}).forEach(c=>{const nm=String(c?.leader||'').trim();if(nm)leaderMap.set(nm.toLowerCase(),{name:nm,id:String(c.allyId||c.ally||''),alliance:String(c.allyName||'اتحاد')});});
+      // در منوی مقام، همه رهبرهای اتحادها نمایش داده می‌شوند؛ محدود به اتحادهای شرکت‌کننده پادشاهی نیست.
+      try{
+        const db=loadAcc()||{};
+        // انتخاب پادشاه فقط برای VAIK است؛ لیست باید از تمام اتحادهای سرور باشد و هیچ ارتباطی با پادشاهی/احضار نیرو نداشته باشد.
+        Object.values(db.allies||{}).forEach(al=>{
+          const leaderKey=String(al?.leader||'').trim();
+          const player=db?.players?.[leaderKey];
+          const nm=String(player?.name||leaderKey).trim();
+          if(nm) leaderMap.set(nm.toLowerCase(),{name:nm,id:String(al.id||''),alliance:String(al.name||'اتحاد')});
+        });
+        // از تمام ساختارهای ممکن بازیکن/اتحاد رهبرها را پیدا کن؛ هیچ شرط پادشاهی یا نیرو وجود ندارد.
+        const addLeader=(pl)=>{
+          const nm=String(pl?.name||pl?.username||pl?.user||'').trim();
+          const lead=String(pl?.role||pl?.rank||'').toLowerCase()==='leader' || pl?.allyLeader===true || pl?.isLeader===true || pl?.leader===true;
+          if(nm && lead) leaderMap.set(nm.toLowerCase(),{name:nm,id:String(pl.allyId||pl.allianceId||pl.ally||''),alliance:String(pl.allyName||pl.allianceName||'اتحاد')});
+        };
+        Object.values(db.players||{}).forEach(addLeader);
+        Object.values(data.players||{}).forEach(addLeader);
+        Object.values(data.allies||{}).forEach(al=>{
+          const nm=String(al?.leader||'').trim();
+          if(nm) leaderMap.set(nm.toLowerCase(),{name:nm,id:String(al.id||''),alliance:String(al.name||'اتحاد')});
+        });
+      }catch(e){}
+      const leaderOpts=[...leaderMap.values()].sort((a,b)=>a.name.localeCompare(b.name,'fa')).map(a=>`<div class="am" data-set-king="${esc(a.name)}" data-king-ally="${esc(a.id)}" data-king-ally-name="${esc(a.alliance)}" style="cursor:pointer">👑 <div class="wui"><b>${esc(a.name)}</b><small>اتحاد: ${esc(a.alliance)}</small></div></div>`).join('');
+      manage.hidden=false;
+      manage.innerHTML=`<h2>🛡️ مدیریت ادمین VAIK</h2><p class="wdesc">رهبر اتحاد موردنظر را انتخاب کن تا مقام پادشاهی به او داده شود. انتخاب جدید، پادشاه فعلی را جایگزین می‌کند.</p><div>${leaderOpts||'<div class="wnone">هنوز رهبر اتحادی در داده‌های موجود پیدا نشد.</div>'}</div>`;
+      manage.querySelectorAll('[data-set-king]').forEach(btn=>btn.onclick=()=>{
+        const nd=normalizeKingdom(kingdomData());
+        const nm=String(btn.dataset.setKing||'').trim();if(!nm)return;
+        nd.kingName=nm;nd.kingKey=nm.toLowerCase();nd.kingAllianceId=btn.dataset.kingAlly||null;nd.winnerAllianceId=btn.dataset.kingAlly||nd.winnerAllianceId||null;nd.winnerAllianceName=btn.dataset.kingAllyName||nd.winnerAllianceName||'';nd._kingAdminUpdatedAt=Date.now();
+        const saved=saveKingdomData(nd,true);KINGDOM.kingKey=saved.kingKey;KINGDOM.allianceId=saved.kingAllianceId;KINGDOM.allianceName=saved.winnerAllianceName;renderKingRoles();renderKingMenus();
+        try{if(typeof buildKingdom==='function')buildKingdom();}catch(e){}
+        toast('👑 پادشاه به '+nm+' تغییر کرد.');
+      });
+      return;
+    }
+    const can=!!leader&&String(me?.name||'').trim().toLowerCase()===leader.toLowerCase(); manage.hidden=!can; if(!can){manage.innerHTML='';return;}
+    const opts=members.sort((a,b)=>String(a.name).localeCompare(String(b.name),'fa')).map(a=>`<option value="${esc(a._key||a.name)}">${esc(a.name)}</option>`).join('');
+    manage.innerHTML=`<h2>⚙️ مدیریت مقام‌ها</h2><p class="wdesc">هر مقام قابل تغییر است و می‌توان آن را به هر بازیکنی داد.</p>`+rr.map(([k,e,n,d])=>`<label style="display:block;margin:12px 0"><b>${e} ${n}</b><small style="display:block;opacity:.75">${d}</small><select data-king-role="${k}" style="width:100%;padding:12px;border-radius:10px"><option value="">آزاد</option>${opts}</select></label>`).join('')+`<button class="buy" id="saveKingRoles" type="button">💾 ذخیره مقام‌ها</button>`;
+    manage.querySelectorAll('[data-king-role]').forEach(x=>{x.value=data.roles[x.dataset.kingRole]||'';});
+    $('#saveKingRoles').onclick=()=>{const nd=normalizeKingdom(kingdomData());nd.roles={};manage.querySelectorAll('[data-king-role]').forEach(x=>{if(x.value)nd.roles[x.dataset.kingRole]=x.value;});nd._rolesUpdatedAt=Date.now();saveKingdomData(nd,true);KINGDOM.roles=nd.roles;renderKingRoles();toast('مقام‌های پادشاهی ذخیره شد.');};
+  }
+  async function showKingdom(){
+    if(!loadAcc()[currentKey])return showLogin();
+    go('kingdom');$('#fabLayer').hidden=false;window.scrollTo(0,0);$('#kingdomNote').textContent='در حال آماده‌سازی پادشاهی…';$('#kingCard').innerHTML='';$('#kingSummonBox').innerHTML='';$('#kingdomList').innerHTML='';
+    try{await mqttConnect();}catch(e){} try{await srvInit();}catch(e){} await buildKingdom();
+  }
+  setInterval(()=>{if(!$('#kingdom').hidden&&!KING.busy){KING.busy=true;buildKingdom().finally(()=>KING.busy=false);}},20000);
+
+
+  try{
+    const raw=store.get('game:vaik:text-edits');
+    vaikTextEdits=raw?JSON.parse(raw):{};
+    if(!vaikTextEdits || typeof vaikTextEdits!=='object') vaikTextEdits={};
+  }catch(e){ vaikTextEdits={}; }
+
+  $('#vaikTextEditToggle').addEventListener('click',()=>{
+    if(!vaikIsAdmin()) return;
+    vaikTextEditMode=!vaikTextEditMode;
+    store.set(VAIK_TEXT_MODE,vaikTextEditMode?'1':'0');
+    vaikSetEditBar();
+    if(vaikTextEditMode){ vaikEnableObserver(); vaikMarkEditable(); }
+    else { vaikDisableObserver(); }
+    toast(vaikTextEditMode?'✏️ ویرایش متن فعال شد':'ویرایش متن خاموش شد');
+  });
+
+  vaikStartTextEditor();
+  if(vaikIsAdmin() && vaikTextEditMode) vaikEnableObserver();
+  mqttConnect().then(()=>vaikLoadTextEdits()).catch(()=>{});
 
   const sheet = $('#sheet');
-  $('#menuBtn').addEventListener('click', () => { sheet.hidden = false; });
+  $('#menuBtn').addEventListener('click', () => {
+    const va=document.getElementById('gotoVaikAdmin');
+    if(va){ const me=loadAcc()[currentKey]; va.hidden=!(String(me?.name||currentKey||'').toLowerCase()==='vaik' || isVerifiedPlayer(me)); }
+    sheet.hidden = false;
+  });
   sheet.addEventListener('click', e => { if (e.target.closest('[data-close]')) sheet.hidden = true; });
   $('#logout').addEventListener('click', () => { store.del(SES); showLogin(); });
   $('#gotoInfra').addEventListener('click', () => { sheet.hidden = true; showInfra(); });
@@ -2688,7 +3844,7 @@ button{cursor:pointer;border:0;background:none}
   $('#pmUsers').addEventListener('click', e => {
     const b=e.target.closest('[data-dm-target]'); if(!b) return;
     dmTarget=b.dataset.dmTarget; renderPm();
-    const p=dmPlayer(dmTarget); $('#pmTo').innerHTML=`در حال گفتگو با <b>${esc(p?.name || dmTarget)}</b>`;
+    const pl=dmPlayer(dmTarget); $('#pmTo').innerHTML=`در حال گفتگو با <b>${esc(pl?.name || dmTarget)}</b>`;
     $('#pmInput').focus();
   });
   $('#pmSend').addEventListener('click', pmSend);
@@ -2700,12 +3856,28 @@ button{cursor:pointer;border:0;background:none}
 
   $('#chatBack').addEventListener('click', () => { go('profile'); $('#fabLayer').hidden = false; render(loadAcc()[currentKey]); });
   $('#gotoChat').addEventListener('click', () => { sheet.hidden = true; showChat(); });
+  $('#chatToggle').addEventListener('click', chatToggle);
   $('#gotoRank').addEventListener('click', () => { sheet.hidden = true; showRank(); });
   $('#gotoAlly').addEventListener('click', () => { sheet.hidden = true; showAlly(); });
+  $('#gotoKingdom').addEventListener('click', () => { sheet.hidden = true; showKingdom(); });
+  $('#gotoKingRoles').addEventListener('click', () => { sheet.hidden=true; go('kingRoles'); $('#fabLayer').hidden=false; renderKingRoles(); const me=loadAcc()[currentKey]; if(isVerifiedPlayer(me)||String(me?.name||currentKey||'').toLowerCase()==='vaik'){ setTimeout(()=>{renderVaikPlayerAdmin();},0); } });
+  $('#gotoVaikAdmin').addEventListener('click', () => { sheet.hidden=true; go('kingRoles'); $('#fabLayer').hidden=false; setTimeout(()=>{ const n=$('#kingRolesNote'), c=$('#kingRolesCard'), m=$('#kingRolesManage'); if(n)n.hidden=true; if(c)c.hidden=true; if(m)m.hidden=false; renderVaikPlayerAdmin(); },0); });
+  $('#kingRolesBack').addEventListener('click', () => { go('profile'); $('#fabLayer').hidden=false; render(loadAcc()[currentKey]); });
+  $('#kingdomBack').addEventListener('click', () => { go('profile'); render(loadAcc()[currentKey]); });
   $('#rankBack').addEventListener('click', () => { go('profile'); render(loadAcc()[currentKey]); });
   $('#allyBack').addEventListener('click', () => { go('profile'); render(loadAcc()[currentKey]); });
   $('#gotoProfile').addEventListener('click', () => { sheet.hidden = true; showProfile(currentKey); });
   $('#infraBack').addEventListener('click', () => { go('profile'); render(loadAcc()[currentKey]); });
+
+  /* ======== اتصال واقعی دکمه‌های ورود و ثبت‌نام */
+  $('#loginBtn').addEventListener('click', doLogin);
+  $('#registerBtn').addEventListener('click', doRegister);
+  $('#pass').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); doLogin(); }
+  });
+  $('#user').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); $('#pass').focus(); }
+  });
 
   /* ======== شروع ======== */
   mqttConnect();
@@ -2737,5 +3909,247 @@ button{cursor:pointer;border:0;background:none}
   })();
 })();
 </script>
+
+
+
+
+
+<script>
+/* ===== سیستم کامل چرخه هفتگی پادشاهی =====
+   زمان بازی: Asia/Tehran
+   یکشنبه 12:00 تا 22:00 = نبرد و اعزام
+   خارج از این بازه = سپر فعال
+   پایان نبرد = ثبت بازگشت نیروهای هر بازیکن
+*/
+(function(){
+  function kingClock(){
+    const p = new Intl.DateTimeFormat('en-US',{
+      timeZone:'Asia/Tehran',
+      year:'numeric',month:'2-digit',day:'2-digit',
+      weekday:'short',hour:'2-digit',minute:'2-digit',
+      hour12:false
+    }).formatToParts(new Date(Date.now()));
+    const o={}; p.forEach(x=>o[x.type]=x.value);
+    const dayMap={Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6};
+    return {
+      day: dayMap[o.weekday],
+      y:+o.year, m:+o.month, d:+o.day,
+      minutes:(+o.hour)*60+(+o.minute)
+    };
+  }
+
+  function kingCycleId(c){
+    const dt=new Date(Date.UTC(c.y,c.m-1,c.d));
+    dt.setUTCDate(dt.getUTCDate()-c.day);
+    return dt.toISOString().slice(0,10);
+  }
+
+  function kingdomWeeklyState(){
+    const c=kingClock();
+    const battle=c.day===0 && c.minutes>=720 && c.minutes<1320;
+    return {battle:battle,shield:!battle,cycleId:kingCycleId(c),clock:c};
+  }
+
+  function kingdomShieldActive(){ return kingdomWeeklyState().shield; }
+  function kingdomCanSummon(){ return kingdomWeeklyState().battle; }
+  function kingdomShieldMessage(){ return 'سپر پادشاهی فعال می‌باشد'; }
+
+  function returnArmyToAccount(account, army){
+    if(!account || !army) return false;
+    if(!account.army || typeof account.army!=='object') account.army={};
+    let changed=false;
+    Object.keys(army).forEach(k=>{
+      const n=Math.max(0,Math.floor(Number(army[k])||0));
+      if(n>0){
+        account.army[k]=(Math.floor(Number(account.army[k])||0))+n;
+        changed=true;
+      }
+    });
+    return changed;
+  }
+
+  function kingdomApplyMyReturn(data){
+    try{
+      if(!data || !data.returnClaims) return false;
+      const st=kingdomWeeklyState();
+      if(st.battle) return false;
+      const claim=data.returnClaims[st.cycleId];
+      if(!claim) return false;
+
+      const accounts=loadAcc();
+      const myKey=String(currentKey||'').trim();
+      const me=accounts[myKey];
+      if(!me) return false;
+
+      const claimKey=Object.keys(claim).find(k=>{
+        const a=claim[k];
+        return String(k).toLowerCase()===myKey.toLowerCase() ||
+          String(a?.name||'').trim().toLowerCase()===String(me.name||myKey).trim().toLowerCase();
+      });
+      if(!claimKey) return false;
+
+      const onceKey='game:kingdom:return-applied:'+st.cycleId+':'+String(myKey).toLowerCase();
+      if(localStorage.getItem(onceKey)==='1') return false;
+
+      const army=claim[claimKey].army||{};
+      if(returnArmyToAccount(me,army)){
+        saveAcc(accounts);
+        localStorage.setItem(onceKey,'1');
+        try{ if(typeof renderProfile==='function') renderProfile(); }catch(e){}
+        return true;
+      }
+    }catch(e){ console.warn('Kingdom return recovery:',e); }
+    return false;
+  }
+
+  // محاسبه قطعی نتیجه هفته: همه کلاینت‌ها با یک قانون یکسان به یک نتیجه می‌رسند.
+  function kingdomWeeklyWinner(data){
+    const groups={};
+    Object.entries(data?.contributors||{}).forEach(([key,c])=>{
+      if(!c || !c.allyId) return;
+      const id=String(c.allyId);
+      const score=kingdomContributionScore(c.army||{});
+      if(score<=0) return;
+      if(!groups[id]) groups[id]={id,name:String(c.allyName||'اتحاد').trim(),leader:String(c.leader||'').trim(),score:0,firstAt:0};
+      const g=groups[id];
+      if(c.allyName) g.name=String(c.allyName).trim();
+      if(c.leader && !g.leader) g.leader=String(c.leader).trim();
+      g.score+=score;
+      const fa=+c.firstAt||0;
+      if(fa && (!g.firstAt || fa<g.firstAt)) g.firstAt=fa;
+    });
+    const arr=Object.values(groups).filter(g=>g.score>0);
+    arr.sort((a,b)=>b.score-a.score || a.firstAt-b.firstAt || String(a.id).localeCompare(String(b.id)));
+    return arr[0]||null;
+  }
+
+  function kingdomFindLeaderName(winner,data){
+    const direct=String(winner?.leader||'').trim();
+    if(direct) return direct;
+    try{
+      const accounts=kingdomAccounts();
+      const hit=Object.values(accounts).find(a=>{
+        if(!a || !a.name) return false;
+        const aid=String(a.ally||a.allyId||a.allianceId||'');
+        const selfLeader=String(a.allyLeader||'').trim().toLowerCase()===String(a.name||'').trim().toLowerCase();
+        return aid===String(winner?.id||'') && selfLeader;
+      });
+      if(hit?.name) return String(hit.name).trim();
+      const c=Object.values(data?.contributors||{}).find(x=>String(x?.allyId||'')===String(winner?.id||'') && x?.leader);
+      return String(c?.leader||'').trim();
+    }catch(e){ return ''; }
+  }
+
+  function kingdomSettleWeek(data,cycleId){
+    try{
+      if(!data || !cycleId) return false;
+      data.settledCycles=data.settledCycles&&typeof data.settledCycles==='object'?data.settledCycles:{};
+      if(data.settledCycles[cycleId]) return false;
+
+      const winner=kingdomWeeklyWinner(data);
+      const previousAlliance=String(data.kingAllianceId||'');
+      let kingKey=String(data.kingKey||'').trim().toLowerCase();
+      let kingName=String(data.kingName||'').trim();
+
+      if(winner){
+        // هر هفته رهبر فعلی اتحادِ پیشتاز، پادشاه همان هفته است.
+        kingName=kingdomFindLeaderName(winner,data);
+        kingKey=kingName.toLowerCase();
+        data.winnerAllianceId=String(winner.id);
+        data.winnerAllianceName=String(winner.name||'اتحاد');
+        data.kingAllianceId=String(winner.id);
+        data.kingKey=kingKey;
+        data.kingName=kingName;
+      }else{
+        // اگر این هفته هیچ نیرویی وارد نشده، پادشاه قبلی حفظ می‌شود و تغییری اعمال نمی‌شود.
+        data.winnerAllianceId=data.winnerAllianceId||null;
+        data.winnerAllianceName=data.winnerAllianceName||'';
+      }
+
+      data.settledCycles[cycleId]={
+        cycleId,
+        winnerAllianceId:data.winnerAllianceId||null,
+        winnerAllianceName:data.winnerAllianceName||'',
+        kingAllianceId:data.kingAllianceId||null,
+        kingKey:data.kingKey||'',
+        kingName:data.kingName||''
+      };
+      const ids=Object.keys(data.settledCycles).sort().reverse();
+      ids.slice(3).forEach(id=>delete data.settledCycles[id]);
+      data._weeklySettledAt=Date.now();
+      return true;
+    }catch(e){ console.warn('Kingdom weekly settlement:',e); return false; }
+  }
+
+  function kingdomPrepareCycle(){
+    try{
+      const st=kingdomWeeklyState();
+      const d=normalizeKingdom(kingdomData());
+      d.settledCycles=d.settledCycles&&typeof d.settledCycles==='object'?d.settledCycles:{};
+
+      // شروع هفته: فقط داده‌های رقابت همان هفته پاک می‌شوند؛ پادشاه قبلی حفظ می‌شود.
+      if(st.battle && String(d.cycleId||'')!==st.cycleId){
+        d.cycleId=st.cycleId;
+        d.contributors={};
+        d.attackers={};
+        d.roles={};
+        d._contributorsResetAt=Date.now();
+        d.returnClaims=d.returnClaims||{};
+        saveKingdomData(d,true);
+      }
+
+      // پایان نبرد: دقیقاً یک settlement برای هر cycle ساخته می‌شود.
+      if(st.shield && String(d.cycleId||'')===st.cycleId){
+        let changed=false;
+        if(!d.returnClaims[st.cycleId]){
+          const claims={};
+          Object.entries(d.contributors||{}).forEach(([key,c])=>{
+            if(c && c.army){
+              claims[key]={name:c.name||key,army:{...c.army}};
+            }
+          });
+          d.returnClaims[st.cycleId]=claims;
+          changed=true;
+        }
+        if(kingdomSettleWeek(d,st.cycleId)) changed=true;
+
+        // بعد از ثبت نتیجه، لیست نیروهای حاضر کاملاً خالی می‌شود.
+        // نیروهای بازیکنان آفلاین داخل returnClaims محفوظ می‌ماند تا هنگام ورودشان برگردد.
+        if(Object.keys(d.contributors||{}).length || Object.keys(d.attackers||{}).length){
+          d.contributors={};
+          d.attackers={};
+          d._contributorsResetAt=Date.now();
+          changed=true;
+        }
+
+        if(changed) saveKingdomData(d,true);
+        kingdomApplyMyReturn(d);
+      }else{
+        kingdomApplyMyReturn(d);
+      }
+    }catch(e){ console.warn('Kingdom weekly cycle:', e); }
+  }
+
+  function kingdomCycleGuard(){
+    try{
+      const st=kingdomWeeklyState();
+      document.documentElement.dataset.kingdomBattle=st.battle?'active':'shield';
+      kingdomPrepareCycle();
+    }catch(e){}
+  }
+
+  window.kingdomWeeklyState=kingdomWeeklyState;
+  window.kingdomShieldActive=kingdomShieldActive;
+  window.kingdomCanSummon=kingdomCanSummon;
+  window.kingdomShieldMessage=kingdomShieldMessage;
+  window.kingdomCycleGuard=kingdomCycleGuard;
+
+  if(!window.__kingdomCycleTimer)
+    window.__kingdomCycleTimer=setInterval(kingdomCycleGuard,30000);
+  kingdomCycleGuard();
+})();
+</script>
+
+
 </body>
 </html>
