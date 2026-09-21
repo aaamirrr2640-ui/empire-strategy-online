@@ -1602,8 +1602,39 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
               const st=JSON.parse(payload.toString());if(st&&st.name)mqttPresence[key]=st;
               return;
             }
-            if(topic.startsWith(MQTT_PLAYERS)){try{const a=JSON.parse(payload.toString());if(a?.name)mqttPlayers[mqttKey(a.name)]=a;}catch(e){}return;}
-            if(topic.startsWith(MQTT_AVATARS)){return;}
+            if(topic.startsWith(MQTT_PLAYERS)){
+              try{
+                const a=JSON.parse(payload.toString());
+                if(a?.name){
+                  const k=mqttKey(a.name), prev=mqttPlayers[k]||{};
+                  mqttPlayers[k]={
+                    ...prev,...a,
+                    res:{...(prev.res||{}),...(a.res||{})},
+                    army:{...(prev.army||{}),...(a.army||{})},
+                    avS:a.avS||prev.avS||'',
+                    avatarVersion:a.avatarVersion||prev.avatarVersion||'',
+                    avV:a.avV||prev.avV||''
+                  };
+                  if(!$('#rank').hidden) renderRank();
+                  if(!$('#kingdom').hidden) renderKingRoles();
+                }
+              }catch(e){}
+              return;
+            }
+            if(topic.startsWith(MQTT_AVATARS)){
+              try{
+                const k=mqttKey(decodeURIComponent(topic.slice(MQTT_AVATARS.length)));
+                const av=payload.toString();
+                if(k && av){
+                  const prev=mqttPlayers[k]||{};
+                  mqttPlayers[k]={...prev,avS:av};
+                  // avatar topic جداگانه است؛ با رسیدنش رتبه‌بندی و مقام‌ها فوراً تازه شوند.
+                  if(!$('#rank').hidden) renderRank();
+                  if(!$('#kingdom').hidden) renderKingRoles();
+                }
+              }catch(e){}
+              return;
+            }
             if(topic.startsWith(MQTT_BLOCKS)){try{const key=topic.slice(MQTT_BLOCKS.length);mqttBlocks[key]=JSON.parse(payload.toString())}catch(e){}return;}
           }catch(e){}
         });
@@ -2584,11 +2615,43 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   const flagOf = cc => /^[A-Z]{2}$/.test(cc) ? String.fromCodePoint(...[...cc].map(c => 127397 + c.charCodeAt(0))) : '🏳️';
   // آدرس عکس پروفایل بازیکن: روی سرور از /api/av ؛ آفلاین از حساب‌های همین دستگاه
   function avUrl(name, v){
-    const low = String(name).toLowerCase(), loc = loadAcc()[low], has = loc && loc.avatar ? loc.avatar : '';
+    const low = String(name).toLowerCase();
+    const loc = loadAcc()[low] || {};
+    const has = loc.avatar || '';
+    // avS ممکن است خودِ data:image باشد؛ آن را مستقیماً نمایش بده.
+    // قبلاً avS به‌عنوان version به /av/... فرستاده می‌شد و در نتیجه
+    // پروفایل بازیکنان دیگر در پادشاهی/رتبه‌بندی دیده نمی‌شد.
+    const direct = (typeof v === 'string' && v.startsWith('data:image/')) ? v :
+      (typeof v === 'string' && /^(https?:|blob:)/i.test(v) ? v : '');
     const base = chatMode === 'server' ? chatUrl.replace(/\/chat$/, '') : '';
-    if (has && (!base || low === currentKey)) return has;          // عکس خودِ بازیکن همیشه بلافاصله و بدون انتظار برای سرور
-    if (base) return v ? base + '/av/' + encodeURIComponent(low) + '?v=' + v : '';
+    if (has && (!base || low === currentKey)) return has;
+    if (direct) return direct;
+    if (base) return v ? base + '/av/' + encodeURIComponent(low) + '?v=' + encodeURIComponent(v) : '';
     return has;
+  }
+
+  // رکوردهای محلی و MQTT را بدون حذف فیلدهای موجود با هم ادغام می‌کند.
+  // این مهم است چون پیام retained ممکن است نسخه‌ای ناقص/قدیمی از حساب داشته باشد.
+  function mergedPlayerDirectory(){
+    const out = {};
+    const add = (key, src) => {
+      if(!src || typeof src !== 'object' || !src.name) return;
+      const k = String(key || src.name).toLowerCase();
+      const prev = out[k] || {};
+      out[k] = {
+        ...prev,
+        ...src,
+        res:{...(prev.res||{}),...(src.res||{})},
+        army:{...(prev.army||{}),...(src.army||{})}
+      };
+      // فیلدهای پروفایل هرگز با مقدار خالیِ یک پیام ناقص پاک نشوند.
+      ['avatar','avS','avV','avatarVersion','photo','profile'].forEach(f=>{
+        if(!out[k][f] && prev[f]) out[k][f]=prev[f];
+      });
+    };
+    Object.entries(loadAcc()||{}).forEach(([k,a])=>add(k,a));
+    Object.entries(mqttPlayers||{}).forEach(([k,a])=>add(k,a));
+    return out;
   }
   const mk = (tag, cls, text) => { const el = document.createElement(tag); if (cls) el.className = cls; if (text != null) el.textContent = text; return el; };
 
@@ -3168,7 +3231,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     mqttConnect().then(() => {
       setTimeout(() => { try { if (!$('#rank').hidden) renderRank(); } catch(e){} }, 900);
     }).catch(()=>{});
-    const remoteRows = Object.values({ ...loadAcc(), ...mqttPlayers }).filter(a => a && a.name && String(a.name).trim().toLowerCase() !== 'vaik').map(a => {
+    const remoteRows = Object.values(mergedPlayerDirectory()).filter(a => a && a.name && String(a.name).trim().toLowerCase() !== 'vaik').map(a => {
       const copy = JSON.parse(JSON.stringify(a));
       try { tickInfra(copy); } catch(e){}
       return {
@@ -3862,7 +3925,11 @@ const me=loadAcc()[currentKey];
     await buildKingdom();
   }
 
-  function kingdomRoleAccounts(){ const out={...loadAcc(),...mqttPlayers}; Object.keys(out).forEach(k=>{if(isVerifiedPlayer(out[k]))delete out[k];else out[k]._key=k;}); return out; }
+  function kingdomRoleAccounts(){
+    const out=mergedPlayerDirectory();
+    Object.keys(out).forEach(k=>{if(isVerifiedPlayer(out[k]))delete out[k];else out[k]._key=k;});
+    return out;
+  }
   
 function kingdomRoleIdentityHtml(name, profile){
   const p = profile || {};
