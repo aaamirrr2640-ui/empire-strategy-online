@@ -1116,6 +1116,8 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   // فهرست مرکزی نام بازیکنان برای پیدا کردن همهٔ حساب‌ها روی دستگاه‌های جدید
   const MQTT_PLAYERS_INDEX = MQTT_NS + '/players-index';
   const MQTT_CHAT = MQTT_NS + '/chat/messages/';
+  // مسیر زندهٔ سبک برای پیام‌های جدید؛ تاریخچه جداگانه نگه داشته می‌شود.
+  const MQTT_CHAT_LIVE = MQTT_NS + '/chat/live';
   // پیام خصوصی: هر پیام روی مسیر فرستنده و گیرندهٔ خودش retained می‌شود تا هر دو نفر
   // حتی اگر آفلاین بوده باشند، تاریخچهٔ گفتگوی خودشان را بعداً دریافت کنند.
   const MQTT_DM = MQTT_NS + '/dm/';
@@ -1462,238 +1464,155 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     return changed;
   }
 
+  // ======== موتور چت پایدار ========
+  // یک اتصال MQTT مشترک برای چت عمومی، خصوصی و سایر امکانات آنلاین.
+  const MQTT_BROKERS = [
+    'wss://broker.emqx.io:8084/mqtt',
+    'wss://broker.hivemq.com:8884/mqtt',
+    'wss://test.mosquitto.org:8081/mqtt'
+  ];
+  let mqttBrokerIndex = 0;
+  let mqttConnecting = false;
+
+  function loadMqttLibrary(){
+    if(window.mqtt) return Promise.resolve(true);
+    if(window.__mqttLoader) return window.__mqttLoader;
+    window.__mqttLoader = new Promise(resolve=>{
+      const urls=[
+        'https://unpkg.com/mqtt/dist/mqtt.min.js',
+        'https://cdn.jsdelivr.net/npm/mqtt/dist/mqtt.min.js'
+      ];
+      let i=0;
+      const next=()=>{
+        if(window.mqtt) return resolve(true);
+        if(i>=urls.length) return resolve(false);
+        const sc=document.createElement('script');
+        sc.src=urls[i++]; sc.async=true;
+        sc.onload=()=>resolve(!!window.mqtt);
+        sc.onerror=()=>next();
+        document.head.appendChild(sc);
+      };
+      next();
+    });
+    return window.__mqttLoader;
+  }
+
+  function mqttSubscribeCore(){
+    if(!mqttClient || !mqttClient.connected) return;
+    try{
+      mqttClient.subscribe([
+        MQTT_CHAT_LIVE,
+        MQTT_CHAT_HISTORY,
+        MQTT_CHAT_STATUS,
+        MQTT_PLAYERS_INDEX,
+        MQTT_PLAYERS + '#',
+        MQTT_STATE + '#',
+        MQTT_BLOCKS + '#',
+        MQTT_PRESENCE + '#',
+        MQTT_KINGDOM
+      ],{qos:1,rh:2});
+      if(currentKey){
+        mqttClient.subscribe([MQTT_PLAYERS+ mqttKey(currentKey), MQTT_AVATARS+ mqttKey(currentKey)],{qos:1,rh:2});
+        mqttSubscribeDM(currentKey,dmTarget);
+      }
+    }catch(e){}
+  }
+
   function mqttConnect(){
-    if (mqttClient && mqttClient.connected) return Promise.resolve(true);
-    // اگر promise اتصال قبلی به خاطر قطع شبکه مانده باشد، آن را دوباره استفاده نکن.
-    if (mqttReady) return mqttReady;
-    mqttReady = new Promise(resolve => {
-      if (!window.mqtt) { mqttReady = null; resolve(false); return; }
-      let settled = false, connectedOnce = false;
-      const finish = ok => {
-        if (settled) return;
-        settled = true;
-        clearTimeout(connectTimer);
-        if (!ok) mqttReady = null;
+    if(mqttClient && mqttClient.connected) return Promise.resolve(true);
+    if(mqttReady) return mqttReady;
+    mqttReady=new Promise(async resolve=>{
+      const lib=await loadMqttLibrary();
+      if(!lib){ mqttReady=null; return resolve(false); }
+      let settled=false;
+      const finish=ok=>{
+        if(settled)return;
+        settled=true;
+        clearTimeout(timer);
+        if(!ok)mqttReady=null;
         resolve(ok);
       };
-      const connectTimer = setTimeout(() => {
-        try { if (mqttClient && !connectedOnce) mqttClient.end(true); } catch(e){}
+      const broker=MQTT_BROKERS[mqttBrokerIndex % MQTT_BROKERS.length];
+      const timer=setTimeout(()=>{
+        try{if(mqttClient)mqttClient.end(true);}catch(e){}
+        mqttClient=null;
+        mqttBrokerIndex++;
         finish(false);
-      }, 6000);
-      try {
+      },7000);
+      try{
         mqttStatus('');
-        mqttClient = window.mqtt.connect(MQTT_URL, {
-          // هر دستگاه نشست مستقل داشته باشد؛ نشست تصادفی قبلی باعث باقی‌ماندن
-          // sessionهای بی‌استفاده روی broker می‌شد و در بعضی شبکه‌ها reconnect را مختل می‌کرد.
-          clean: true, connectTimeout: 5000, reconnectPeriod: 1000,
-          keepalive: 30, clientId: 'game-chat-' + Math.random().toString(16).slice(2, 12)
+        mqttClient=window.mqtt.connect(broker,{
+          clean:true,
+          connectTimeout:5000,
+          reconnectPeriod:1500,
+          keepalive:25,
+          clientId:'iron-nations-'+Math.random().toString(16).slice(2,12)
         });
-        mqttClient.on('connect', () => {
-          connectedOnce = true;
-          mqttStatus('', true);
-          mqttChatReady = true;
-          // اتصال موفق را بلافاصله اعلام کن؛ منتظر callback اشتراک‌ها نمی‌مانیم
-          // تا ورود به بازی به خاطر کندی retained messages متوقف نشود.
+        mqttClient.on('connect',()=>{
+          mqttChatReady=true;
+          mqttStatus('',true);
+          mqttSubscribeCore();
+          try{publishVAIKSupportAvatar();}catch(e){}
+          if(currentKey){try{mqttPresenceOnline(currentKey);}catch(e){}}
           finish(true);
-          try {
-            // کانال گفتگوی عمومی + تاریخچه + کلید باز/بسته شدن چت را همیشه با QoS1 می‌گیریم.
-            mqttClient.subscribe([MQTT_CHAT + '#', MQTT_CHAT_HISTORY, MQTT_CHAT_STATUS], { qos: 1, rh: 2 }, () => {});
-            mqttClient.subscribe([MQTT_PLAYERS_INDEX, MQTT_PLAYERS + '#', MQTT_STATE + '#', MQTT_BLOCKS + '#', MQTT_PRESENCE + '#', MQTT_KINGDOM], { qos: 0, rh: 2 });
-            // حساب و آواتار بازیکن فعلی را جداگانه می‌گیریم؛ از دریافت یک‌جای هزاران retained پیام جلوگیری می‌شود.
-            if (currentKey) {
-              try { mqttClient.subscribe([MQTT_PLAYERS + mqttKey(currentKey), MQTT_AVATARS + mqttKey(currentKey)], { qos: 0 }); } catch(e){}
-            }
-          } catch(e){}
-          publishVAIKSupportAvatar();
-          if (currentKey) {
-            mqttPresenceOnline(currentKey);
-            mqttSubscribeDM(currentKey, dmTarget);
-            try { if (mqttClient && mqttClient.connected) mqttClient.subscribe(MQTT_BLOCKS + mqttKey(currentKey), { qos: 1, rh: 2 }); } catch(e){}
-          }
         });
-        mqttClient.on('message', (topic, payload) => {
-          try {
-            if (topic.startsWith(MQTT_STATE)) {
-              mqttRestoreStore(topic, payload);
-              return;
-            }
-            if (topic === MQTT_PLAYERS_INDEX) {
-              // روی بعضی دستگاه‌ها دریافت wildcard retained کامل نیست؛ فهرست مرکزی
-              // کلیدها را می‌گیریم و همان topicهای حساب‌ها را مستقیم subscribe می‌کنیم.
-              const idx = JSON.parse(payload.toString());
-              if (Array.isArray(idx) && mqttClient && mqttClient.connected) {
-                const keys = idx.filter(k => typeof k === 'string' && k);
-                const topics = keys.map(k => mqttTopic(k));
-                const avatarTopics = keys.map(k => MQTT_AVATARS + mqttKey(k));
-                if (topics.length) mqttClient.subscribe(topics, { qos: 0 });
-                if (avatarTopics.length) mqttClient.subscribe(avatarTopics, { qos: 0 });
-                // اگر index رسید، بلافاصله لیست جنگ/رتبه‌بندی را پس از دریافت
-                // retained accountها دوباره رندر می‌کنیم.
-                setTimeout(() => {
-                  try { if (typeof renderPlayers === 'function') renderPlayers(); } catch(e){}
-                  try { if (typeof renderRank === 'function') renderRank(); } catch(e){}
-                }, 350);
+        mqttClient.on('message',(topic,payload)=>{
+          try{
+            if(topic.startsWith(MQTT_STATE)){mqttRestoreStore(topic,payload);return;}
+            if(topic===MQTT_PLAYERS_INDEX){
+              const idx=JSON.parse(payload.toString());
+              if(Array.isArray(idx)&&mqttClient?.connected){
+                const ts=idx.filter(k=>typeof k==='string'&&k).map(k=>mqttTopic(k));
+                const avs=idx.filter(k=>typeof k==='string'&&k).map(k=>MQTT_AVATARS+mqttKey(k));
+                if(ts.length)mqttClient.subscribe(ts,{qos:0});
+                if(avs.length)mqttClient.subscribe(avs,{qos:0});
               }
               return;
             }
-            if (topic.startsWith(MQTT_AVATARS)) {
-              const key = decodeURIComponent(topic.slice(MQTT_AVATARS.length));
-              const avs = payload.toString();
-              if (key && avs.startsWith('data:image/')) {
-                // ممکن است retained عکس قبل از retained حساب برسد؛ عکس را در آبجکت
-                // فعلی نگه می‌داریم تا پیام حساب بعدی آن را overwrite نکند.
-                const old = mqttPlayers[key] || {};
-                mqttPlayers[key] = { ...old, avS: avs };
-                cacheRemoteAccount(key, mqttPlayers[key]);
-                // اگر حساب قبلاً با پرچم رندر شده بود، حالا عکس را نشان بده.
-                try { if (typeof renderPlayers === 'function') renderPlayers(); } catch(e){}
-                try { if (typeof renderRank === 'function') renderRank(); } catch(e){}
+            if(topic===MQTT_CHAT_STATUS){
+              const st=JSON.parse(payload.toString());
+              if(st&&typeof st.open==='boolean'){chatGlobalOpen=st.open;try{store.set('game:chat-global-open',chatGlobalOpen?'1':'0')}catch(e){};updateChatLockUI();}
+              return;
+            }
+            if(topic===MQTT_CHAT_HISTORY){
+              const h=JSON.parse(payload.toString());
+              if(Array.isArray(h)){h.forEach(m=>mqttReceiveChat(m));if(typeof chatById!=='undefined'&&!$('#chat').hidden)renderChatMessages(true);}
+              return;
+            }
+            if(topic===MQTT_CHAT_LIVE){
+              const m=JSON.parse(payload.toString());
+              if(m&&m.id&&m.text){mqttReceiveChat(m);if(typeof chatById!=='undefined'&&!$('#chat').hidden)addMsgs([m]);}
+              return;
+            }
+            if(topic.startsWith(MQTT_DM_HISTORY)){
+              const h=JSON.parse(payload.toString());
+              if(Array.isArray(h)){h.forEach(m=>{if(m?.id&&m?.from&&m?.to&&m?.text)dmMessages.set(String(m.id),m)});saveDmCache();if(!$('#pm').hidden)renderPm();}
+              return;
+            }
+            if(topic.startsWith(MQTT_DM)){
+              const m=JSON.parse(payload.toString()), me=String(currentKey||'').toLowerCase();
+              if(m&&m.id&&m.from&&m.to&&m.text&&(String(m.from).toLowerCase()===me||String(m.to).toLowerCase()===me)){
+                dmMessages.set(String(m.id),m);saveDmCache();updatePmBadge();if(!$('#pm').hidden)renderPm();
               }
               return;
             }
-            if (topic.startsWith(MQTT_PLAYERS)) {
-              const key = decodeURIComponent(topic.slice(MQTT_PLAYERS.length));
-              if (!key) return;
-              const acc = JSON.parse(payload.toString());
-              if (acc && acc.name) {
-                // ترتیب رسیدن retainedها قطعی نیست. اگر عکس قبل از حساب رسیده باشد،
-                // باید هنگام ثبت حساب حفظش کنیم.
-                const previousAvatar = mqttPlayers[key] && mqttPlayers[key].avS ? mqttPlayers[key].avS : '';
-                if (!acc.avS && previousAvatar) acc.avS = previousAvatar;
-                const changed = ensureVAIKVerified(key, acc);
-                mqttPlayers[key] = acc;
-                cacheRemoteAccount(key, acc);
-                // اگر عکس جداگانه قبلاً/هنوز دریافت نشده، همان topic را مستقیم هم subscribe کن.
-                try { if (mqttClient && mqttClient.connected) mqttClient.subscribe(MQTT_AVATARS + mqttKey(key), { qos: 0 }); } catch(e){}
-                // سازگاری با پروفایل‌های قدیمی: اگر عکس اصلی داخل حساب قدیمی آمده باشد،
-                // همان لحظه thumbnail را به topic جداگانه منتقل کن.
-                if (!acc.avS && acc.avatar) {
-                  thumbOf(acc.avatar).then(avs => {
-                    if (!avs || !mqttClient || !mqttClient.connected) return;
-                    acc.avS = avs;
-                    mqttPlayers[key].avS = avs;
-                    mqttClient.publish(MQTT_AVATARS + mqttKey(key), avs, { qos: 1, retain: true });
-                    const clean = JSON.parse(JSON.stringify(acc));
-                    delete clean.avatar; delete clean.avDirty;
-                    mqttClient.publish(mqttTopic(key), JSON.stringify(publicAccount(clean)), { qos: 1, retain: true });
-                    try { renderPlayers(); } catch(e){}
-                  }).catch(()=>{});
-                }
-                if (changed && mqttClient && mqttClient.connected) {
-                  mqttClient.publish(mqttTopic(key), JSON.stringify(publicAccount(acc)), { qos: 1, retain: true });
-                }
-              }
+            if(topic.startsWith(MQTT_PRESENCE)){
+              const key=decodeURIComponent(topic.slice(MQTT_PRESENCE.length));
+              const st=JSON.parse(payload.toString());if(st&&st.name)mqttPresence[key]=st;
               return;
             }
-            if (topic === VAIK_TEXT_EDITS) {
-              try{
-                const ed=JSON.parse(payload.toString());
-                if(ed && typeof ed==='object'){
-                  vaikTextEdits=ed;
-                  store.set('game:vaik:text-edits',JSON.stringify(vaikTextEdits));
-                  vaikScheduleApply();
-                }
-              }catch(e){}
-              return;
-            }
-            if (topic === MQTT_KINGDOM) {
-              try {
-                const remoteKd = JSON.parse(payload.toString());
-                if (remoteKd && typeof remoteKd === 'object') {
-                  const localKd = kingdomData();
-                  const kd = (typeof kingdomMergeStates === 'function') ? kingdomMergeStates(localKd,remoteKd) : remoteKd;
-                  const remoteRaw=JSON.stringify(remoteKd), mergedRaw=JSON.stringify(kd);
-                  store.set('game:kingdom', mergedRaw);
-                  // اگر دو کلاینت هم‌زمان نوشته باشند، نسخهٔ ادغام‌شده دوباره retained می‌شود تا هیچ مشارکتی از بین نرود.
-                  if(mergedRaw!==remoteRaw && mqttClient && mqttClient.connected){
-                    try{ mqttClient.publish(MQTT_KINGDOM,mergedRaw,{qos:1,retain:true}); }catch(e){}
-                  }
-                  // بازگشت نیرو بلافاصله بعد از دریافت نتیجه هفتگی؛ منتظر باز شدن صفحه پادشاهی نمی‌ماند.
-                  try { if (typeof kingdomApplyMyReturn === 'function') kingdomApplyMyReturn(normalizeKingdom(kd)); } catch(e){}
-                  try { if (typeof kingdomApplyExpulsionReturn === 'function') kingdomApplyExpulsionReturn(normalizeKingdom(kd)); } catch(e){}
-                  try { if (!$('#kingdom').hidden && typeof buildKingdom === 'function') buildKingdom(); if (!$('#kingRoles').hidden && typeof renderKingRoles === 'function') renderKingRoles(); } catch(e){}
-                }
-              } catch(e){}
-              return;
-            }
-            if (topic.startsWith(MQTT_BLOCKS)) {
-              const blocker = decodeURIComponent(topic.slice(MQTT_BLOCKS.length)).toLowerCase();
-              const list = JSON.parse(payload.toString());
-              mqttBlocks[blocker] = Array.isArray(list) ? list.map(x => String(x).toLowerCase()) : [];
-              if (!$('#pm').hidden) renderPm();
-              return;
-            }
-            if (topic === MQTT_CHAT_STATUS) {
-              const st = JSON.parse(payload.toString());
-              if (st && typeof st.open === 'boolean') { chatGlobalOpen = st.open; try{store.set('game:chat-global-open', chatGlobalOpen?'1':'0');}catch(e){} updateChatLockUI(); }
-              return;
-            }
-            if (topic === MQTT_CHAT_HISTORY) {
-              const history = JSON.parse(payload.toString());
-              if (Array.isArray(history)) {
-                history.forEach(m => mqttReceiveChat(m));
-                mqttChatHistory = mqttChatHistory.sort((a,b)=>(a.t||0)-(b.t||0)).slice(-CHAT_KEEP);
-                if (typeof chatById !== 'undefined' && !$('#chat').hidden) renderChatMessages(true);
-              }
-              return;
-            }
-            if (topic.startsWith(MQTT_CHAT)) {
-              const m = JSON.parse(payload.toString());
-              if (m && m.id && m.text) {
-                mqttReceiveChat(m);
-                if (!mqttChatHistory.some(x => x.id === m.id)) {
-                  mqttChatHistory.push(m);
-                  mqttChatHistory = mqttChatHistory.slice(-CHAT_KEEP);
-                }
-              }
-              return;
-            }
-            if (topic.startsWith(MQTT_DM_HISTORY)) {
-              const history = JSON.parse(payload.toString());
-              if (Array.isArray(history)) {
-                history.forEach(m => { if (m && m.id && m.from && m.to && m.text) dmMessages.set(String(m.id), m); });
-                saveDmCache();
-                if (!$('#pm').hidden) renderPm();
-              }
-              return;
-            }
-            if (topic.startsWith(MQTT_DM)) {
-              const m = JSON.parse(payload.toString());
-              if (m && m.id && m.from && m.to && m.text) {
-                const me = String(currentKey || '').toLowerCase();
-                if (String(m.from).toLowerCase() === me || String(m.to).toLowerCase() === me) {
-                  dmMessages.set(String(m.id), m);
-                  saveDmCache();
-                  updatePmBadge();
-                  if (!$('#pm').hidden) renderPm();
-                }
-              }
-              return;
-            }
-            if (topic.startsWith(MQTT_PRESENCE)) {
-              const key = decodeURIComponent(topic.slice(MQTT_PRESENCE.length));
-              const st = JSON.parse(payload.toString());
-              if (st && st.name) mqttPresence[key] = st;
-            }
-          } catch(e){}
+            if(topic.startsWith(MQTT_PLAYERS)){try{const a=JSON.parse(payload.toString());if(a?.name)mqttPlayers[mqttKey(a.name)]=a;}catch(e){}return;}
+            if(topic.startsWith(MQTT_AVATARS)){return;}
+            if(topic.startsWith(MQTT_BLOCKS)){try{const key=topic.slice(MQTT_BLOCKS.length);mqttBlocks[key]=JSON.parse(payload.toString())}catch(e){}return;}
+          }catch(e){}
         });
-        mqttClient.on('error', () => {
-          mqttStatus('');
-          // خطای شبکه نباید promise قدیمی را برای همیشه نگه دارد.
-          if (!connectedOnce && !settled) finish(false);
+        mqttClient.on('error',()=>{mqttChatReady=false;mqttStatus('');});
+        mqttClient.on('offline',()=>{mqttChatReady=false;mqttStatus('');});
+        mqttClient.on('close',()=>{
+          mqttChatReady=false;
+          if(mqttReady && !settled)mqttReady=null;
         });
-        mqttClient.on('offline', () => {
-          mqttChatReady = false;
-          mqttStatus('');
-        });
-        mqttClient.on('close', () => {
-          mqttChatReady = false;
-          mqttStatus('');
-          if (mqttReady) mqttReady = null;
-          // اتصال بعدی باید یک client تازه بسازد.
-          if (!connectedOnce && !settled) finish(false);
-        });
-      } catch(e) { mqttStatus(''); resolve(false); }
+      }catch(e){mqttClient=null;mqttBrokerIndex++;finish(false);}
     });
     return mqttReady;
   }
@@ -1710,14 +1629,13 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   }
   function mqttSubscribeDM(key,target){
     if (!mqttClient || !mqttClient.connected || !key) return false;
-    const k = mqttKey(key);
-    const topics = [MQTT_DM + k + '/#', MQTT_DM_HISTORY + k];
+    const topics = [MQTT_DM_HISTORY + mqttKey(key)];
     if(target && String(target).toLowerCase() !== String(key).toLowerCase()){
       const ck=dmConversationKey(key,target);
       if(ck) topics.push(MQTT_DM + 'conversation/' + ck + '/#');
     }
     try {
-      mqttClient.subscribe(topics, { qos: 1, rh: 2 }, (err) => {
+      mqttClient.subscribe(topics, { qos: 0, rh: 2 }, (err) => {
         if(err) console.warn('DM subscribe failed',err);
       });
       return true;
@@ -1887,10 +1805,12 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     await mqttConnect();
     mqttSubscribeDM(currentKey, dmTarget);
     try { if (mqttClient && mqttClient.connected) mqttClient.subscribe(MQTT_BLOCKS + mqttKey(currentKey), { qos: 1, rh: 2 }); } catch(e){}
-    // retained پیام‌های خصوصی بعد از subscribe می‌رسند؛ کمی صبر می‌کنیم تا تاریخچه روی گوشی تازه بازسازی شود.
-    await new Promise(r=>setTimeout(r, 450));
-    if (dmTarget) await ensureRemotePlayer(dmTarget, 3000);
+    // تاریخچه retained در پس‌زمینه می‌رسد؛ صفحه نباید برای آن متوقف شود.
     renderPm();
+    if (dmTarget) {
+      try { await ensureRemotePlayer(dmTarget, 700); } catch(e){}
+      renderPm();
+    }
     if (dmTarget) {
       const p = dmPlayer(dmTarget), name = p?.name || target;
       $('#pmTo').innerHTML = dmTarget === VAIK_SUPPORT ? `💙 گفتگو با <b>VAIK</b> · پشتیبانی` : `در حال گفتگو با <b>${esc(name || dmTarget)}</b>`;
@@ -1901,95 +1821,70 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     $('#pmStatus').textContent = mqttClient && mqttClient.connected ? 'سرور آنلاین' : 'اتصال برقرار نیست';
   }
 
-  async function dmPublish(topic, payload){
-    let ok = await mqttConnect();
-    if (!ok || !mqttClient || !mqttClient.connected) throw new Error('mqtt offline');
-    for (let attempt=0; attempt<3; attempt++) {
-      try {
-        await new Promise((resolve,reject)=>{
-          let done=false;
-          const timer=setTimeout(()=>{ if(!done){done=true;reject(new Error('publish-timeout'));} },5000);
-          try {
-            mqttClient.publish(topic,payload,{qos:1,retain:true},err=>{
-              if(done)return; done=true; clearTimeout(timer); err?reject(err):resolve(true);
-            });
-          } catch(e){ if(!done){done=true;clearTimeout(timer);reject(e);} }
-        });
-        return true;
-      } catch(e) {
-        if (attempt<2) {
-          mqttReady=null;
-          try { if(mqttClient) mqttClient.end(true); } catch(_){}
-          await new Promise(r=>setTimeout(r,300 + attempt*250));
-          ok=await mqttConnect();
-          if (ok) mqttSubscribeDM(currentKey);
-          if (!ok && attempt===1) throw e;
-        } else throw e;
-      }
+  // ======== پیام خصوصی: یک کانال مشترک برای هر دو کاربر ========
+  async function dmPublish(topic,payload){
+    let ok=await mqttConnect();
+    if(!ok||!mqttClient?.connected){
+      mqttReady=null;
+      ok=await mqttConnect();
     }
-    return false;
+    if(!ok||!mqttClient?.connected) throw new Error('mqtt-offline');
+    // پیام زنده را بدون انتظار برای callback بروکر می‌فرستیم؛ این روی WebView/موبایل پایدارتر است.
+    try{
+      mqttClient.publish(topic,payload,{qos:0,retain:false});
+      return true;
+    }catch(e){
+      // یک بار اتصال مجدد و تلاش دوم
+      try{
+        mqttReady=null;
+        const ok2=await mqttConnect();
+        if(!ok2||!mqttClient?.connected) throw e;
+        mqttClient.publish(topic,payload,{qos:0,retain:false});
+        return true;
+      }catch(e2){ throw e2; }
+    }
+  }
+
+  let dmHistoryTimer=null, dmHistoryQueue=new Set();
+  function scheduleDmHistory(...keys){
+    keys.map(k=>String(k||'').toLowerCase()).filter(Boolean).forEach(k=>dmHistoryQueue.add(k));
+    clearTimeout(dmHistoryTimer);
+    dmHistoryTimer=setTimeout(async()=>{
+      const q=[...dmHistoryQueue];dmHistoryQueue.clear();
+      for(const k of q){try{await dmPublishHistory(k)}catch(e){}}
+    },1200);
   }
 
   async function dmPublishHistory(key){
-    const k = String(key || '').toLowerCase();
-    if (!k) return false;
-    const arr = [...dmMessages.values()].filter(m => m && m.id && m.text && (String(m.from).toLowerCase()===k || String(m.to).toLowerCase()===k));
-    const history = arr.sort((a,b)=>(a.t||0)-(b.t||0)).slice(-300);
-    for(let attempt=0; attempt<3; attempt++){
-      const ok = await mqttConnect();
-      if(!ok || !mqttClient || !mqttClient.connected){
-        await new Promise(r=>setTimeout(r,300 + attempt*250));
-        continue;
-      }
-      try{
-        await new Promise((resolve,reject)=>{
-          let done=false;
-          const timer=setTimeout(()=>{if(!done){done=true;reject(new Error('dm-history-timeout'));}},5000);
-          try { mqttClient.publish(MQTT_DM_HISTORY + mqttKey(k), JSON.stringify(history), {qos:1,retain:true}, err=>{
-            if(done)return; done=true; clearTimeout(timer); err?reject(err):resolve(true);
-          }); } catch(e){ if(!done){done=true;clearTimeout(timer);reject(e);} }
-        });
-        return true;
-      }catch(e){
-        mqttReady=null;
-        try{ if(mqttClient) mqttClient.end(true); }catch(_){ }
-        if(attempt<2) await new Promise(r=>setTimeout(r,300 + attempt*250));
-      }
-    }
-    return false;
+    const k=String(key||'').toLowerCase();if(!k)return false;
+    const arr=[...dmMessages.values()].filter(m=>m&&m.id&&m.text&&(String(m.from).toLowerCase()===k||String(m.to).toLowerCase()===k)).sort((a,b)=>(a.t||0)-(b.t||0)).slice(-300);
+    const ok=await mqttConnect();if(!ok||!mqttClient?.connected)return false;
+    return await new Promise(resolve=>{
+      try{mqttClient.publish(MQTT_DM_HISTORY+mqttKey(k),JSON.stringify(arr),{qos:1,retain:true},err=>resolve(!err));}
+      catch(e){resolve(false)}
+    });
   }
 
   async function pmSend(){
-    const inp=$('#pmInput'), text=inp.value.replace(/\s+/g,' ').trim().slice(0,500);
-    if(!text || !dmTarget || dmBusy) return;
-    if(isBlockedForMe(dmTarget)) return toast('🚫 این بازیکن شما را بلاک کرده است و نمی‌توانید پیام بدهید.');
-    dmBusy=true; $('#pmSend').disabled=true;
+    const inp=$('#pmInput'),text=inp.value.replace(/\s+/g,' ').trim().slice(0,500);
+    if(!text||!dmTarget||dmBusy)return;
+    if(isBlockedForMe(dmTarget))return toast('🚫 این بازیکن شما را بلاک کرده است و نمی‌توانید پیام بدهید.');
+    dmBusy=true;$('#pmSend').disabled=true;
+    const a=loadAcc()[currentKey];
     try{
-      const ok=await mqttConnect();
-      if(!ok || !mqttClient || !mqttClient.connected) throw new Error('mqtt offline');
-      mqttSubscribeDM(currentKey, dmTarget);
-      const a=loadAcc()[currentKey]; if(!a) throw new Error('account missing');
+      if(!a)throw new Error('account');
       const id=Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);
       const m={id,from:String(currentKey).toLowerCase(),to:String(dmTarget).toLowerCase(),fromName:a.name,fromCc:ccOf(a),fromAv:a.avS||'',text,t:Date.now(),seen:false};
-      const raw=JSON.stringify(m);
-      // پیام خصوصی روی یک کانال مشترکِ اختصاصی همین دو کاربر منتشر می‌شود.
-      // این روش از وابستگی به publish دوم و مسیر inbox گیرنده جلوگیری می‌کند.
-      const convTopic = dmConversationTopic(currentKey, dmTarget, id);
-      if(!convTopic) throw new Error('conversation topic missing');
-      await dmPublish(convTopic,raw);
-      // برای سازگاری با نسخه‌های قبلی، یک نسخه در inbox گیرنده هم نگه می‌داریم؛
-      // اگر این نسخه شکست بخورد، پیام اصلی قبلاً روی کانال گفتگو ثبت شده است.
-      try { await dmPublish(dmTopic(dmTarget,id),raw); } catch(_e) {}
-      dmMessages.set(id,m); saveDmCache();
-      // یک نسخهٔ retained از تاریخچهٔ هر دو طرف هم نگه می‌داریم؛ اگر یکی از دو publish تاریخچه
-      // به‌علت قطع لحظه‌ای شبکه شکست خورد، خود پیام اصلی همچنان ارسال شده و دفعه بعد دوباره history ساخته می‌شود.
-      const h1 = await dmPublishHistory(currentKey);
-      const h2 = await dmPublishHistory(dmTarget);
-      if(!h1 || !h2) toast('پیام ارسال شد؛ تاریخچه در حال همگام‌سازی است.');
-      inp.value=''; renderPm();
-    }catch(e){ toast('پیام ارسال نشد؛ اتصال سرور را بررسی کنید.'); }
+      const topic=dmConversationTopic(currentKey,dmTarget,id);
+      if(!topic)throw new Error('topic');
+      const ok=await dmPublish(topic,JSON.stringify(m));
+      if(!ok)throw new Error('send');
+      dmMessages.set(id,m);saveDmCache();inp.value='';renderPm();
+      scheduleDmHistory(currentKey,dmTarget);
+    }catch(e){toast('پیام ارسال نشد؛ اتصال اینترنت را بررسی کنید.');}
     finally{dmBusy=false;$('#pmSend').disabled=false;}
   }
+
 
   function mqttPresenceOnline(key){
     if (!mqttClient || !mqttClient.connected || !key) return;
@@ -2016,36 +1911,32 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   }
 
   async function mqttPublishChat(m){
-    // اتصال و ارسال واقعی روی broker؛ اگر publish تایم‌اوت شد، client را از نو می‌سازیم.
-    for (let attempt=0; attempt<3; attempt++) {
-      try {
-        const connected = await mqttConnect();
-        if (!connected || !mqttClient || !mqttClient.connected) throw new Error('mqtt offline');
-        const id=String(m.id), clean=JSON.parse(JSON.stringify(m));
-        const topic=MQTT_CHAT+encodeURIComponent(id), payload=JSON.stringify(clean);
-        await new Promise((resolve,reject)=>{
-          let done=false;
-          const timer=setTimeout(()=>{if(!done){done=true;reject(new Error('publish-timeout'));}},5000);
-          try { mqttClient.publish(topic,payload,{qos:1,retain:true},err=>{
-            if(done)return; done=true; clearTimeout(timer); err?reject(err):resolve(true);
-          }); } catch(e){ if(!done){done=true;clearTimeout(timer);reject(e);} }
-        });
-        if(!mqttChatHistory.some(x=>x.id===clean.id)){
-          mqttChatHistory.push(clean); mqttChatHistory=mqttChatHistory.slice(-CHAT_KEEP);
-        }
-        // علاوه بر topic اختصاصی هر پیام، یک history retained هم داریم تا بازیابی بعد از refresh قطعی‌تر باشد.
-        await mqttPublishChatHistory([clean]);
-        return true;
-      } catch(e){
-        if(attempt < 2){
-          mqttReady=null;
-          try{if(mqttClient)mqttClient.end(true);}catch(_){}
-          await new Promise(r=>setTimeout(r,250));
-        }
-      }
+    let ok=await mqttConnect();
+    if(!ok||!mqttClient?.connected){
+      mqttReady=null;
+      ok=await mqttConnect();
     }
-    return false;
+    if(!ok||!mqttClient?.connected)return false;
+    const clean=JSON.parse(JSON.stringify(m));
+    try{
+      // ارسال زنده با QoS0 و بدون منتظر ماندن برای callback؛ برای WebView اندروید مطمئن‌تر است.
+      mqttClient.publish(MQTT_CHAT_LIVE,JSON.stringify(clean),{qos:0,retain:false});
+      mqttReceiveChat(clean);
+      clearTimeout(window.__chatHistoryTimer);
+      window.__chatHistoryTimer=setTimeout(()=>{mqttPublishChatHistory([clean]).catch(()=>{})},1200);
+      return true;
+    }catch(e){
+      try{
+        mqttReady=null;
+        const ok2=await mqttConnect();
+        if(!ok2||!mqttClient?.connected)return false;
+        mqttClient.publish(MQTT_CHAT_LIVE,JSON.stringify(clean),{qos:0,retain:false});
+        mqttReceiveChat(clean);
+        return true;
+      }catch(e2){return false;}
+    }
   }
+
 
   function mqttReceiveChat(m){
     if (!m || !m.id) return;
@@ -2809,6 +2700,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
       return;
     }
     chatMode = 'local'; chatMqttActive = false; chatUrl = '';
+    setDot('local','حالت ذخیره محلی');
     if (CHAT_API === '') return;
     const url = CHAT_API === 'auto' ? '/api/chat' : CHAT_API;
     if (CHAT_API === 'auto' && !/^https?:$/.test(location.protocol)) return;
@@ -2860,7 +2752,8 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
         // تمام پیام‌های ذخیره‌شده را از broker بگیریم؛ UI به تاریخچهٔ محلی وابسته نیست.
         try {
           // چت نباید منتظر دانلود کل retained history بماند؛ پیام‌ها در پس‌زمینه می‌آیند.
-          mqttClient.subscribe(MQTT_CHAT + '#', { qos:1, rh:2 });
+          mqttClient.subscribe([MQTT_CHAT_HISTORY, MQTT_CHAT_STATUS], { qos:1, rh:2 });
+          mqttClient.subscribe(MQTT_CHAT_LIVE, { qos:0, rh:2 });
         } catch(e){}
       }
       chatById.clear();
@@ -2900,8 +2793,12 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
       let sent = false;
       if (chatMode === 'mqtt') {
         sent = await mqttPublishChat(m);
-        if (!sent) throw new Error('اتصال برقرار نیست.');
-        mqttReceiveChat(m);
+        // اگر اتصال لحظه‌ای قطع شده، یک بار مستقیم از نو وصل شو و دوباره بفرست.
+        if (!sent) {
+          mqttReady = null;
+          sent = await mqttPublishChat(m);
+        }
+        if (!sent) throw new Error('اتصال به سرور برقرار نیست.');
       } else if (chatMode === 'server') {
         const r = await fetch(chatUrl, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({...m, cid:chatCid}) });
         const j = await r.json(); if (!j.ok) throw new Error(j.error || 'fail');
@@ -4088,7 +3985,7 @@ function renderKingRoles(){
   $('#pmInput').addEventListener('keydown', e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();pmSend();}});
   $('#pmBack').addEventListener('click',()=>{go('profile');$('#fabLayer').hidden=false;render(loadAcc()[currentKey]);});
   $('#gotoPm').addEventListener('click',()=>{sheet.hidden=true;showPm();});
-  setInterval(()=>{if(!$('#pm').hidden){mqttSubscribeDM(currentKey, dmTarget); try { if (mqttClient && mqttClient.connected) mqttClient.subscribe(MQTT_BLOCKS + mqttKey(currentKey), { qos: 1 }); } catch(e){} renderPm();}},3000);
+  setInterval(()=>{if(!$('#pm').hidden){if(mqttClient && mqttClient.connected) mqttSubscribeDM(currentKey, dmTarget); try { if (mqttClient && mqttClient.connected) mqttClient.subscribe(MQTT_BLOCKS + mqttKey(currentKey), { qos: 0, rh: 2 }); } catch(e){} renderPm();}},5000);
 
   $('#chatBack').addEventListener('click', () => { go('profile'); $('#fabLayer').hidden = false; render(loadAcc()[currentKey]); });
   $('#gotoChat').addEventListener('click', () => { sheet.hidden = true; showChat(); });
