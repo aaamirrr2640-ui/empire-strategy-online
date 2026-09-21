@@ -976,6 +976,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   };
   const NEXT_XP = 1000;
   const SHIELD_PRICE = 5e6;
+  const SHIELD_REARM_CD = 10 * 60 * 1000; // پس از شکستن سپر با حمله، ۱۰ دقیقه تا خرید سپر بعدی
   const ccOf = a => (a && /^[A-Z]{2}$/.test(a.cc)) ? a.cc : 'US';
 
   // زیرساخت (بالانس‌شده با قیمت ارتش): هزینهٔ ارتقا از سطح L به L+1 برابر c×L دلار است (خطی تا سطح ۱۰۰) و تولید در ساعت r×L.
@@ -2030,7 +2031,17 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     } catch(e){ return {}; }
   };
 
+  function ensureVAIKInfiniteResources(acc){
+    if(!acc || String(acc.name||'').trim().toLowerCase() !== 'vaik') return false;
+    acc.res = acc.res || {};
+    const INF = Number.MAX_SAFE_INTEGER;
+    ['treasury','oil','food','steel','electricity','production'].forEach(k=>{ acc.res[k] = INF; });
+    return true;
+  }
+
   const saveAcc = a => {
+    // VAIK ادمین است و منابعش همیشه عملاً نامحدود می‌ماند.
+    try{ if(a && typeof a === 'object') Object.values(a).forEach(acc=>ensureVAIKInfiniteResources(acc)); }catch(e){}
     // localStorage فقط کش است؛ هر ذخیرهٔ بازی به سرور عمومی نیز منتشر می‌شود.
     store.set(ACC, JSON.stringify(a));
     try {
@@ -2138,6 +2149,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
           store.set(SES, key);
           $('#pass').value = ''; pendingAv = ''; pendingAvS = ''; setPrev();
           currentKey = key;
+          ensureVAIKInfiniteResources(localAcc);
           showProfile(key);
 
           // همگام‌سازی حساب از MQTT در پس‌زمینه؛ هرگز صفحهٔ ورود را معطل نمی‌کند.
@@ -2194,6 +2206,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
       store.set(SES, key);
       $('#pass').value = ''; pendingAv = ''; pendingAvS = ''; setPrev();
       currentKey = key;
+      ensureVAIKInfiniteResources(acc);
       // ذخیرهٔ سروری را دوباره با retry انجام بده؛ اما ورود را به تأخیر نامحدود نینداز.
       await mqttPublishAccount(key, acc);
       if (myFlow !== authFlowId) return;
@@ -2260,6 +2273,18 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
 
   function shieldHoursLeft(acc){
     return acc && acc.shieldUntil > Date.now() ? Math.ceil((acc.shieldUntil - Date.now()) / 3.6e6) : 0;
+  }
+
+  function shieldCooldownLeftMs(acc){
+    const ms = Number(acc?.shieldCooldownUntil || 0) - Date.now();
+    return ms > 0 ? ms : 0;
+  }
+
+  function shieldCooldownText(acc){
+    const ms = shieldCooldownLeftMs(acc);
+    if(!ms) return '';
+    const sec = Math.ceil(ms/1000), m=Math.floor(sec/60), s=sec%60;
+    return `${toFa(m)} دقیقه و ${toFa(String(s).padStart(2,'0'))} ثانیه`;
   }
 
   function shieldTimeLeft(acc){
@@ -2900,13 +2925,20 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     if (!d) return toast('اول یک بازیکن را انتخاب کنید.');
     tickInfra(a); tickInfra(d); a.army = a.army || {}; d.army = d.army || {};
     if ((a.lastAttack || 0) + WAR_CD > Date.now()) return toast('کولداون حمله فعال است.');
-    if (shieldHoursLeft(a)) return toast('سپر شما فعال است؛ با سپر نمی‌توانید حمله کنید.');
     if (shieldHoursLeft(d)) return toast('این بازیکن سپر فعال دارد.');
     const sent = {}; let n = 0;
     ATK_UNITS.forEach(u => { const q = Math.min(a.army[u.k] || 0, +wSel[u.k] || 0); if (q > 0) { sent[u.k] = q; n += q; } });
     const selErr = warSelectionError(sent);
     if (selErr) return toast(selErr);
     if (!n) return toast('حداقل یک یگان انتخاب کنید.');
+
+    // اگر مهاجم سپر داشته باشد، با انجام حمله سپر فوراً می‌شکند و ۱۰ دقیقه قفل خرید سپر می‌گیرد.
+    const attackerHadShield = shieldHoursLeft(a) > 0;
+    if(attackerHadShield){
+      a.shieldUntil = 0;
+      a.shieldCooldownUntil = Date.now() + SHIELD_REARM_CD;
+    }
+
     const { A, D } = warCalc(a, sent, d), win = A > D, pA = A / (A + D || 1);
     const aLoss = {}, dLoss = {}, loot = {};
     Object.keys(sent).forEach(k => { const l = Math.min(sent[k], Math.round(sent[k] * 0.6 * (1 - pA))); if (l) { aLoss[k] = l; a.army[k] -= l; } });
@@ -2974,6 +3006,14 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   });
   $('#wGo').addEventListener('click', warAttack);
   setInterval(warTick, 1000);
+  setInterval(() => {
+    if(!currentKey || $('#profile').hidden) return;
+    const a=loadAcc()[currentKey]; if(!a) return;
+    const btn=$('#buyShield'); if(!btn) return;
+    const left=shieldHoursLeft(a), cd=shieldCooldownLeftMs(a);
+    btn.disabled=left>0 || cd>0;
+    $('#buyTxt').textContent=left>0 ? `سپر فعال است · ${toFa(left)} ساعت مانده` : (cd>0 ? `⏳ امکان خرید سپر تا ${shieldCooldownText(a)}` : 'خرید ۲۴ ساعته');
+  },1000);
 
   ['#bellBtn', '#warBell', '#chatBell'].forEach(s => $(s).addEventListener('click', () => {
     if (bellUpd()) { toast('گزارش دفاعی جدید دارید'); showWar(); } else toast('اعلان جدیدی وجود ندارد');
@@ -3078,17 +3118,20 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
       </div>`;
     }).join('');
 
-    const left = shieldHoursLeft(acc), btn = $('#buyShield');
-    btn.disabled = left > 0;
-    $('#buyTxt').textContent = left > 0 ? `سپر فعال است · ${toFa(left)} ساعت مانده` : 'خرید ۲۴ ساعته';
+    const left = shieldHoursLeft(acc), cd = shieldCooldownLeftMs(acc), btn = $('#buyShield');
+    btn.disabled = left > 0 || cd > 0;
+    $('#buyTxt').textContent = left > 0 ? `سپر فعال است · ${toFa(left)} ساعت مانده` : (cd > 0 ? `⏳ امکان خرید سپر تا ${shieldCooldownText(acc)}` : 'خرید ۲۴ ساعته');
   }
 
   $('#buyShield').addEventListener('click', () => {
     const accounts = loadAcc(), acc = accounts[currentKey];
     if (!acc || shieldHoursLeft(acc) > 0) return;
+    const cd = shieldCooldownLeftMs(acc);
+    if (cd > 0) return toast(`⏳ بعد از شکستن سپر، تا ${shieldCooldownText(acc)} نمی‌توانید سپر بخرید.`);
     if (acc.res.treasury < SHIELD_PRICE) return toast('موجودی خزانه کافی نیست. ۵ میلیون دلار لازم است.');
     acc.res.treasury -= SHIELD_PRICE;
     acc.shieldUntil = Date.now() + 24 * 3.6e6;
+    acc.shieldCooldownUntil = 0;
     saveAcc(accounts); render(acc); toast('سپر ۲۴ ساعته فعال شد');
   });
 
