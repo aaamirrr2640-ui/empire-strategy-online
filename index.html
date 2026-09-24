@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<!-- QRTT SECURITY HARDENED CLIENT: public MQTT payloads are sanitized; authoritative game security still requires backend validation. -->
+<!-- VAIK_CHAT_SERVER_READY: MQTT chat configuration placeholder -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
@@ -1019,7 +1019,6 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     <h1 class="login-title" style="margin-top:16px">👑 پادشاهی</h1>
     <p class="login-sub">در این بخش اعضای اتحاد برای فتح پادشاهی نیرو احضار می‌کنند.</p>
     <div class="kingdom-battle-time" style="margin:10px 12px 14px;padding:11px 12px;border:1px solid #b89422;border-radius:12px;text-align:center;font-weight:700;color:#f5d35b;background:rgba(184,148,34,.08);">هر هفته یکشنبه ساعت ۱۲ تا ۲۲ زمان نبرد برای پادشاهی</div>
-    <div id="kingdomCountdown" class="wnone" style="margin:0 12px 14px;border-color:rgba(214,174,53,.35);color:#f5d35b">⏳ در حال محاسبه زمان پادشاهی…</div>
     <div class="wnone" id="kingdomNote">
 
 در حال آماده‌سازی پادشاهی…</div>
@@ -1161,9 +1160,6 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
 
 
 <script>
-/* QRTT server security layer: set window.QRTT_SERVER_URL before this script when the API is hosted separately. */
-window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
-
 /* ===== ساعت مرکزی سرور =====
    زمان بازی از هدر Date سروری که فایل بازی را سرو می‌کند گرفته می‌شود.
    بعد از همگام‌سازی، زمان با performance.now() جلو می‌رود؛
@@ -1248,7 +1244,7 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
 })();
 </script>
 
-<script src="https://unpkg.com/mqtt@5.10.3/dist/mqtt.min.js"></script>
+<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 <script>
 (() => {
   /* ======== تنظیمات بازی ======== */
@@ -1434,17 +1430,24 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
     const all = mergedPlayerDirectory();
     return Object.values(all).filter(a=>a&&a.name&&!isBannedPlayer(a)&&worldIdOf(a)===Number(id)).length;
   }
+  function unlockedWorldMax(){
+    let max=1;
+    for(let id=1;id<WORLD_COUNT;id++){ if(worldPlayerCount(id)>=WORLD_CAPACITY) max=id+1; else break; }
+    return max;
+  }
   function renderWorldPicker(){
     const box=$('#worldGrid'); if(!box)return;
+    const unlocked=unlockedWorldMax();
     box.innerHTML=WORLD_LIST.map(w=>{
-      const n=worldPlayerCount(w.id), full=n>=WORLD_CAPACITY, on=Number(selectedWorldId)===w.id;
-      return `<button type="button" class="world-option${on?' on':''}" data-world-select="${w.id}" ${full?'disabled':''}><span><b>${w.icon} ${w.name}</b><small>${toFa(n)} / ${toFa(WORLD_CAPACITY)} بازیکن${full?' · تکمیل شده':''}</small></span><span class="world-badge">${full?'🔒':'›'}</span></button>`;
+      const n=worldPlayerCount(w.id), full=n>=WORLD_CAPACITY, locked=w.id>unlocked, on=Number(selectedWorldId)===w.id;
+      return `<button type="button" class="world-option${on?' on':''}" data-world-select="${w.id}" ${(full||locked)?'disabled':''}><span><b>${w.icon} ${w.name}</b><small>${toFa(n)} / ${toFa(WORLD_CAPACITY)} بازیکن${full?' · تکمیل شده':locked?' · هنوز باز نشده':''}</small></span><span class="world-badge">${(full||locked)?'🔒':'›'}</span></button>`;
     }).join('');
     const w=worldInfo(selectedWorldId); $('#worldCurrent').textContent=`${w?.icon||'🌍'} ${w?.name||'جهان ۱'} انتخاب شده است`;
   }
   function showWorldPicker(){ $('#worldPicker').hidden=false; selectedWorldId=1; renderWorldPicker(); }
   function setWorldSelection(id){
     id=Math.max(1,Math.min(WORLD_COUNT,Number(id)||1));
+    if(id>unlockedWorldMax())return toast('این جهان هنوز باز نشده است؛ ابتدا جهان قبلی باید پر شود.');
     if(worldPlayerCount(id)>=WORLD_CAPACITY)return toast('این جهان به ظرفیت ۲۰۰ بازیکن رسیده است.');
     selectedWorldId=id; renderWorldPicker();
   }
@@ -1755,8 +1758,7 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
   }
 
   function mqttPersistStore(key, value){
-    // امنیت: credential و کل دیتای حساب در retained MQTT عمومی ذخیره نمی‌شود.
-    if (!key || key === SES || key === ACC || /pass|password|salt|hash|token|secret|session/i.test(String(key))) return;
+    if (!key || key === SES) return;
     try {
       if (!mqttClient || !mqttClient.connected) return;
       const topic = MQTT_STATE + encodeURIComponent(key);
@@ -1768,7 +1770,7 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
   function mqttRestoreStore(topic, payload){
     if (!topic || !topic.startsWith(MQTT_STATE)) return false;
     const key = decodeURIComponent(topic.slice(MQTT_STATE.length));
-    if (!key || key === SES || key === ACC || /pass|password|salt|hash|token|secret|session/i.test(String(key))) return true;
+    if (!key || key === SES) return true;
     try {
       mqttHydrating = true;
       const v = payload.toString();
@@ -1779,19 +1781,8 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
 
   function publicAccount(acc){
     if (!acc) return null;
-    // امنیت: فقط داده‌های لازم برای نمایش عمومی منتشر می‌شوند.
-    // salt/hash، منابع، ارتش، تحقیقات، رمز و state خصوصی هرگز وارد payload عمومی نمی‌شوند.
-    const src = acc || {};
-    return {
-      name: src.name || '', cc: src.cc || '', worldId: worldIdOf(src),
-      xp: Number(src.xp || 0), avS: src.avS || '',
-      avatarVersion: src.avatarVersion || src.avV || '',
-      verified: !!src.verified, shieldUntil: Number(src.shieldUntil || 0),
-      banned: !!src.banned, adminBanned: !!src.adminBanned,
-      reports: Array.isArray(src.reports) ? mergeWarReports([], src.reports) : [],
-      allyId: src.allyId || src.allianceId || null, ally: src.ally || null,
-      allyLeader: !!src.allyLeader, isLeader: !!src.isLeader
-    };
+    // همهٔ داده‌های بازی نگه داشته می‌شوند؛ رمز خام هرگز داخل payload نیست.
+    return JSON.parse(JSON.stringify(acc));
   }
 
   // تیک آبی اختصاصی بازیکن VAIK
@@ -1839,8 +1830,8 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
     if(window.__mqttLoader) return window.__mqttLoader;
     window.__mqttLoader = new Promise(resolve=>{
       const urls=[
-        'https://unpkg.com/mqtt@5.10.3/dist/mqtt.min.js',
-        'https://cdn.jsdelivr.net/npm/mqtt@5.10.3/dist/mqtt.min.js'
+        'https://unpkg.com/mqtt/dist/mqtt.min.js',
+        'https://cdn.jsdelivr.net/npm/mqtt/dist/mqtt.min.js'
       ];
       let i=0;
       const next=()=>{
@@ -2533,30 +2524,6 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
     } catch(x){ toast('این عکس قابل استفاده نیست. عکس دیگری انتخاب کنید.'); }
   });
 
-  async function serverRequest(path, options={}){
-    const base=String(window.QRTT_SERVER_URL||'').replace(/\/$/,'');
-    if(!base) return null;
-    const headers={...(options.headers||{}),'Content-Type':'application/json'};
-    const tok=store.get('qrtt:token'); if(tok) headers.Authorization='Bearer '+tok;
-    const r=await fetch(base+path,{...options,headers});
-    let j={}; try{j=await r.json();}catch(e){}
-    if(!r.ok) throw new Error(j.error||'خطای سرور');
-    return j;
-  }
-
-  function applyServerState(j){
-    if(!j?.state || !currentKey) return;
-    const accs=loadAcc(), old=accs[currentKey]||{};
-    accs[currentKey]={...old,...j.state,name:j.state.name||old.name};
-    saveAcc(accs);
-    return accs[currentKey];
-  }
-  async function serverAction(path, body){
-    if(!window.QRTT_SERVER_URL) return null;
-    const j=await serverRequest(path,{method:'POST',body:JSON.stringify(body||{})});
-    return applyServerState(j);
-  }
-
   /* ======== ورود ======== */
   const USER_RE = /^[A-Za-z0-9_\u0600-\u06FF]{3,16}$/;
   const errEl = $('#err');
@@ -2578,13 +2545,6 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
 
     const btn = $('#loginBtn'); btn.disabled = true;
     try {
-      if(window.QRTT_SERVER_URL){
-        const j=await serverRequest('/api/auth/login',{method:'POST',body:JSON.stringify({name,password:pw})});
-        const key=name.toLocaleLowerCase('en'), accounts=loadAcc();
-        accounts[key]={...(accounts[key]||{}),...(j.state||{}),...(j.player||{}),name};
-        store.set(ACC,JSON.stringify(accounts)); store.set('qrtt:token',j.token); store.set(SES,key); currentKey=key;
-        $('#pass').value=''; pendingAv=''; pendingAvS=''; setPrev(); showProfile(key); return;
-      }
       const key = name.toLocaleLowerCase('en');
       let accounts = loadAcc();
       const localAcc = accounts[key] || null;
@@ -2681,13 +2641,6 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
 
     const btn = $('#registerBtn'); btn.disabled = true;
     try {
-      if(window.QRTT_SERVER_URL){
-        const j=await serverRequest('/api/auth/register',{method:'POST',body:JSON.stringify({name,password:pw,worldId:selectedWorldId})});
-        const key=name.toLocaleLowerCase('en'), accounts=loadAcc();
-        accounts[key]={...(accounts[key]||{}),...(j.state||{}),...(j.player||{}),name};
-        store.set(ACC,JSON.stringify(accounts)); store.set('qrtt:token',j.token); store.set(SES,key); currentKey=key;
-        $('#pass').value=''; pendingAv=''; pendingAvS=''; setPrev(); showProfile(key); toast('ثبت‌نام با موفقیت انجام شد'); return;
-      }
       const key = name.toLocaleLowerCase('en');
       const accounts = loadAcc();
       const remote = await mqttGetAccount(key, 1200);
@@ -2805,16 +2758,12 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
     }).join('');
     $('#infraCard').querySelectorAll('.upbtn[data-b]').forEach(btn => {
       if (btn.disabled) return;
-      btn.addEventListener('click', async () => {
+      btn.addEventListener('click', () => {
         const key = btn.dataset.b;
         const accounts = loadAcc(), a = accounts[currentKey];
         tickInfra(a);
         const b = BUILDINGS.find(x => x.key === key), st = a.buildings[key], c0 = infraCost(b, st.level), c = Math.round(c0 * (playerHasRole(a,'infra') ? 0.70 : 1));
         if (a.res.treasury < c) return toast('موجودی خزانه برای ساخت کافی نیست.');
-        if(window.QRTT_SERVER_URL){
-          try{ const fresh=await serverAction('/api/action/infra',{building:key}); render(fresh); renderInfra(fresh); toast('ساختمان ارتقا یافت.'); }catch(e){ toast(e.message||'خطای سرور'); }
-          return;
-        }
         a.res.treasury -= c; st.level++;
         saveAcc(accounts); render(a); renderInfra(a);
       });
@@ -2863,7 +2812,7 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
     renderArmy(acc);
   }
 
-  $('#armyList').addEventListener('click', async e => {
+  $('#armyList').addEventListener('click', e => {
     const btn = e.target.closest('.pack'); if (!btn) return;
     const u = UNITS.find(x => x.k === btn.dataset.u), n = +btn.dataset.n;
     const accounts = loadAcc(), a = accounts[currentKey]; if (!a) return;
@@ -2874,10 +2823,6 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
     // اگر بازیکن نفت/غذا نداشته باشد، با پرداخت پول هم می‌تواند یگان بسازد.
     if (need.treasury > (a.res.treasury || 0)) {
       return toast(`${names.treasury} کافی نیست. لازم: ${fmt(need.treasury)}`);
-    }
-    if(window.QRTT_SERVER_URL){
-      try{ const fresh=await serverAction('/api/action/buy-unit',{unit:u.k,count:n}); renderArmy(fresh); toast(`${toFa(n)} ${u.n} به ارتش اضافه شد`); }catch(e){ toast(e.message||'خطای سرور'); }
-      return;
     }
     a.res.treasury = Math.round((a.res.treasury - need.treasury) * 100) / 100;
     ['oil','food'].forEach(k => {
@@ -2920,7 +2865,7 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
     renderResearch(acc);
   }
 
-  $('#rsList').addEventListener('click', async e => {
+  $('#rsList').addEventListener('click', e => {
     const btn = e.target.closest('.rup'); if (!btn || btn.disabled) return;
     const r = RESEARCH.find(x => x.k === btn.dataset.r);
     const accounts = loadAcc(), a = accounts[currentKey]; if (!a) return;
@@ -2929,10 +2874,6 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
     if (L >= r.max) return;
     const c0 = rCost(r, L), c = Math.round(c0 * (playerHasRole(a,'research') ? 0.70 : 1));
     if (a.res.treasury < c) return toast(`موجودی خزانه کافی نیست. لازم: ${fmt(c)}$`);
-    if(window.QRTT_SERVER_URL){
-      try{ const fresh=await serverAction('/api/action/research',{research:r.k}); renderResearch(fresh); toast(`${r.n} به سطح ${L + 1} رسید`); }catch(e){ toast(e.message||'خطای سرور'); }
-      return;
-    }
     a.res.treasury = Math.round((a.res.treasury - c) * 100) / 100;
     a.research[r.k] = L + 1;
     saveAcc(accounts); renderResearch(a); toast(`${r.n} به سطح ${L + 1} رسید`);
@@ -3030,10 +2971,6 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
     const n = +inp.value || 0, h = have(a, m.key);
     if (n < 1) return toast('تعداد را وارد کنید.');
     if (n > h) return toast(`موجودی ${m.name} کافی نیست. موجودی شما: ${fmt(h)}`);
-    if(window.QRTT_SERVER_URL){
-      try{ const j=await serverRequest('/api/action/market',{method:'POST',body:JSON.stringify({resource:m.key,amount:n})}); const fresh=applyServerState(j); inp.value='1'; refreshMarket(fresh); toast(`${fmt(n)} ${m.unit} ${m.name} فروخته شد · +$${fmt(j.gain||0)}`); }catch(e){ toast(e.message||'خطای سرور'); }
-      return;
-    }
     const gain = n * mktPrice(m, hourNow(), a);
     a.res[m.key] = Math.round((a.res[m.key] - n) * 100) / 100;
     a.res.treasury = Math.round((a.res.treasury + gain) * 100) / 100;
@@ -3669,7 +3606,6 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
     const h=HERO_TYPES.find(x=>x.k===k);if(!h)return;const L=a.heroLevels[k],cost=heroUpgradeCost(L);
     if(L>=HERO_MAX)return toast('این قهرمان به حداکثر سطح رسیده است.');
     if(a.heroScrolls<cost)return toast('طومار کافی ندارید.');
-    if(window.QRTT_SERVER_URL){ serverAction('/api/action/hero-upgrade',{hero:k}).then(()=>{heroRender();toast('🦸 قهرمان ارتقا یافت.');}).catch(e=>toast(e.message||'خطای سرور')); return; }
     a.heroScrolls-=cost;a.heroLevels[k]=L+1;saveAcc(accs);heroRender();toast('🦸 قهرمان ارتقا یافت.');
   }
   function terroristRender(){
@@ -3689,11 +3625,10 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
     if(!a.activeHeroes.length)return toast('اول از منوی «قهرمانان» حداقل یک قهرمان را فعال کن.');
     const enemy=terrorPower(level), power=terrorFightPower(a);
     a.terrorAttempts++;
-    if(window.QRTT_SERVER_URL){ serverAction('/api/action/terror',{level}).then(()=>{terroristRender();heroRender();toast(`🏆 تروریست سطح ${toFa(level)} نابود شد.`);}).catch(e=>toast(e.message||'خطای سرور')); return; }
     if(power<enemy){saveAcc(accs);terroristRender();return toast(`☠️ شکست! قدرت تروریست ${fmt(enemy)} بود؛ نیروی ارتش شما کم نشد.`);}
     const reward=terrorReward(level);a.heroScrolls+=reward;saveAcc(accs);terroristRender();heroRender();toast(`🏆 تروریست سطح ${toFa(level)} نابود شد؛ ${toFa(reward)} طومار گرفتی. هیچ نیرویی کم نشد.`);
   }
-  $('#heroesList').addEventListener('click',e=>{const b=e.target.closest('[data-hero-up]');if(b)heroUpgrade(b.dataset.heroUp);const aBtn=e.target.closest('[data-hero-active]');if(aBtn){const accs=loadAcc(),a=heroData(accs[currentKey]);if(!a)return;if(window.QRTT_SERVER_URL){ serverAction('/api/action/hero-active',{hero:aBtn.dataset.heroActive}).then(()=>{heroRender();terroristRender();}).catch(e=>toast(e.message||'خطای سرور')); return; } if(toggleActiveHero(a,aBtn.dataset.heroActive))saveAcc(accs);heroRender();terroristRender();}});
+  $('#heroesList').addEventListener('click',e=>{const b=e.target.closest('[data-hero-up]');if(b)heroUpgrade(b.dataset.heroUp);const aBtn=e.target.closest('[data-hero-active]');if(aBtn){const accs=loadAcc(),a=heroData(accs[currentKey]);if(!a)return;if(toggleActiveHero(a,aBtn.dataset.heroActive))saveAcc(accs);heroRender();terroristRender();}});
   $('#terrorList').addEventListener('click',e=>{const b=e.target.closest('[data-terror-attack]');if(b)terroristAttack(Number(b.dataset.terrorAttack));});
   setInterval(()=>{ enforceBanState(); }, 1500);
   setInterval(()=>{if(!$('#terrorists').hidden)terroristRender();if(!$('#heroes').hidden)heroRender();},1000);
@@ -3790,8 +3725,10 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
         const rep={id:now,t:now,att:a.name,def:d.name,reason:p.reason||'',win:false,A:0,D:0,sent:p.sent||{},aLoss:{},dLoss:{},loot:{},blockedByShield:true,distance:p.distance};
         a.reports=[{...rep,type:'att'},...(a.reports||[])].slice(0,40);
         d.reports=[{...rep,type:'def',seen:false},...(d.reports||[])].slice(0,40);
-        p.battleResolved=true;p.battleAt=now;p.blockedByShield=true;p.returnAt=now+Number(p.oneWay||0);p.resolveAt=p.returnAt;
+        p.battleResolved=true;p.battleAt=now;p.blockedByShield=true;p.returnAt=now;p.resolveAt=now;
         p.returnUnits={...(p.sent||{})};
+        Object.keys(p.returnUnits).forEach(k=>{const q=Math.max(0,Math.floor(Number(p.returnUnits[k]||0)));if(q)a.army[k]=(a.army[k]||0)+q;});
+        delete a.pendingAttack;
         saveAcc(accounts);
         publishBattleAccounts(a,d,currentKey,targetKey);
         publishWarMission(a);
@@ -3813,7 +3750,9 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
       const rep={id:now+Math.random().toString(36).slice(2,6),t:now,att:a.name,def:d.name,reason:p.reason||'',win,A:Math.round(A*10)/10,D:Math.round(D*10)/10,sent,aLoss,dLoss,allyLoss,allyDefensePower:allyDef,loot,distance:p.distance,battleAt:now};
       a.reports=[{...rep,type:'att'},...(a.reports||[])].slice(0,40);
       d.reports=[{...rep,type:'def',seen:false},...(d.reports||[])].slice(0,40);
-      p.battleResolved=true;p.battleAt=now;p.win=win;p.returnAt=now+Number(p.oneWay||0);p.resolveAt=p.returnAt;
+      p.battleResolved=true;p.battleAt=now;p.win=win;p.returnAt=now;p.resolveAt=now;
+      Object.keys(p.returnUnits||{}).forEach(k=>{const q=Math.max(0,Math.floor(Number(p.returnUnits[k]||0)));if(q)a.army[k]=(a.army[k]||0)+q;});
+      delete a.pendingAttack;
       saveAcc(accounts);
       // هر دو حساب بلافاصله retained می‌شوند تا همهٔ دستگاه‌ها نتیجهٔ یکسان ببینند.
       publishBattleAccounts(a,d,currentKey,targetKey);
@@ -3851,36 +3790,21 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
       }catch(e){}
     }
     if(!d)return toast('اول یک بازیکن از جهان خودتان را انتخاب کنید.');if(worldIdOf(a)!==worldIdOf(d))return toast('امکان حمله به بازیکن جهان دیگر وجود ندارد.');
-    if(window.QRTT_SERVER_URL){
-      if(a.pendingAttack && Date.now()<Number(a.pendingAttack.resolveAt||0)) return toast(`🚀 نیروها هنوز در مأموریت هستند؛ ${formatTravel(Number(a.pendingAttack.resolveAt)-Date.now())} باقی مانده.`);
-      const sent={};let n=0;ATK_UNITS.forEach(u=>{const q=Math.min(a.army[u.k]||0,+wSel[u.k]||0);if(q>0){sent[u.k]=q;n+=q;}});const err=warSelectionError(sent);if(err)return toast(err);if(!n)return toast('حداقل یک یگان انتخاب کنید.');
-      const tr=attackDistanceText(currentKey,wTarget);
-      try{
-        const j=await serverRequest('/api/action/attack',{method:'POST',body:JSON.stringify({target:wTarget,army:sent,distance:Math.round(tr.distance),reason:$('#wReason').value.trim().slice(0,80)})});
-        applyServerState(j); wSel={};$('#wReason').value=''; const fresh=loadAcc()[currentKey]; renderUnits(fresh); warTick(); go('worldmap'); $('#fabLayer').hidden=true; resetWorldMap(); renderWorldMap(); renderWorldMapAttackRoute(); updateMapMission(fresh); toast(`🚀 حمله آغاز شد؛ رسیدن ${formatTravel(tr.oneWay)} و بازگشت کامل ${formatTravel(tr.roundTrip)}.`);
-      }catch(e){toast(e.message||'خطای سرور در حمله');}
-      return;
-    }
     resolvePendingAttack(a,accounts);if(a.pendingAttack&&Date.now()<Number(a.pendingAttack.resolveAt))return toast(`🚀 نیروها هنوز در مأموریت هستند؛ ${formatTravel(a.pendingAttack.resolveAt-Date.now())} باقی مانده.`);
     if(shieldHoursLeft(d))return toast('🛡️ این بازیکن سپر فعال دارد.');a.army=a.army||{};d.army=d.army||{};
     const sent={};let n=0;ATK_UNITS.forEach(u=>{const q=Math.min(a.army[u.k]||0,+wSel[u.k]||0);if(q>0){sent[u.k]=q;n+=q;}});const err=warSelectionError(sent);if(err)return toast(err);if(!n)return toast('حداقل یک یگان انتخاب کنید.');
     const tr=attackDistanceText(currentKey,wTarget),now=Date.now();
+    // نیروها در لحظهٔ اعزام از ارتش محلی و نسخهٔ retained سرور کم می‌شوند.
+    // بنابراین با refresh/update دوباره ظاهر نمی‌شوند؛ فقط بعد از برگشت به ارتش اضافه می‌شوند.
     Object.keys(sent).forEach(k=>{a.army[k]=Math.max(0,(a.army[k]||0)-sent[k]);});
-    a.pendingAttack={id:'atk_'+now,from:currentKey,target:wTarget,targetName:d.name,sent,returnUnits:{...sent},createdAt:now,departAt:now,arriveAt:now+tr.oneWay,oneWay:tr.oneWay,resolveAt:now+tr.roundTrip,distance:Math.round(tr.distance),reason:$('#wReason').value.trim().slice(0,80),battleResolved:false};
+    a.pendingAttack={id:'atk_'+now,from:currentKey,target:wTarget,targetName:d.name,sent,returnUnits:{...sent},createdAt:now,departAt:now,arriveAt:now+tr.oneWay,oneWay:tr.oneWay,resolveAt:now+tr.oneWay,distance:Math.round(tr.distance),reason:$('#wReason').value.trim().slice(0,80),battleResolved:false};
     saveAcc(accounts);
     publishWarMission(a);
-    wSel={};$('#wReason').value='';renderUnits(a);warTick();go('worldmap');$('#fabLayer').hidden=true;resetWorldMap();renderWorldMap();renderWorldMapAttackRoute();updateMapMission(loadAcc()[currentKey]);toast(`🚀 حمله آغاز شد؛ فاصله ${fmt(Math.round(tr.distance))} واحد. رسیدن ${formatTravel(tr.oneWay)} و بازگشت کامل ${formatTravel(tr.roundTrip)}.`);
+    wSel={};$('#wReason').value='';renderUnits(a);warTick();go('worldmap');$('#fabLayer').hidden=true;resetWorldMap();renderWorldMap();renderWorldMapAttackRoute();updateMapMission(loadAcc()[currentKey]);toast(`🚀 حمله آغاز شد؛ زمان رسیدن و انجام حمله ${formatTravel(tr.oneWay)} است. پس از نبرد نیروها فوراً به ارتش برمی‌گردند.`);
   }
   async function warAttack(){await createPendingAttack();}
-  let lastServerWarPull=0;
-  async function pullServerWarState(){
-    if(!window.QRTT_SERVER_URL||!currentKey)return;
-    const t=Date.now(); if(t-lastServerWarPull<2500)return; lastServerWarPull=t;
-    try{const j=await serverRequest('/api/me'); applyServerState(j); if(!$('#war').hidden){const a=loadAcc()[currentKey];renderRep(a);renderUnits(a);}}catch(e){}
-  }
   function warTick(){
     if(!currentKey)return;
-    pullServerWarState();
     const accounts=loadAcc(),a=accounts[currentKey];if(!a)return;
     restoreWarMission(a);
     const changed=resolvePendingAttack(a,accounts);if(changed){saveAcc(accounts);renderRep(a);renderUnits(a);}
@@ -3890,7 +3814,7 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
       if(!$('#war').hidden)$('#wCd').textContent=p.battleResolved?`↩️ نبرد انجام شد · نیروها در حال بازگشت · ${formatTravel(toReturn)} باقی مانده`:`🚀 نیروها در مسیر هدف · رسیدن و انجام حمله: ${formatTravel(toArr)} · بازگشت کامل: ${formatTravel(toReturn)}`;
       b.disabled=true;
     }else if(!p){
-      if(!$('#war').hidden)$('#wCd').textContent='⚔️ آماده حمله؛ زمان رفت‌وبرگشت بر اساس فاصله نقشه محاسبه می‌شود.';
+      if(!$('#war').hidden)$('#wCd').textContent='⚔️ آماده حمله؛ زمان فقط برای رسیدن نیروها محاسبه می‌شود و پس از نبرد فوراً برمی‌گردند.';
       b.disabled=false;
     }else if(Number(p.resolveAt||0)<=now){
       restoreWarMission(a);
@@ -3925,7 +3849,12 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
     ps[key]={x,y}; saveWorldMapPositions(ps); return ps[key];
   }
   function worldCitySvg(){return `<svg class="city-art" viewBox="0 0 90 78" aria-hidden="true"><defs><linearGradient id="cb1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e5d08a"/><stop offset="1" stop-color="#9b692d"/></linearGradient><linearGradient id="cb2" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#8fd1df"/><stop offset="1" stop-color="#3e7484"/></linearGradient></defs><ellipse cx="45" cy="68" rx="31" ry="7" fill="#0d471f" opacity=".45"/><path d="M13 61V34l12-9 12 9v27Z" fill="url(#cb1)" stroke="#d9c06e"/><path d="M53 61V20l12-9 12 9v41Z" fill="url(#cb1)" stroke="#d9c06e"/><path d="M37 61V28l8-7 8 7v33Z" fill="#c79a43" stroke="#ead88d"/><path d="M19 38h14v18H19Zm38-12h14v30H57ZM41 34h8v23h-8Z" fill="url(#cb2)"/><g fill="#f7e8aa"><circle cx="26" cy="44" r="2"/><circle cx="26" cy="51" r="2"/><circle cx="64" cy="32" r="2"/><circle cx="64" cy="40" r="2"/><circle cx="64" cy="48" r="2"/><circle cx="45" cy="41" r="2"/><circle cx="45" cy="49" r="2"/></g><path d="M45 5v15" stroke="#d7bf69" stroke-width="2"/><path d="M45 5l10 4-10 4Z" fill="#d94d3f"/></svg>`}
-  function worldMapAllPlayers(){return {...loadAcc(),...mqttPlayers};}
+  function worldMapAllPlayers(){
+    const raw={...mqttPlayers,...loadAcc()}, out={}, seen=new Set();
+    const entries=Object.entries(raw).sort(([ka,a],[kb,b])=>{if(ka===currentKey)return -1;if(kb===currentKey)return 1;return (Number(b?.updatedAt||b?.created||0)-Number(a?.updatedAt||a?.created||0));});
+    for(const [k,a] of entries){const n=String(a?.name||'').trim().toLowerCase();if(!n||seen.has(n))continue;seen.add(n);out[k]=a;}
+    return out;
+  }
   function worldPower(a){if(!a)return 0; try{return Math.round(UNITS.reduce((t,u)=>t+(+((a.army||{})[u.k])||0)*u.w,0)*milMult(a));}catch(e){return Math.round(+a.power||0)}}
   function worldShieldText(a){const t=shieldTimeLeft(a);return t?'🛡️ '+t:'🎯 آماده حمله';}
   let worldMapRenderSignature='';
@@ -4206,10 +4135,6 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
     const cd = shieldCooldownLeftMs(acc);
     if (cd > 0) return toast(`⏳ بعد از شکستن سپر، تا ${shieldCooldownText(acc)} نمی‌توانید سپر بخرید.`);
     if (acc.res.treasury < SHIELD_PRICE) return toast('موجودی خزانه کافی نیست. ۵ میلیون دلار لازم است.');
-    if(window.QRTT_SERVER_URL){
-      serverAction('/api/action/shield',{}).then(fresh=>{render(fresh);toast('سپر ۲۴ ساعته فعال شد');}).catch(e=>toast(e.message||'خطای سرور'));
-      return;
-    }
     acc.res.treasury -= SHIELD_PRICE;
     acc.shieldUntil = Date.now() + 24 * 3.6e6;
     acc.shieldCooldownUntil = 0;
@@ -4220,7 +4145,7 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
   /* ======== سرور مشترک + رتبه‌بندی + اتحاد ======== */
   let SRV = '', rankTab = 'power', rkSeq = 0, warned = false;
   const srvInit = async () => { if (chatMode !== 'server') await chatProbe(); SRV = chatMode === 'server' ? chatUrl.replace(/\/chat$/, '') : ''; return SRV; };
-  const post = (p, b) => { const a = loadAcc()[currentKey]; if(window.QRTT_SERVER_URL){ return serverRequest('/api'+p,{method:'POST',body:JSON.stringify(b)}); } return fetch(SRV + p, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ ...b, name: a.name, cid: chatCid, worldId: worldIdOf(a) }) }).then(r => r.json()); };
+  const post = (p, b) => { const a = loadAcc()[currentKey]; return fetch(SRV + p, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ ...b, name: a.name, cid: chatCid, worldId: worldIdOf(a) }) }).then(r => r.json()); };
   const setEff = e => { const accs = loadAcc(), a = accs[currentKey]; if (a && (a.eff || 0) !== e) { a.eff = e; saveAcc(accs); } };
   const myPower = a => UNITS.reduce((t, u) => t + ((a.army && a.army[u.k]) || 0) * u.w, 0) * milMult(a);
 
@@ -4256,18 +4181,15 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
         name: copy.name, cc: ccOf(copy), av: copy.avS || '',
         v: Math.round(rankTab === 'power' ? myPower(copy) : (copy.res?.treasury || 0))
       };
-    }).sort((x,y) => y.v - x.v).slice(0,10);
+    }).sort((x,y) => y.v - x.v);
+    const rankSeen=new Set();
+    const uniqueRemoteRows=remoteRows.filter(r=>{const n=String(r.name||'').trim().toLowerCase();if(!n||rankSeen.has(n))return false;rankSeen.add(n);return true;}).slice(0,10);
 
-    if (remoteRows.length) rows = remoteRows;
+    if (uniqueRemoteRows.length) rows = uniqueRemoteRows;
     if (!rows || !rows.length) {
-      try {
-        if(window.QRTT_SERVER_URL){
-          const j=await serverRequest('/api/rank?worldId='+encodeURIComponent(currentWorldId()),{method:'GET'}); rows=j[rankTab];
-        } else if (SRV) {
-          rows = (await fetch(SRV + '/rank', { cache:'no-store' }).then(r => r.json()))[rankTab];
-        }
-        if (Array.isArray(rows)) rows = rows.filter(r => Number(r?.worldId) === currentWorldId() && String(r?.name || '').trim().toLowerCase() !== 'vaik');
-      } catch(e){}
+      if (SRV) {
+        try { rows = (await fetch(SRV + '/rank', { cache:'no-store' }).then(r => r.json()))[rankTab]; if (Array.isArray(rows)) rows = rows.filter(r => Number(r?.worldId) === currentWorldId() && String(r?.name || '').trim().toLowerCase() !== 'vaik'); } catch(e){}
+      }
     }
     if (seq !== rkSeq) return;
 
@@ -4398,16 +4320,37 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
   }
   function clearAllyArmyInputs(){document.querySelectorAll('[data-ally-unit]').forEach(i=>i.value='0');}
   async function allyArmyDeposit(){
-    const m=AL.st?.mine;if(!m)return; const accs=loadAcc(),me=accs[currentKey];if(!me)return; const q=allyArmyInputs();
-    if(window.QRTT_SERVER_URL){try{const j=await serverAction('/api/action/ally-army',{act:'deposit',army:q});applyServerState(j.state);clearAllyArmyInputs();renderAllyArmy(m);renderUnits(loadAcc()[currentKey]);toast('🛡️ نیروها وارد ارتش اتحاد شدند.');}catch(e){toast(e.message||'خطای سرور');}return;}
-    const st=allyArmyState(m.id);let moved=0;for(const k of ALLY_DEF_UNITS){const n=Math.min(Number(q[k])||0,Math.max(0,Math.floor(Number(me.army?.[k])||0)));if(n){me.army[k]-=n;st.army[k]+=n;moved+=n;}}if(!moved)return toast('مقدار نیرو را وارد کنید.');saveAcc(accs);await publishAllyArmy(m.id,st);clearAllyArmyInputs();renderAllyArmy(m);renderUnits(me);toast('🛡️ نیروها وارد خانه ارتش اتحاد شدند.');
+    const m=AL.st?.mine;if(!m)return;
+    const accs=loadAcc(), me=accs[currentKey]; if(!me)return;
+    const q=allyArmyInputs(), st=allyArmyState(m.id); let moved=0;
+    for(const k of ALLY_DEF_UNITS){const n=Math.min(Number(q[k])||0,Math.max(0,Math.floor(Number(me.army?.[k])||0)));if(n){me.army[k]-=n;st.army[k]+=n;moved+=n;}}
+    if(!moved)return toast('مقدار نیرو را وارد کنید.');
+    saveAcc(accs); await publishAllyArmy(m.id,st); clearAllyArmyInputs(); renderAllyArmy(m); renderUnits(me); toast('🛡️ نیروها وارد خانه ارتش اتحاد شدند.');
   }
   async function allyArmyWithdraw(){
-    const m=AL.st?.mine;if(!m||m.me!=='leader')return toast('فقط رهبر می‌تواند ارتش اتحاد را برداشت کند.');const targetName=String($('#aArmyTarget')?.value||'').trim();if(!targetName)return toast('یک عضو را انتخاب کنید.');const q=allyArmyInputs();
-    if(window.QRTT_SERVER_URL){try{await serverAction('/api/action/ally-army',{act:'withdraw',army:q,target:targetName});clearAllyArmyInputs();renderAllyArmy(m);renderUnits(loadAcc()[currentKey]);toast('📤 نیرو برای عضو انتخاب‌شده ارسال شد.');}catch(e){toast(e.message||'خطای سرور');}return;}
-    const st=allyArmyState(m.id);const moved={};let total=0;for(const k of ALLY_DEF_UNITS){const n=Math.min(Number(q[k])||0,st.army[k]);if(n){moved[k]=n;st.army[k]-=n;total+=n;}}if(!total)return toast('مقدار نیروی برداشت را وارد کنید.');const members=m.members||[],target=members.find(x=>String(x.name||'').trim().toLowerCase()===targetName.toLowerCase());const targetKey=String(target?.name||targetName).toLowerCase();const payload={id:'tr_'+Date.now(),worldId:currentWorldId(),allyId:m.id,from:currentKey,targetKey,targetName,army:moved,at:Date.now()};await publishAllyArmy(m.id,st);const tk=ALLY_TRANSFER_KEY(currentWorldId(),targetKey),tv=JSON.stringify(payload);store.set(tk,tv);try{await mqttConnect();if(mqttClient?.connected)mqttClient.publish(MQTT_STATE+encodeURIComponent(tk),tv,{qos:1,retain:true});}catch(e){}clearAllyArmyInputs();renderAllyArmy(m);toast('📤 نیرو برای عضو انتخاب‌شده ارسال شد.');
+    const m=AL.st?.mine;if(!m||m.me!=='leader')return toast('فقط رهبر می‌تواند ارتش اتحاد را برداشت کند.');
+    const targetName=String($('#aArmyTarget')?.value||'').trim();if(!targetName)return toast('یک عضو را انتخاب کنید.');
+    const q=allyArmyInputs(),st=allyArmyState(m.id);const moved={};let total=0;
+    for(const k of ALLY_DEF_UNITS){const n=Math.min(Number(q[k])||0,st.army[k]);if(n){moved[k]=n;st.army[k]-=n;total+=n;}}
+    if(!total)return toast('مقدار نیروی برداشت را وارد کنید.');
+    const members=m.members||[], target=members.find(x=>String(x.name||'').trim().toLowerCase()===targetName.toLowerCase());
+    const targetKey=String(target?.name||targetName).toLowerCase();
+    const payload={id:'tr_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),worldId:currentWorldId(),allyId:m.id,from:currentKey,targetKey,targetName,army:moved,at:Date.now()};
+    await publishAllyArmy(m.id,st);
+    const tk=ALLY_TRANSFER_KEY(currentWorldId(),targetKey),tv=JSON.stringify(payload);store.set(tk,tv);
+    try{await mqttConnect();if(mqttClient?.connected)mqttClient.publish(MQTT_STATE+encodeURIComponent(tk),tv,{qos:1,retain:true});}catch(e){}
+    clearAllyArmyInputs();renderAllyArmy(m);toast('📤 نیرو برای عضو انتخاب‌شده ارسال شد.');
   }
-  async function processAllyArmyTransfers(){if(window.QRTT_SERVER_URL)return;if(!currentKey)return;const key=ALLY_TRANSFER_KEY(currentWorldId(),currentKey);let p=null;try{p=JSON.parse(store.get(key)||'null')}catch(e){}if(!p||String(p.targetKey||'').toLowerCase()!==String(currentKey).toLowerCase())return;const accs=loadAcc(),me=accs[currentKey];if(!me)return;me.army=me.army||{};Object.entries(p.army||{}).forEach(([k,n])=>{if(ALLY_DEF_UNITS.includes(k))me.army[k]=(Number(me.army[k])||0)+Math.max(0,Math.floor(Number(n)||0));});saveAcc(accs);store.del(key);toast('📥 نیروهای ذخیره دریافت شد.');if(!$('#ally').hidden)renderAllyArmy(AL.st?.mine);}
+  async function processAllyArmyTransfers(){
+    if(!currentKey)return;
+    const key=ALLY_TRANSFER_KEY(currentWorldId(),currentKey);let p=null;try{p=JSON.parse(store.get(key)||'null')}catch(e){}
+    if(!p||String(p.targetKey||'').toLowerCase()!==String(currentKey).toLowerCase())return;
+    const accs=loadAcc(),me=accs[currentKey];if(!me)return;
+    me.army=me.army||{};Object.entries(p.army||{}).forEach(([k,n])=>{if(ALLY_DEF_UNITS.includes(k))me.army[k]=(Number(me.army[k])||0)+Math.max(0,Math.floor(Number(n)||0));});saveAcc(accs);
+    store.del(key);try{await mqttConnect();if(mqttClient?.connected)mqttClient.publish(MQTT_STATE+encodeURIComponent(key),'',{qos:1,retain:true});}catch(e){}
+    toast('📥 رهبر اتحاد نیروهای ذخیره را برای شما ارسال کرد.');
+    if(!$('#ally').hidden)renderAllyArmy(AL.st?.mine);
+  }
   setInterval(processAllyArmyTransfers,2500);
 
   /* ---- اتحاد آفلاین: همان منطق سرور، فقط روی همین دستگاه (کلید game:lally) ---- */
@@ -4677,18 +4620,6 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
     if(publish){ try { if (mqttClient && mqttClient.connected) mqttClient.publish(MQTT_KINGDOM, JSON.stringify(merged), {qos:1, retain:true}); } catch(e){} }
     return merged;
   }
-  // این تابع باید بین اسکریپت اصلی و اسکریپت چرخهٔ هفتگی مشترک باشد.
-  // قبلاً نسخهٔ آن فقط داخل IIFE هفتگی بود و buildKingdom به ReferenceError می‌خورد.
-  window.returnArmyToAccount = window.returnArmyToAccount || function(account, army){
-    if(!account || !army) return false;
-    if(!account.army || typeof account.army!=='object') account.army={};
-    let changed=false;
-    Object.keys(army).forEach(k=>{
-      const n=Math.max(0,Math.floor(Number(army[k])||0));
-      if(n>0){ account.army[k]=(Math.floor(Number(account.army[k])||0))+n; changed=true; }
-    });
-    return changed;
-  };
   // امتیاز مشارکت پادشاهی: بر اساس تعداد یگان‌های ارسالی، نه قدرت نظامی.
   function kingdomContributionScore(army){
     return UNITS.reduce((t,u)=>t+Math.max(0,Math.floor(+((army&&army[u.k])||0))),0);
@@ -4723,11 +4654,7 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
     return Object.entries(data.contributors||{}).map(([key,c])=>{ const a=accounts[key]||Object.values(accounts).find(x=>String(x?.name||'').trim().toLowerCase()===String(c.name||key).trim().toLowerCase())||{}; a._key=key; return {key,name:c.name||key,allyId:String(c.allyId||''),army:c.army||{},score:kingdomContributionScore(c.army||{}),firstAt:+c.firstAt||0}; }).filter(x=>x.score>0);
   }
   function kingdomAttackRows(data){
-    return Object.entries(data.attackers||{}).map(([key,c])=>{
-      const army=c.army||{};
-      const power=UNITS.reduce((t,u)=>t+Math.max(0,Number(army[u.k])||0)*Number(u.w||0),0);
-      return {key,name:c.name||key,allyId:String(c.allyId||''),army,score:kingdomContributionScore(army),power,firstAt:+c.firstAt||0};
-    }).filter(x=>x.score>0);
+    return Object.entries(data.attackers||{}).map(([key,c])=>({key,name:c.name||key,allyId:String(c.allyId||''),army:c.army||{},score:kingdomContributionScore(c.army||{}),firstAt:+c.firstAt||0})).filter(x=>x.score>0);
   }
   function isKingdomMember(alliance, me){
     if(!alliance || !me) return false;
@@ -4791,8 +4718,7 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
 
   function kingdomApplyExpulsionReturn(data){
     try{
-      const st=(typeof window.kingdomWeeklyState==='function'?window.kingdomWeeklyState():null);
-      if(!st) return false;
+      const st=kingdomWeeklyState();
       const claim=data?.returnClaims?.[st.cycleId];
       if(!claim) return false;
       const myKey=String(currentKey||'').trim();
@@ -4807,11 +4733,11 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
       const onceKey='game:kingdom:expulsion-return:'+st.cycleId+':'+myKey.toLowerCase();
       if(localStorage.getItem(onceKey)==='1') return false;
       const army=claim[claimKey].army||{};
-      if(typeof window.returnArmyToAccount!=='function' || !window.returnArmyToAccount(me,army)) return false;
+      if(!returnArmyToAccount(me,army)) return false;
       saveAcc(accounts);
       localStorage.setItem(onceKey,'1');
       try{ if(mqttClient && mqttClient.connected && typeof mqttPublishAccount==='function') mqttPublishAccount(myKey,me).catch(()=>{}); }catch(e){}
-      try{ if(typeof render==='function') render(me); }catch(e){}
+      try{ if(typeof renderProfile==='function') renderProfile(); }catch(e){}
       return true;
     }catch(e){ console.warn('Kingdom expulsion return:',e); return false; }
   }
@@ -4820,8 +4746,6 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
     const seq=++KING.seq;
     const accounts=kingdomAccounts();
     const data=normalizeKingdom(kingdomData());
-    if(window.QRTT_SERVER_URL){try{const kj=await serverRequest('/api/kingdom');const ks=kj?.state||{};data.cycleId=ks.cycleId||data.cycleId;data.kingKey=ks.kingKey||data.kingKey||'';data.kingName=ks.kingName||data.kingName||'';data.kingAllianceId=ks.winnerAllianceId||data.kingAllianceId||'';data.winnerAllianceName=ks.winnerAllianceName||data.winnerAllianceName||'';data.roles=ks.roles||data.roles||{};data.contributors={};Object.entries(ks.alliances||{}).forEach(([aid,a])=>Object.entries(a.members||{}).forEach(([pk,m])=>{data.contributors[pk]={name:m.name||pk,allyId:aid,allyName:a.name||'',army:m.army||{},firstAt:+m.firstAt||+m.updatedAt||Date.now()};}));saveKingdomData(data,false);}catch(e){console.warn('Kingdom server sync:',e);}}
-
     // هویت پادشاه فقط از «نتیجه قطعی هفته» خوانده می‌شود؛
     // در زمان نبرد هیچ بازنویسی خودکاری روی پادشاه قبلی انجام نمی‌دهیم.
     data.name='پادشاهی جهان';
@@ -4861,14 +4785,13 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
       };
       await Promise.all(Array.from({length:Math.min(6,verifyKeys.length)},worker));
     }
-    const cycleNow=(typeof window.kingdomWeeklyState==='function'?window.kingdomWeeklyState():{cycleId:String(data.cycleId||'')}).cycleId;
+    const cycleNow=(typeof kingdomWeeklyState==='function'?kingdomWeeklyState():{cycleId:String(data.cycleId||'')}).cycleId;
     if(cycleNow && String(data.cycleId||'')===String(cycleNow)){
       if(kingdomReconcileExpulsions(data,liveAllyByKey,accounts,cycleNow)){ saveKingdomData(data,true); }
       kingdomApplyExpulsionReturn(data);
     }
     const arr=[...groups.values()].filter(g=>g.members.length);
     const rows=kingdomOwnerRows(data,accounts);
-    const attacks=kingdomAttackRows(data);
     arr.forEach(g=>{ g.total=g.members.reduce((sum,m)=>{ const a=Object.values(accounts).find(x=>String(x&&x.name||'').trim().toLowerCase()===String(m.name||'').trim().toLowerCase()); return sum+baseMilitaryPower(a||{}); },0); g.kingScore=rows.filter(r=>String(r.allyId)===String(g.id)).reduce((sum,r)=>sum+r.score,0); });
     arr.sort((a,b)=>b.kingScore-a.kingScore);
     rows.sort((a,b)=>(a.firstAt-b.firstAt)||String(a.key).localeCompare(String(b.key)));
@@ -4928,9 +4851,9 @@ window.QRTT_SERVER_URL = window.QRTT_SERVER_URL || '';
   async function kingdomSummon(allianceId,isAttack){
     
     try{
-      if(typeof window.kingdomCycleGuard==='function') window.kingdomCycleGuard();
-      if(typeof window.kingdomCanSummon==='function' && !window.kingdomCanSummon()){
-        return toast(typeof window.kingdomShieldMessage==='function'?window.kingdomShieldMessage():'سپر پادشاهی فعال می‌باشد');
+      if(typeof kingdomCycleGuard==='function') kingdomCycleGuard();
+      if(typeof kingdomCanSummon==='function' && !kingdomCanSummon()){
+        return toast(kingdomShieldMessage());
       }
     }catch(e){
       return toast('سپر پادشاهی فعال می‌باشد');
@@ -5004,7 +4927,6 @@ const me=loadAcc()[currentKey];
       return toast('تعداد نیرو را در یکی از کادرها وارد کنید؛ مثلاً ۱۰.');
     }
 
-    if(window.QRTT_SERVER_URL){try{const j=await serverRequest('/api/kingdom',{method:'POST',body:JSON.stringify({act:'summon',army})});applyServerState(j.player||j.state);clearAllyArmyInputs();toast('⚔️ نیروها وارد رقابت پادشاهی شدند.');await buildKingdom();return;}catch(e){return toast(e.message||'خطای سرور');}}
     // اول عضویت اتحاد را بررسی می‌کنیم، بدون اینکه مقدارهای خوانده‌شده از DOM دوباره گرفته شوند.
     let memberOk=false, myAllyId=String(allianceId||'');
     try{
@@ -5043,8 +4965,8 @@ const me=loadAcc()[currentKey];
     if(!memberOk) return toast('عضویت اتحاد شما تشخیص داده نشد؛ ابتدا صفحه اتحاد را یک‌بار باز کنید.');
 
     const d=normalizeKingdom(kingdomData());
-    const _ks=typeof window.kingdomWeeklyState==='function'?window.kingdomWeeklyState():null;
-    if(_ks && !_ks.battle) return toast(typeof window.kingdomShieldMessage==='function'?window.kingdomShieldMessage():'سپر پادشاهی فعال می‌باشد');
+    const _ks=typeof kingdomWeeklyState==='function'?kingdomWeeklyState():null;
+    if(_ks && !_ks.battle) return toast(kingdomShieldMessage());
     if(_ks && String(d.cycleId||'')!==_ks.cycleId){
       d.cycleId=_ks.cycleId;
       d.contributors={};
@@ -5287,48 +5209,9 @@ function renderKingRoles(){
     manage.querySelectorAll('[data-king-role]').forEach(x=>{x.value=data.roles[x.dataset.kingRole]||'';});
     $('#saveKingRoles').onclick=()=>{const nd=normalizeKingdom(kingdomData());nd.roles={};manage.querySelectorAll('[data-king-role]').forEach(x=>{if(x.value)nd.roles[x.dataset.kingRole]=x.value;});nd._rolesUpdatedAt=Date.now();saveKingdomData(nd,true);KINGDOM.roles=nd.roles;renderKingRoles();toast('مقام‌های پادشاهی ذخیره شد.');};
   }
-  function kingdomTehranParts(date=new Date()){
-    const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tehran',weekday:'short',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).formatToParts(date);
-    const o={}; parts.forEach(x=>o[x.type]=x.value);
-    const dm={Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6};
-    return {day:dm[o.weekday],y:+o.year,m:+o.month,d:+o.day,h:+o.hour,min:+o.minute,sec:+o.second};
-  }
-  function kingdomTehranTarget(y,m,d,h,min){
-    let t=Date.UTC(y,m-1,d,h,min,0);
-    for(let i=0;i<2;i++){
-      const q=kingdomTehranParts(new Date(t));
-      const asUtc=Date.UTC(q.y,q.m-1,q.d,q.h,q.min,q.sec);
-      t += Date.UTC(y,m-1,d,h,min,0)-asUtc;
-    }
-    return t;
-  }
-  function kingdomCountdownTarget(){
-    const c=kingdomTehranParts();
-    const battle=(c.day===0 && (c.h*60+c.min)>=720 && (c.h*60+c.min)<1320);
-    const todayBase=Date.UTC(c.y,c.m-1,c.d);
-    if(battle) return {battle:true,at:kingdomTehranTarget(c.y,c.m,c.d,22,0)};
-    const days=(7-c.day)%7;
-    let targetDay=new Date(todayBase); targetDay.setUTCDate(targetDay.getUTCDate()+days);
-    if(days===0 && (c.h*60+c.min)>=1320) targetDay.setUTCDate(targetDay.getUTCDate()+7);
-    return {battle:false,at:kingdomTehranTarget(targetDay.getUTCFullYear(),targetDay.getUTCMonth()+1,targetDay.getUTCDate(),12,0)};
-  }
-  function kingdomDurationText(ms){
-    let s=Math.max(0,Math.ceil(ms/1000));
-    const d=Math.floor(s/86400); s%=86400; const h=Math.floor(s/3600); s%=3600; const m=Math.floor(s/60); s%=60;
-    const parts=[]; if(d)parts.push(toFa(d)+' روز'); if(h||d)parts.push(toFa(h)+' ساعت'); if(m||h||d)parts.push(toFa(m)+' دقیقه'); parts.push(toFa(s)+' ثانیه');
-    return parts.join(' و ');
-  }
-  function renderKingdomCountdown(){
-    const el=$('#kingdomCountdown'); if(!el)return;
-    const target=kingdomCountdownTarget(); const ms=Math.max(0,target.at-Date.now());
-    el.innerHTML=target.battle?'⚔️ <b>تا پایان نبرد پادشاهی:</b> '+kingdomDurationText(ms):'🛡️ <b>تا افتادن سپر پادشاهی:</b> '+kingdomDurationText(ms);
-  }
-  if(!window.__kingdomCountdownTimer) window.__kingdomCountdownTimer=setInterval(()=>{if(!$('#kingdom').hidden)renderKingdomCountdown();},1000);
-
   async function showKingdom(){
     if(!loadAcc()[currentKey])return showLogin();
     go('kingdom');$('#fabLayer').hidden=false;window.scrollTo(0,0);$('#kingdomNote').textContent='در حال آماده‌سازی پادشاهی…';$('#kingCard').innerHTML='';$('#kingSummonBox').innerHTML='';$('#kingdomList').innerHTML='';
-    renderKingdomCountdown();
     try{await mqttConnect();}catch(e){} try{await srvInit();}catch(e){} await buildKingdom();
   }
   setInterval(()=>{if(!$('#kingdom').hidden&&!KING.busy){KING.busy=true;buildKingdom().finally(()=>KING.busy=false);}},20000);
@@ -5550,7 +5433,7 @@ function renderKingRoles(){
       if(returnArmyToAccount(me,army)){
         saveAcc(accounts);
         localStorage.setItem(onceKey,'1');
-        try{ if(typeof render==='function') render(me); }catch(e){}
+        try{ if(typeof renderProfile==='function') renderProfile(); }catch(e){}
         return true;
       }
     }catch(e){ console.warn('Kingdom return recovery:',e); }
@@ -5707,6 +5590,63 @@ function renderKingRoles(){
 
 
 
+<script>
+(function(){
+  const ALLY_SERVER_PREFIX = 'alliance:army:v4:';
+  function allianceServerKey(worldId, allianceId){
+    return ALLY_SERVER_PREFIX + String(worldId||'1') + ':' + String(allianceId||'');
+  }
+  window.persistAllianceArmyServer = function(allianceId, army){
+    try{
+      const wid = (typeof currentWorldId==='function' ? currentWorldId() : (window.currentWorld||'1'));
+      const key = allianceServerKey(wid, allianceId);
+      const payload = {
+        type:'alliance_army_state',
+        worldId:String(wid),
+        allianceId:String(allianceId),
+        army: army || {},
+        updatedAt:Date.now()
+      };
+      if(typeof mqttClient!=='undefined' && mqttClient && mqttClient.publish){
+        mqttClient.publish(key, JSON.stringify(payload), {qos:1, retain:true});
+      }
+      if(typeof store!=='undefined' && store.set) store.set(key, JSON.stringify(payload));
+    }catch(e){ console.warn('alliance army persist failed',e); }
+  };
+  window.loadAllianceArmyServer = function(allianceId, cb){
+    try{
+      const wid = (typeof currentWorldId==='function' ? currentWorldId() : (window.currentWorld||'1'));
+      const key = allianceServerKey(wid, allianceId);
+      const local = (typeof store!=='undefined' && store.get) ? store.get(key) : null;
+      if(local){
+        try{ const x=JSON.parse(local); if(x && x.army){ cb&&cb(x.army); } }catch(e){}
+      }
+      if(typeof mqttClient!=='undefined' && mqttClient && mqttClient.subscribe){
+        mqttClient.subscribe(key, {qos:1});
+      }
+    }catch(e){ console.warn('alliance army load failed',e); }
+  };
+})();
+</script>
+
+
+<script id="alliance-army-auto-persist">
+(function(){
+  let last='';
+  setInterval(function(){
+    try{
+      const a = window.allianceArmy || window.allyArmy || window.currentAllianceArmy;
+      const id = window.currentAllianceId || (typeof me!=='undefined' && me && me.allianceId);
+      if(!a || !id || !window.persistAllianceArmyServer) return;
+      const sig=JSON.stringify(a);
+      if(sig!==last){
+        last=sig;
+        window.persistAllianceArmyServer(id,a);
+      }
+    }catch(e){}
+  },1000);
+})();
+</script>
 
 </body>
 </html>
