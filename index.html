@@ -166,6 +166,74 @@ button{cursor:pointer;border:0;background:none}
 .buy:active{transform:scale(.98)}
 .buy[disabled]{background:#26241a;color:var(--muted);box-shadow:none;cursor:default}
 
+/* ---------- kill event ---------- */
+.event-card{margin-top:16px;padding:18px 15px 20px;border-radius:22px;background:linear-gradient(180deg,#21150d,#0f0c08);border:1px solid rgba(214,174,53,.38);box-shadow:0 8px 28px rgba(0,0,0,.5)}
+.event-hero{padding:18px 12px;border-radius:18px;text-align:center;background:radial-gradient(80% 120% at 50% 0%,rgba(176,45,35,.28),transparent 70%),linear-gradient(180deg,#2a1711,#14100b);border:1px solid rgba(214,174,53,.22)}
+.event-ico{font-size:46px;line-height:1}.event-title{margin-top:7px;font-size:24px;font-weight:900;color:var(--gold)}
+.event-sub{margin-top:5px;font-size:12px;line-height:1.9;color:#aaa291}.event-time{margin-top:10px;font-size:13px;font-weight:800;color:#f0d77c}
+.event-me{margin-top:14px;padding:11px 13px;border-radius:14px;background:#17130b;border:1px solid rgba(214,174,53,.2);display:flex;justify-content:space-between;align-items:center;gap:10px}.event-me b{color:var(--gold);font-size:18px}
+.event-list{margin-top:14px;display:grid;gap:8px}.event-row{display:flex;align-items:center;gap:10px;min-height:58px;padding:8px 11px;border-radius:15px;background:#12110c;border:1px solid rgba(214,174,53,.16)}
+.event-row.first{border-color:rgba(214,174,53,.5);background:linear-gradient(90deg,#21190b,#14110b)}.event-pos{width:32px;text-align:center;font-size:20px;font-weight:900;color:var(--gold);flex:none}.event-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;border:1px solid rgba(214,174,53,.35);background:#211f17;flex:none}.event-name{flex:1;min-width:0;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.event-points{font-weight:900;color:var(--gold);direction:ltr;white-space:nowrap}.event-prize{margin-top:12px;text-align:center;padding:11px;border-radius:13px;color:#f0d77c;background:rgba(214,174,53,.07);border:1px solid rgba(214,174,53,.18);font-size:13px;font-weight:800}
+
+/* ---------- heroes / terrorists ---------- */
+.hero-scroll-box{margin:14px 0;padding:13px;border-radius:14px;background:#17130b;border:1px solid rgba(214,174,53,.3);text-align:center;color:#d7c99f}.hero-scroll-box b{color:var(--gold);font-size:19px}
+.heroes-grid{display:grid;gap:12px}.hero-card{padding:13px;border-radius:17px;background:linear-gradient(145deg,#17140d,#0e0e0c);border:1px solid rgba(214,174,53,.2);box-shadow:0 8px 22px rgba(0,0,0,.22)}.hero-card.max{border-color:rgba(214,174,53,.65)}
+.hero-top{display:flex;align-items:center;gap:11px}.hero-em{width:50px;height:50px;border-radius:15px;display:grid;place-items:center;background:#211a0b;border:1px solid rgba(214,174,53,.25);font-size:27px}.hero-info{flex:1}.hero-info h3{font-size:16px}.hero-info small{display:block;color:#a9a18f;margin-top:3px}.hero-level{font-weight:900;color:var(--gold);font-size:13px}.hero-bonus{margin-top:10px;display:flex;justify-content:space-between;gap:8px;font-size:12px;color:#c9c0ad}.hero-progress{height:7px;margin-top:8px;border-radius:99px;background:#29251b;overflow:hidden}.hero-progress i{display:block;height:100%;width:var(--hp);background:linear-gradient(90deg,#8f6d18,var(--gold));border-radius:99px}.hero-up{margin-top:10px;width:100%;min-height:40px;border-radius:11px;background:#d6ae35;color:#181208;font-weight:900}.hero-up:disabled{opacity:.45;cursor:not-allowed}.hero-active-btn{margin-top:8px;width:100%;min-height:38px;border-radius:11px;background:#17150f;color:#e7c56a;border:1px solid rgba(214,174,53,.3);font-weight:900}.hero-card.active{border-color:rgba(214,174,53,.8);box-shadow:0 0 0 1px rgba(214,174,53,.22),0 8px 24px rgba(214,174,53,.08)}.hero-scroll-box small{display:block;color:#aaa08c;font-size:11px;margin-top:5px}.terror-active-info{padding:11px;border-radius:12px;background:#12110d;border:1px solid rgba(214,174,53,.2);color:#d7c99f;line-height:1.8}.terror-active-info b{color:#e7c56a}.terror-hero{padding:20px 14px;margin-top:16px;text-align:center;border-radius:18px;background:radial-gradient(circle at 50% 0,#352016,#12100d 65%);border:1px solid rgba(180,80,50,.35)}.terror-skull{font-size:48px}.terror-hero h1{color:#e7c56a;font-size:25px;margin:4px 0}.terror-hero p{color:#aaa08c;font-size:12px;line-height:1.9}.terror-counter{margin-top:13px;display:flex;justify-content:space-between;padding:10px 12px;border-radius:12px;background:#18120e}.terror-counter b{color:var(--gold)}.terror-reset{margin-top:8px;color:#b8ae9b;font-size:11px}.terror-hero-pick{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.terror-pick{padding:10px;border-radius:12px;border:1px solid rgba(214,174,53,.18);background:#12110d;text-align:right}.terror-pick.on{border-color:var(--gold);box-shadow:0 0 0 1px rgba(214,174,53,.2)}.terror-pick b{display:block;color:#eee3cb;font-size:12px}.terror-pick small{color:#a79e8c}.terror-list{display:grid;gap:8px}.terror-row{padding:11px;border-radius:13px;background:#12110d;border:1px solid rgba(214,174,53,.16);display:grid;grid-template-columns:38px 1fr auto;gap:10px;align-items:center}.terror-row.locked{opacity:.55}.terror-lv{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#21180f;color:#e9c967;font-weight:900;font-size:12px}.terror-name{font-weight:900;font-size:12px}.terror-stats{font-size:10px;color:#aaa08e;margin-top:3px}.terror-btn{height:36px;padding:0 11px;border-radius:10px;background:#d6ae35;color:#171208;font-weight:900;font-size:11px}.terror-btn:disabled{opacity:.4}.terror-reward{color:#d7bd62;font-size:10px;margin-top:2px}
+
+/* ---------- WORLD MAP ---------- */
+.worldmap-app{max-width:430px;padding:0;min-height:100dvh;background:#1d6f35;overflow:hidden}
+.worldmap-shell{position:relative;width:100%;height:100dvh;min-height:620px;overflow:hidden;background:#238342;touch-action:none;user-select:none}
+.worldmap-top{position:absolute;z-index:20;top:12px;left:12px;right:12px;display:flex;align-items:center;justify-content:space-between;pointer-events:none}
+.worldmap-top .map-pill,.worldmap-top button{pointer-events:auto}
+.map-pill{padding:8px 12px;border-radius:13px;background:rgba(9,43,20,.72);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18);font-size:12px;font-weight:900;color:#fff;box-shadow:0 5px 18px rgba(0,0,0,.22)}
+.map-back{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:rgba(18,45,27,.72);border:1px solid rgba(255,255,255,.2);font-size:25px;color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+.worldmap-viewport{position:absolute;inset:0;overflow:hidden;cursor:grab}
+.worldmap-viewport.dragging{cursor:grabbing}
+.worldmap-canvas{position:absolute;left:0;top:0;width:6000px;height:4500px;transform-origin:0 0;will-change:transform}
+.worldmap-terrain{position:absolute;inset:0;width:6000px;height:4500px;display:block}
+.worldmap-canvas{contain:layout paint;will-change:transform;backface-visibility:hidden}
+.worldmap-canvas::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.18;background:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:120px 120px;mix-blend-mode:screen}
+.map-player .shield-bubble{position:absolute;left:50%;top:2px;transform:translate(-50%,-2px);width:92px;height:92px;border-radius:50%;pointer-events:none;border:2px solid rgba(123,206,255,.9);background:radial-gradient(circle,rgba(104,190,255,.13),rgba(63,142,255,.08) 55%,transparent 73%);box-shadow:0 0 10px rgba(93,188,255,.75),inset 0 0 18px rgba(93,188,255,.2);animation:shieldPulse 1.8s ease-in-out infinite}
+.map-player .shield-bubble::before{content:"🛡️";position:absolute;left:50%;top:-8px;transform:translateX(-50%);font-size:16px;filter:drop-shadow(0 0 4px rgba(100,190,255,.9))}
+@keyframes shieldPulse{0%,100%{opacity:.72;transform:translate(-50%,-2px) scale(.98)}50%{opacity:1;transform:translate(-50%,-2px) scale(1.04)}}
+
+.worldmap-players{position:absolute;inset:0}
+.map-player{position:absolute;transform:translate(-50%,-100%);width:108px;text-align:center;filter:drop-shadow(0 4px 5px rgba(0,0,0,.28));cursor:pointer}
+.map-player .city-art{width:72px;height:66px;margin:auto;display:block}
+.map-player .map-name{display:inline-flex;align-items:center;gap:3px;max-width:108px;padding:2px 7px;border-radius:5px;background:rgba(17,17,14,.92);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:11px;font-weight:900;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.map-player .map-power{display:inline-block;margin-top:2px;padding:1px 6px;border-radius:5px;background:rgba(8,28,14,.86);color:#d8f2b7;font-size:9px;font-weight:800}
+.map-player.me .map-name{border-color:#f0d77c;box-shadow:0 0 0 1px rgba(240,215,124,.25)}
+.map-player.me .city-art{filter:drop-shadow(0 0 7px rgba(255,220,100,.55))}
+.map-player .map-dot{position:absolute;right:7px;top:15px;width:17px;height:17px;border-radius:50%;display:grid;place-items:center;background:#ef8b33;color:#fff;font-size:9px;border:2px solid rgba(255,255,255,.85)}
+.map-controls{position:absolute;z-index:21;right:12px;bottom:90px;display:grid;gap:7px}
+.map-controls button{width:43px;height:43px;border-radius:13px;background:rgba(18,45,27,.82);backdrop-filter:blur(7px);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:22px;font-weight:900;box-shadow:0 5px 16px rgba(0,0,0,.24)}
+.map-controls .map-zoom{font-size:18px}
+.map-pad{position:absolute;z-index:21;left:12px;bottom:82px;width:112px;height:112px;pointer-events:none}
+.map-pad button{position:absolute;width:37px;height:37px;border-radius:11px;background:rgba(18,45,27,.78);border:1px solid rgba(255,255,255,.18);color:#fff;font-size:19px;pointer-events:auto}
+.map-pad .up{left:38px;top:0}.map-pad .down{left:38px;bottom:0}.map-pad .left{left:0;top:38px}.map-pad .right{right:0;top:38px}
+.map-popup{position:absolute;z-index:30;left:50%;bottom:17px;transform:translateX(-50%);width:min(calc(100% - 28px),390px);padding:12px;border-radius:17px;background:rgba(18,20,13,.95);border:1px solid rgba(214,174,53,.45);box-shadow:0 12px 30px rgba(0,0,0,.45);color:#fff;display:none}
+.map-popup.open{display:block}.map-popup .mp-top{display:flex;align-items:center;gap:10px}.map-popup .mp-avatar{width:44px;height:44px;border-radius:10px;object-fit:cover;background:#263b27;border:1px solid rgba(255,255,255,.18)}
+.map-popup h3{font-size:15px}.map-popup small{display:block;color:#aaa;font-size:10px;margin-top:3px}.map-popup .mp-actions{display:flex;gap:7px;margin-top:10px}.map-popup .mp-actions button{flex:1;height:39px;border-radius:10px;font-weight:900;background:#d6ae35;color:#191307}.map-popup .mp-actions button.secondary{background:#22291c;color:#eee;border:1px solid rgba(255,255,255,.15)}
+
+/* ---------- WORLD MAP ATTACK ROUTES ---------- */
+.map-attack-routes{position:absolute;inset:0;width:6000px;height:4500px;pointer-events:none;overflow:visible;z-index:2}
+.map-attack-line{fill:none;stroke:#b85cff;stroke-width:12;stroke-linecap:round;stroke-dasharray:24 16;filter:drop-shadow(0 0 7px rgba(184,92,255,.9))}
+.map-attack-line-glow{fill:none;stroke:rgba(190,95,255,.28);stroke-width:28;stroke-linecap:round;filter:blur(3px)}
+.map-attack-plane{
+  position:absolute;z-index:4;width:44px;height:44px;margin-left:-22px;margin-top:-22px;
+  display:grid;place-items:center;font-size:31px;line-height:1;
+  filter:drop-shadow(0 0 7px rgba(190,95,255,.95));
+  pointer-events:none;transform-origin:50% 50%;
+}
+.map-attack-plane::after{
+  content:"";position:absolute;width:14px;height:14px;border-radius:50%;
+  background:rgba(190,95,255,.3);filter:blur(7px);z-index:-1;
+}
+
+.map-mission{position:absolute;z-index:30;left:10px;top:50%;transform:translateY(-50%);width:min(205px,48vw);padding:12px 13px;border-radius:15px;background:rgba(10,31,17,.92);border:1px solid rgba(240,215,124,.55);box-shadow:0 8px 28px rgba(0,0,0,.34);backdrop-filter:blur(9px);color:#fff;font-size:11px;line-height:1.8;text-align:right;pointer-events:none}.map-mission b{color:#f2d56e}.map-mission .mtitle{font-weight:900;font-size:12px;margin-bottom:4px}.map-mission .bar{height:5px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:7px}.map-mission .bar i{display:block;height:100%;width:var(--progress,0%);background:linear-gradient(90deg,#6ec8ff,#f0d76d);border-radius:99px}.map-mission .phase{color:#8fd8ff;font-weight:900}
+.map-count{position:absolute;z-index:21;top:69px;right:12px;padding:6px 9px;border-radius:10px;background:rgba(9,43,20,.68);color:#fff;font-size:10px;font-weight:800}
+@media(max-height:700px){.map-controls{bottom:78px}.map-pad{bottom:70px}}
+
 /* ---------- floating buttons ---------- */
 .fab-layer{
   position:fixed;top:0;bottom:0;left:50%;transform:translateX(-50%);
@@ -195,6 +263,17 @@ button{cursor:pointer;border:0;background:none}
 .err{min-height:20px;margin-top:10px;font-size:12px;line-height:1.7;color:var(--err)}
 .login-btn{margin-top:6px}
 .login-register{margin-top:10px;width:100%;height:42px;color:var(--gold);background:#17150d;border-color:rgba(214,174,53,.38)}
+/* ---------- جهان‌ها ---------- */
+.world-picker{margin:14px 0 8px;padding:12px;border:1px solid rgba(214,174,53,.28);border-radius:16px;background:rgba(20,18,12,.72)}
+.world-picker-title{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;font-weight:800;color:#f4df9a}
+.world-picker-title small{font-size:11px;color:#9ea8b6;font-weight:600}
+.world-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.world-option{min-height:54px;border:1px solid rgba(214,174,53,.22);border-radius:13px;background:linear-gradient(180deg,#201d15,#15130e);color:#f4ead0;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:right;cursor:pointer}
+.world-option.on{border-color:#d6ae35;box-shadow:0 0 0 2px rgba(214,174,53,.13),0 0 14px rgba(214,174,53,.14)}
+.world-option b{font-size:13px}.world-option small{font-size:10px;color:#8f98a7;display:block;margin-top:2px}.world-badge{font-size:20px;flex:none}
+.world-current{margin-top:8px;text-align:center;font-size:11px;color:#d6ae35;min-height:18px}
+.world-tag{display:inline-flex;align-items:center;gap:6px;margin-top:6px;padding:5px 10px;border-radius:12px;background:rgba(214,174,53,.1);border:1px solid rgba(214,174,53,.2);font-size:11px;color:#d9c37a}
+
 .login-register:active{transform:scale(.98)}
 .mqtt-status{margin-top:10px;text-align:center;font-size:11px;color:#7d786b}
 .mqtt-status b{color:#4fd37a}
@@ -450,6 +529,12 @@ button{cursor:pointer;border:0;background:none}
 .wrand{margin-top:10px;width:100%;height:46px;border-radius:14px;font-size:15px;font-weight:800;color:var(--gold);background:rgba(214,174,53,.1);border:1px solid rgba(214,174,53,.35)}
 .wrand:active{transform:scale(.98)}
 
+/* ---------- VAIK admin ---------- */
+#vaikAdmin .world-grid{display:grid;gap:8px}
+#vaikAdmin .world-option{width:100%;display:flex;align-items:center;justify-content:space-between;text-align:right;padding:12px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.10);background:#182218;color:#fff}
+#vaikAdmin .world-option.on{border-color:rgba(214,174,53,.8);box-shadow:0 0 0 1px rgba(214,174,53,.25) inset}
+#vaikAdmin .world-option small{display:block;opacity:.72;margin-top:4px}
+
 /* ---------- rank + ally ---------- */
 .rkh{margin-top:16px;padding:11px 16px;border-radius:24px;text-align:center;font-weight:800;color:var(--gold);background:#1a170a;border:1px solid var(--gold-dim)}
 .rkt{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
@@ -514,6 +599,58 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   background:rgba(214,174,53,.08)!important;border-radius:4px;
 }
 
+
+.ally-army-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.ally-army-row{display:flex;align-items:center;gap:8px;padding:9px;border:1px solid rgba(214,174,53,.22);border-radius:13px;background:#12110c}.ally-army-row .ae{font-size:25px;width:30px;text-align:center}.ally-army-row .ai{flex:1;min-width:0}.ally-army-row .ai b{display:block;font-size:12px}.ally-army-row .ai small{display:block;color:#9f977f;font-size:10px;margin-top:2px}.ally-army-row input{width:82px;height:38px;border-radius:10px;background:#090907;border:1px solid rgba(214,174,53,.28);color:#fff;text-align:center;font-weight:800}.ally-army-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.ally-army-actions button{flex:1;min-width:130px}.ally-army-target{width:100%;height:42px;border-radius:11px;background:#0b0a07;border:1px solid rgba(214,174,53,.28);color:#fff;padding:0 10px}.ally-army-note{padding:10px;border-radius:12px;background:rgba(214,174,53,.08);border:1px solid rgba(214,174,53,.18);line-height:1.9;font-size:11px;margin-top:9px}.ally-army-power{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:8px}.ally-army-power span{padding:6px 9px;border-radius:10px;background:#0c0b08;border:1px solid rgba(255,255,255,.07)}
+
+
+.alliance-army-open{
+  width:100%!important;
+  min-height:52px!important;
+  margin:0 0 12px!important;
+  font-size:17px!important;
+}
+.ally-army-row{
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  gap:10px!important;
+  padding:10px!important;
+  margin-bottom:8px!important;
+  border:1px solid rgba(214,174,53,.20)!important;
+  border-radius:13px!important;
+  background:rgba(255,255,255,.025)!important;
+}
+.ally-army-row .ae{font-size:28px!important;width:38px!important;text-align:center!important;flex:none!important}
+.ally-army-row .ai{display:flex!important;flex-direction:column!important;gap:3px!important;flex:1!important;min-width:0!important}
+.ally-army-row .ai small{opacity:.72!important;font-size:11px!important}
+.ally-army-row input{flex:0 0 105px!important;box-sizing:border-box!important;text-align:center!important}
+.ally-army-row input:focus{outline:2px solid rgba(214,174,53,.55)!important}
+/* Alliance Army panel: vertical, mobile-friendly */
+.alliance-army-panel .ally-unit-row,
+.ally-army-unit-row,
+.ally-army-row{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  gap:8px!important;
+  width:100%!important;
+}
+.alliance-army-panel input[type="number"],
+.ally-army-unit-row input[type="number"],
+.ally-army-row input[type="text"]{
+  width:100%!important;
+  min-height:46px!important;
+  font-size:18px!important;
+  -webkit-user-select:text!important;
+  user-select:text!important;
+  touch-action:manipulation;
+}
+.alliance-army-panel{
+  max-height:calc(100vh - 100px);
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
 </style>
 </head>
 <body>
@@ -569,6 +706,12 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
       <div class="err" id="err" role="alert" aria-live="polite"></div>
       <button class="buy login-btn" id="loginBtn" type="button">ورود</button>
       <button class="row login-register" id="registerBtn" type="button">📝 ثبت‌نام بازیکن جدید</button>
+      <div class="world-picker" id="worldPicker" hidden>
+        <div class="world-picker-title"><span>🌍 انتخاب جهان</span><small>فعلاً هر ۱۰ جهان باز است · ظرفیت هر جهان ۲۰۰ نفر</small></div>
+        <div class="world-grid" id="worldGrid"></div>
+        <div class="world-current" id="worldCurrent">جهان ۱ انتخاب شده است</div>
+      </div>
+
 
     </div>
   </div>
@@ -593,6 +736,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
 
     <div class="name" id="pname"></div>
     <div class="rank"><span>🎖️</span><span>فرمانروای منطقه‌ای</span></div>
+    <div class="world-tag" id="profileWorldTag">🌍 جهان ۱</div>
 
     <div class="body">
       <div class="xp">
@@ -708,7 +852,56 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   </div>
 </main>
 
+
 <!-- ================= WORLD MAP ================= -->
+<main class="app worldmap-app" id="worldmap" hidden>
+  <div class="worldmap-shell">
+    <div class="worldmap-top">
+      <button class="map-back" id="worldMapBack" type="button" aria-label="بازگشت">→</button>
+      <div class="map-pill">🌍 نقشه جهانی</div>
+    </div>
+    <div class="map-count" id="worldMapCount">۰ بازیکن</div>
+    <div class="map-mission" id="mapMission" hidden aria-live="polite"></div>
+    <div class="worldmap-viewport" id="worldMapViewport">
+      <div class="worldmap-canvas" id="worldMapCanvas">
+        <div class="map-attack-routes" id="mapAttackRoutes" aria-hidden="true"></div>
+        <svg class="worldmap-terrain" viewBox="0 0 6000 4500" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="wmGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b9448"/><stop offset="1" stop-color="#176b31"/></linearGradient>
+            <linearGradient id="wmRiver" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7bc6d1"/><stop offset="1" stop-color="#2f8191"/></linearGradient>
+            <filter id="wmShadow"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#0b3b18" flood-opacity=".35"/></filter>
+          </defs>
+          <rect width="2400" height="1800" fill="url(#wmGrass)"/>
+          <path d="M0 360 C380 160 520 610 850 390 S1370 160 1710 430 S2110 630 2400 300 L2400 0 0 0Z" fill="#319b4d" opacity=".55"/>
+          <path d="M0 1330 C350 1120 610 1490 920 1280 S1480 1040 1810 1320 S2160 1510 2400 1260 L2400 1800 0 1800Z" fill="#1a7234" opacity=".65"/>
+          <path d="M-80 1030 C300 880 460 1040 650 940 S1010 650 1190 790 S1510 1120 1710 960 S2050 660 2490 760" fill="none" stroke="url(#wmRiver)" stroke-width="62" opacity=".85"/>
+          <path d="M-80 1030 C300 880 460 1040 650 940 S1010 650 1190 790 S1510 1120 1710 960 S2050 660 2490 760" fill="none" stroke="#a5dfe1" stroke-width="5" opacity=".45"/>
+          <g fill="#6e9a48" opacity=".75">
+            <path d="M180 270l120-95 120 95-65 80H245Z"/><path d="M680 690l130-110 130 110-75 90H755Z"/><path d="M1540 280l145-120 145 120-80 95h-130Z"/>
+            <path d="M1940 1180l150-125 150 125-75 95h-150Z"/><path d="M930 1500l130-110 130 110-70 90H1000Z"/>
+          </g>
+          <g stroke="#d9bd72" stroke-width="12" fill="none" opacity=".22">
+            <path d="M120 760 C500 700 650 820 920 760 S1430 650 1750 730 S2140 850 2300 720"/>
+            <path d="M400 1450 C720 1310 980 1390 1230 1470 S1780 1560 2140 1430"/>
+          </g>
+          <g fill="#2d6d32" opacity=".5">
+            <circle cx="280" cy="520" r="150"/><circle cx="550" cy="280" r="120"/><circle cx="1320" cy="420" r="170"/><circle cx="1840" cy="620" r="130"/><circle cx="2140" cy="1030" r="180"/><circle cx="520" cy="1260" r="180"/><circle cx="1320" cy="1320" r="150"/>
+          </g>
+          <g fill="#e4cf86" opacity=".25"><circle cx="240" cy="420" r="7"/><circle cx="420" cy="680" r="6"/><circle cx="760" cy="360" r="8"/><circle cx="1180" cy="250" r="6"/><circle cx="1510" cy="620" r="7"/><circle cx="2010" cy="420" r="6"/><circle cx="2250" cy="910" r="7"/><circle cx="880" cy="1120" r="7"/><circle cx="1480" cy="1470" r="6"/><circle cx="1980" cy="1500" r="8"/></g>
+        </svg>
+        <div class="worldmap-players" id="worldMapPlayers"></div>
+      </div>
+    </div>
+    <div class="map-pad" aria-label="حرکت نقشه">
+      <button class="up" data-pan="up">↑</button><button class="left" data-pan="left">←</button><button class="right" data-pan="right">→</button><button class="down" data-pan="down">↓</button>
+    </div>
+    <div class="map-controls">
+      <button class="map-zoom" id="mapZoomIn">＋</button><button class="map-zoom" id="mapZoomOut">−</button><button id="mapCenter">⌾</button>
+    </div>
+    <div class="map-popup" id="mapPopup"></div>
+  </div>
+</main>
+
 
 
 <!-- ================= WAR ================= -->
@@ -719,7 +912,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     <div class="body" style="padding-top:18px">
       <button class="buy" id="warBack" type="button" style="height:38px;width:auto;padding:0 16px;display:inline-flex">→ بازگشت</button>
       <section class="wcard atk" style="margin-top:22px">
-        <h2>⚔️ حمله لحظه‌ای</h2>
+        <h2>⚔️ حمله بر اساس فاصله</h2>
 <div class="rline">🧱 <b>پدافند زمینی</b> ضد <b>تانک</b></div>
           <div class="rline">📡 <b>پدافند هوایی</b> ضد <b>موشک</b></div>
           <div class="rline">🚀 <b>موشک</b> ضد <b>جنگنده</b></div>
@@ -779,6 +972,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
       <div class="wrow"><input class="winp" id="aName" type="text" dir="auto" maxlength="16" autocomplete="off" placeholder="نام اتحاد…"><button class="watk gbtn" id="aCreate" type="button">➕ ساخت · $۵M</button></div>
     </section>
     <div id="allyIn" hidden>
+      <button id="openAllianceArmy" class="buy alliance-army-open" type="button">🏰 خانه ارتش اتحاد</button>
       <section class="achat">
         <div class="alist" id="aList" aria-live="polite"></div>
         <div class="ain"><button id="aSend" type="button" aria-label="ارسال">➤</button><input id="aIn" type="text" dir="auto" maxlength="500" autocomplete="off" enterkeyhint="send" placeholder="پیام به اعضای اتحاد…"></div>
@@ -790,6 +984,19 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
         <div class="wcd">✅ سقف باقی‌مانده امروز: <b dir="ltr" id="aLeft"></b></div>
         <div class="wrow"><input class="winp" id="aWd" type="text" inputmode="numeric" autocomplete="off" placeholder="$ درخواست برداشت"><button class="watk" id="aWdBtn" type="button" style="color:var(--gold);background:#2a2110;border-color:rgba(214,174,53,.4)">درخواست برداشت</button></div>
         <div id="aReqs"></div>
+      </section>
+      <section class="wcard" id="allyArmyCard" hidden>
+        <h2>🏰 خانه ارتش اتحاد</h2>
+        <p class="wdesc">زیردریایی، پدافند زمینی و هوایی، جنگنده، زرهی و سرباز را داخل اتحاد نگه دار. هنگام حمله به هر عضو، <b>۲۵٪ قدرت ارتش اتحاد</b> به دفاع او اضافه می‌شود.</p>
+        <div class="ally-army-power"><span>⚔️ قدرت کل: <b id="aArmyPower">۰</b></span><span>🛡️ قدرت دفاعی مؤثر: <b id="aArmyDefPower">۰</b></span></div>
+        <div class="ally-army-grid" id="aArmyGrid"></div>
+        <div class="ally-army-actions"><button class="watk gbtn" id="aArmyDeposit" type="button">➕ سپردن به ارتش اتحاد</button><button class="watk" id="aArmyClear" type="button">پاک‌کردن مقادیر</button></div>
+        <div class="ally-army-note">رهبر اتحاد می‌تواند نیروهای ذخیره را از خانه ارتش برداشت کند و برای هر عضو انتخاب‌شده بفرستد. نیروهای ذخیره در دفاع ثابت هستند و فقط در زمان حمله ممکن است تلفات بگیرند.</div>
+        <div id="aArmyLeaderBox" hidden style="margin-top:12px">
+          <h3 style="margin:0 0 8px">👑 مدیریت ارتش توسط رهبر</h3>
+          <select id="aArmyTarget" class="ally-army-target"></select>
+          <div class="ally-army-actions"><button class="watk gbtn" id="aArmyWithdraw" type="button">📤 برداشت و ارسال به عضو</button></div>
+        </div>
       </section>
       <section class="wcard">
         <h2 id="aMemT">👥 اعضای اتحاد</h2>
@@ -828,6 +1035,22 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   </div></div>
 </main>
 
+<main class="app" id="vaikAdmin" hidden>
+  <div class="frame"><div class="body" style="padding-top:18px">
+    <button class="buy" id="vaikAdminBack" type="button" style="height:38px;width:auto;padding:0 16px;display:inline-flex">→ بازگشت</button>
+    <h1 class="login-title" style="margin-top:16px">🛡️ مدیریت VAIK</h1>
+    <p class="login-sub">انتخاب جهان، مدیریت بازیکنان و بن کردن بازیکن‌ها</p>
+    <section class="wcard">
+      <h2>🌍 انتخاب جهان</h2>
+      <div id="vaikWorldGrid" class="world-grid"></div>
+    </section>
+    <section class="wcard" id="vaikWorldPlayersCard" hidden>
+      <h2 id="vaikWorldTitle">بازیکنان جهان</h2>
+      <div id="vaikWorldPlayers"></div>
+    </section>
+  </div></div>
+</main>
+
 <main class="app" id="kingRoles" hidden>
   <div class="frame"><div class="body" style="padding-top:18px">
     <button class="buy" id="kingRolesBack" type="button" style="height:38px;width:auto;padding:0 16px;display:inline-flex">→ بازگشت</button>
@@ -836,6 +1059,57 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     <div class="wnone" id="kingRolesNote">در حال بررسی مقام‌ها…</div>
     <section class="wcard" id="kingRolesCard"></section>
     <section class="wcard" id="kingRolesManage" hidden></section>
+  </div></div>
+</main>
+
+<main class="app" id="event" hidden>
+  <div class="frame">
+    <div class="body" style="padding-top:18px">
+      <button class="buy" id="eventBack" type="button" style="height:38px;width:auto;padding:0 16px;display:inline-flex">→ بازگشت</button>
+      <section class="event-card">
+        <div class="event-hero">
+          <div class="event-ico">☠️</div>
+          <h1 class="event-title">ایونت کشتار</h1>
+          <p class="event-sub">هر روز از ساعت ۰۰:۰۰ تا ۰۰:۰۰ روز بعد فعال است.<br>به ازای هر ۱ قدرت نظامیِ کشته‌شده، ۱ امتیاز کشتار دریافت می‌کنید.</p>
+          <div class="event-time" id="eventCountdown">در حال محاسبه زمان…</div>
+        </div>
+        <div class="event-me"><span>امتیاز کشتار شما</span><b id="eventMyPoints">۰</b></div>
+        <div class="event-list" id="eventList"></div>
+        <div class="event-prize">🏆 فقط نفر اول جایزه می‌گیرد: <b>$۵ میلیون</b></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+
+<main class="app" id="heroes" hidden>
+  <div class="frame"><div class="body" style="padding-top:18px">
+    <button class="buy" id="heroesBack" type="button" style="height:38px;width:auto;padding:0 16px;display:inline-flex">→ بازگشت</button>
+    <h1 class="login-title" style="margin-top:16px">🦸 قهرمانان</h1>
+    <p class="login-sub">پنج قهرمان تخصصی؛ ارتقای آن‌ها با طومار انجام می‌شود و برای فول کردن هر قهرمان به زمان طولانی نیاز است.</p>
+    <div class="hero-scroll-box">📜 طومار شما: <b id="heroScrolls">۰</b></div>
+    <div class="hero-scroll-box" id="heroActiveNow">⚪ هیچ قهرمانی فعال نیست<small>برای نبرد و تروریست‌ها تا ۲ قهرمان را فعال کن.</small></div>
+    <div class="heroes-grid" id="heroesList"></div>
+  </div></div>
+</main>
+
+<main class="app" id="terrorists" hidden>
+  <div class="frame"><div class="body" style="padding-top:18px">
+    <button class="buy" id="terroristsBack" type="button" style="height:38px;width:auto;padding:0 16px;display:inline-flex">→ بازگشت</button>
+    <section class="terror-hero">
+      <div class="terror-skull">☠️</div><h1>تروریست‌ها</h1>
+      <p>۲۵ سطح تروریست با قدرت رو به افزایش. حمله به تروریست هیچ نیرویی از ارتش شما کم نمی‌کند.</p>
+      <div class="terror-counter"><span>حمله امروز</span><b id="terrorAttempts">۰ / ۱۰</b></div>
+      <div class="terror-reset" id="terrorReset">در حال محاسبه ریست روزانه…</div>
+    </section>
+    <section class="wcard">
+      <h2>🦸 انتخاب قهرمان حمله</h2>
+      <div class="terror-hero-pick" id="terrorHeroPick"></div>
+    </section>
+    <section class="wcard">
+      <h2>☠️ انتخاب تروریست</h2>
+      <div class="terror-list" id="terrorList"></div>
+    </section>
   </div></div>
 </main>
 
@@ -853,11 +1127,15 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   <div class="sheet-panel" role="dialog" aria-label="منو">
     <div class="who">وارد شده با <b id="sheetWho"></b></div>
     <button class="row" id="gotoProfile" type="button">🧑‍💼 پروفایل</button>
+    <button class="row" id="gotoWorldMap" type="button">🌍 نقشه جهانی</button>
     <button class="row" id="gotoInfra" type="button">🏗️ زیرساخت</button>
     <button class="row" id="gotoArmy" type="button">🪖 ارتش</button>
     <button class="row" id="gotoResearch" type="button">🔬 تحقیقات</button>
     <button class="row" id="gotoMarket" type="button">🏪 بازار</button>
     <button class="row" id="gotoWar" type="button">⚔️ جنگ</button>
+    <button class="row" id="gotoHeroes" type="button">🦸 قهرمانان</button>
+    <button class="row" id="gotoTerrorists" type="button">☠️ تروریست‌ها</button>
+    <button class="row" id="gotoEvent" type="button">☠️ ایونت کشتار</button>
     <button class="row" id="gotoChat" type="button">💬 گفتگوی جهانی</button>
     <button class="row" id="gotoPm" type="button">💌 پیام‌ها <span id="pmBadge" style="float:left;color:var(--gold)"></span></button>
     <button class="row" id="gotoRank" type="button">🏆 رتبه‌بندی</button>
@@ -976,7 +1254,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   };
   const NEXT_XP = 1000;
   const SHIELD_PRICE = 5e6;
-  const SHIELD_REARM_CD = 10 * 60 * 1000; // پس از شکستن سپر با حمله، ۱۰ دقیقه تا خرید سپر بعدی
+  const SHIELD_REARM_CD = 0; // کول‌داون سپر/حمله حذف شده است
   const ccOf = a => (a && /^[A-Z]{2}$/.test(a.cc)) ? a.cc : 'US';
 
   // زیرساخت (بالانس‌شده با قیمت ارتش): هزینهٔ ارتقا از سطح L به L+1 برابر c×L دلار است (خطی تا سطح ۱۰۰) و تولید در ساعت r×L.
@@ -1049,14 +1327,30 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   const rCost = (r, L) => L >= r.max ? 0 : Math.round(r.base * Math.pow(r.g, L - 1) / 1e5) * 1e5;
   const rLvl = (a, k) => Math.min(RESEARCH.find(r => r.k === k).max, (a.research && a.research[k]) || 1);
   const allyM = a => 1 + (a.eff || 0) / 100;
+
+  // ===== قهرمان فعال =====
+  // درصد قهرمان فعال فقط روی قدرت نظامی همان بازیکن اعمال می‌شود.
+  const activeHeroOf = a => {
+    const h = a && (a.activeHero || a.heroActive || a.selectedHero || a.currentHero || (a.hero && a.hero.active ? a.hero : null));
+    return h && typeof h === 'object' ? h : null;
+  };
+  const heroPercent = a => {
+    const h = activeHeroOf(a);
+    if (!h) return 0;
+    const raw = h.percent ?? h.bonusPercent ?? h.powerPercent ?? h.militaryPercent ?? h.attackPercent ?? h.defensePercent ?? h.bonus ?? h.powerBonus ?? 0;
+    const n = Number(raw);
+    return Number.isFinite(n) ? Math.max(0, Math.min(500, n)) : 0;
+  };
+  const heroM = a => 1 + heroPercent(a) / 100;
+
   let KINGDOM = { kingKey:'', allianceId:null, allianceName:'', power:0, alliances:[], roles:{} };
   const roleAssignedTo = role => String(KINGDOM.roles?.[role]||'').trim().toLowerCase();
   const playerHasRole = (a, role) => { const v=roleAssignedTo(role); const ck=(a===loadAcc()[currentKey])?String(currentKey||'').trim().toLowerCase():''; return !!v && (v===String(a?.name||'').trim().toLowerCase() || v===String(a?._key||'').trim().toLowerCase() || v===ck); };
   const isKingAccount = a => !!(a && KINGDOM.kingKey && (String(a.name||'').trim().toLowerCase()===String(KINGDOM.kingKey).trim().toLowerCase() || String(a._key||'').trim().toLowerCase()===String(KINGDOM.kingKey).trim().toLowerCase()));
   const kingdomM = a => isKingAccount(a) ? 1.50 : (playerHasRole(a,'commander') || playerHasRole(a,'president')) ? 1.20 : 1;
   const militaryBaseMult = a => (1 + 0.02 * rLvl(a, 'mil')) * allyM(a);
-  const milMult = a => militaryBaseMult(a) * kingdomM(a);
-  const baseMilitaryPower = a => UNITS.reduce((t,u)=>t+((a&&a.army&&a.army[u.k])||0)*u.w,0)*militaryBaseMult(a);
+  const milMult = a => militaryBaseMult(a) * kingdomM(a) * heroM(a);
+  const baseMilitaryPower = a => UNITS.reduce((t,u)=>t+((a&&a.army&&a.army[u.k])||0)*u.w,0)*militaryBaseMult(a)*kingdomM(a)*heroM(a);
   const incMult = a => (1 + 0.03 * rLvl(a, 'eco')) * allyM(a);
   const indMult = a => 1 + 0.03 * rLvl(a, 'ind');
   const unitDisc = a => 1 - 0.015 * rLvl(a, 'tech');
@@ -1103,6 +1397,54 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     }
   };
   const ACC = 'game:accounts', SES = 'game:session';
+  const WORLD_COUNT = 10, WORLD_CAPACITY = 200;
+  const WORLD_LIST = Array.from({length: WORLD_COUNT}, (_,i) => ({ id:i+1, name:`جهان ${i+1}`, icon:['🌍','🌎','🌏','🪐','🌌','🏰','⚔️','👑','🛡️','🔥'][i] }));
+  let selectedWorldId = 1;
+  const worldIdOf = acc => Math.max(1, Math.min(WORLD_COUNT, Number(acc?.worldId) || 1));
+  const worldInfo = id => WORLD_LIST[Math.max(0, Math.min(WORLD_COUNT-1, Number(id)-1))];
+  const currentWorldId = () => worldIdOf(loadAcc()[currentKey]);
+  const isSameWorld = (a,b) => worldIdOf(a) === worldIdOf(b);
+  function worldLabel(id){ const w=worldInfo(id); return w ? `${w.icon} ${w.name}` : `🌍 جهان ${id}`; }
+  const isBannedPlayer = acc => !!acc && (acc.banned === true || acc.adminBanned === true);
+  function bannedPlayerKey(key, acc){
+    const k=String(key||acc?.name||'').trim().toLowerCase();
+    return k;
+  }
+  function isCurrentBanned(){
+    try{
+      const me=(loadAcc()||{})[currentKey];
+      return isBannedPlayer(me);
+    }catch(e){ return false; }
+  }
+  function enforceBanState(){
+    if(!currentKey) return false;
+    if(isCurrentBanned()){
+      try{ store.del(SES); }catch(e){}
+      currentKey=null;
+      try{ showLogin(); }catch(e){}
+      return true;
+    }
+    return false;
+  }
+  function worldPlayerCount(id){
+    const all = mergedPlayerDirectory();
+    return Object.values(all).filter(a=>a&&a.name&&!isBannedPlayer(a)&&worldIdOf(a)===Number(id)).length;
+  }
+  function renderWorldPicker(){
+    const box=$('#worldGrid'); if(!box)return;
+    box.innerHTML=WORLD_LIST.map(w=>{
+      const n=worldPlayerCount(w.id), full=n>=WORLD_CAPACITY, on=Number(selectedWorldId)===w.id;
+      return `<button type="button" class="world-option${on?' on':''}" data-world-select="${w.id}" ${full?'disabled':''}><span><b>${w.icon} ${w.name}</b><small>${toFa(n)} / ${toFa(WORLD_CAPACITY)} بازیکن${full?' · تکمیل شده':''}</small></span><span class="world-badge">${full?'🔒':'›'}</span></button>`;
+    }).join('');
+    const w=worldInfo(selectedWorldId); $('#worldCurrent').textContent=`${w?.icon||'🌍'} ${w?.name||'جهان ۱'} انتخاب شده است`;
+  }
+  function showWorldPicker(){ $('#worldPicker').hidden=false; selectedWorldId=1; renderWorldPicker(); }
+  function setWorldSelection(id){
+    id=Math.max(1,Math.min(WORLD_COUNT,Number(id)||1));
+    if(worldPlayerCount(id)>=WORLD_CAPACITY)return toast('این جهان به ظرفیت ۲۰۰ بازیکن رسیده است.');
+    selectedWorldId=id; renderWorldPicker();
+  }
+
   // تعریف زودهنگام نشست؛ ادیتور VAIK قبل از بخش ورود اجرا می‌شود و به currentKey نیاز دارد.
   let currentKey = null;
 
@@ -1130,6 +1472,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   const MQTT_KINGDOM = MQTT_NS + '/kingdom';
   // ذخیرهٔ عمومی همهٔ stateهای بازی روی retained MQTT
   const MQTT_STATE = MQTT_NS + '/state/';
+  const MQTT_WORLD_ATTACKS = MQTT_NS + '/world-attacks/';
 
   // ======== ویرایشگر متن سراسری مخصوص VAIK ========
   // مهم: ویرایشگر فقط برای VAIK فعال و DOM را فقط در حالت ویرایش لمس می‌کند.
@@ -1498,6 +1841,13 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     return window.__mqttLoader;
   }
 
+  function mqttSubscribeWorldChannels(){
+    if(!mqttClient || !mqttClient.connected || !currentKey) return;
+    try{
+      mqttClient.subscribe([worldChatTopic('live'),worldChatTopic('history'),worldChatStatusTopic(),worldKingdomTopic()],{qos:1,rh:2});
+    }catch(e){}
+  }
+
   function mqttSubscribeCore(){
     if(!mqttClient || !mqttClient.connected) return;
     try{
@@ -1507,14 +1857,21 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
         MQTT_CHAT_STATUS,
         MQTT_PLAYERS_INDEX,
         MQTT_PLAYERS + '#',
-        MQTT_STATE + '#',
+        // MQTT_STATE/# قبلاً تمام stateهای retained را روی هر اتصال می‌کشید
+        // و باعث کندی تدریجی مرورگر/بروکر می‌شد. فقط mission مربوط به خود بازیکن لازم است.
         MQTT_BLOCKS + '#',
         MQTT_PRESENCE + '#',
-        MQTT_KINGDOM
+        MQTT_KINGDOM,
+        MQTT_WORLD_ATTACKS + 'w' + String(currentWorldId()) + '/#'
       ],{qos:1,rh:2});
       if(currentKey){
+        try{
+          const mk=WAR_MISSION_KEY(currentWorldId(),currentKey);
+          mqttClient.subscribe(MQTT_STATE + encodeURIComponent(mk),{qos:1,rh:2});
+        }catch(e){}
         mqttClient.subscribe([MQTT_PLAYERS+ mqttKey(currentKey), MQTT_AVATARS+ mqttKey(currentKey)],{qos:1,rh:2});
         mqttSubscribeDM(currentKey,dmTarget);
+        mqttSubscribeWorldChannels();
       }
     }catch(e){}
   }
@@ -1559,6 +1916,17 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
         });
         mqttClient.on('message',(topic,payload)=>{
           try{
+            if(topic.startsWith(MQTT_WORLD_ATTACKS)){
+              const tail=topic.slice(MQTT_WORLD_ATTACKS.length), m=/^w(\d+)\/([^/]+)$/.exec(tail);
+              if(m){
+                const wid=Number(m[1]), attacker=decodeURIComponent(m[2]).toLowerCase();
+                if(!mqttWorldAttacks) mqttWorldAttacks={};
+                if(payload.toString().trim()){try{const x=JSON.parse(payload.toString());if(x&&x.pendingAttack)mqttWorldAttacks[wid+':'+attacker]=x;}catch(e){}}
+                else delete mqttWorldAttacks[wid+':'+attacker];
+                if(!$('#worldmap').hidden) renderWorldMapAttackRoute(true);
+              }
+              return;
+            }
             if(topic.startsWith(MQTT_STATE)){mqttRestoreStore(topic,payload);return;}
             if(topic===MQTT_PLAYERS_INDEX){
               const idx=JSON.parse(payload.toString());
@@ -1831,6 +2199,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
 
   async function showPm(target){
     const acc = loadAcc()[currentKey]; if (!acc) return showLogin();
+    if(target && String(target).toLowerCase()!=='vaik'){ const ta=mergedPlayerDirectory()[String(target).toLowerCase()]; if(ta && worldIdOf(ta)!==worldIdOf(acc)) return toast('این بازیکن در جهان دیگری است و امکان گفتگو وجود ندارد.'); }
     go('pm'); $('#fabLayer').hidden = false; window.scrollTo(0,0);
     dmTarget = target ? String(target).toLowerCase() : (dmTarget || VAIK_SUPPORT);
     $('#pmStatus').textContent = mqttClient && mqttClient.connected ? 'سرور آنلاین' : 'در حال اتصال…';
@@ -1900,6 +2269,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   async function pmSend(){
     const inp=$('#pmInput'),text=inp.value.replace(/\s+/g,' ').trim().slice(0,500);
     if(!text||!dmTarget||dmBusy)return;
+    if(String(dmTarget).toLowerCase()!=='vaik'){ const ta=mergedPlayerDirectory()[String(dmTarget).toLowerCase()]; if(ta && worldIdOf(ta)!==worldIdOf(a)) return toast('این بازیکن در جهان دیگری است و امکان گفتگو وجود ندارد.'); }
     if(isBlockedForMe(dmTarget))return toast('🚫 این بازیکن شما را بلاک کرده است و نمی‌توانید پیام بدهید.');
     dmBusy=true;$('#pmSend').disabled=true;
     const a=loadAcc()[currentKey];
@@ -1972,6 +2342,8 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
 
   function mqttReceiveChat(m){
     if (!m || !m.id) return;
+    const wid=worldIdOf(loadAcc()[currentKey]);
+    if (m.worldId!=='all' && Number(m.worldId)!==wid) return;
 
     // همیشه در کش تاریخچه نگه دار؛ حتی اگر صفحهٔ چت باز نباشد.
     if (!mqttChatHistory.some(x => x.id === m.id)) {
@@ -2067,6 +2439,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     acc.res = acc.res || {};
     const INF = Number.MAX_SAFE_INTEGER;
     ['treasury','oil','food','steel','electricity','production'].forEach(k=>{ acc.res[k] = INF; });
+    acc.heroScrolls = INF;
     return true;
   }
 
@@ -2180,6 +2553,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
           store.set(SES, key);
           $('#pass').value = ''; pendingAv = ''; pendingAvS = ''; setPrev();
           currentKey = key;
+          if(!localAcc.worldId){localAcc.worldId=1;accounts[key]=localAcc;store.set(ACC,JSON.stringify(accounts));}
           ensureVAIKInfiniteResources(localAcc);
           showProfile(key);
 
@@ -2237,6 +2611,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
       store.set(SES, key);
       $('#pass').value = ''; pendingAv = ''; pendingAvS = ''; setPrev();
       currentKey = key;
+      if(!acc.worldId){acc.worldId=1;accounts[key]=acc;store.set(ACC,JSON.stringify(accounts));}
       ensureVAIKInfiniteResources(acc);
       // ذخیرهٔ سروری را دوباره با retry انجام بده؛ اما ورود را به تأخیر نامحدود نینداز.
       await mqttPublishAccount(key, acc);
@@ -2262,6 +2637,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
       const accounts = loadAcc();
       const remote = await mqttGetAccount(key, 1200);
       if (accounts[key] || remote) return setErr('این نام کاربری قبلاً ثبت شده است.');
+      if (worldPlayerCount(selectedWorldId) >= WORLD_CAPACITY) { renderWorldPicker(); return setErr('ظرفیت این جهان تکمیل شده است؛ یک جهان دیگر انتخاب کنید.'); }
 
       const salt = Math.random().toString(36).slice(2) + Date.now().toString(36);
       const buildings = {};
@@ -2271,6 +2647,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
         name, salt, hash: await hash(salt + pw), xp: 0, res: { ...START },
         shieldUntil: Date.now() + 3 * 24 * 3.6e6, buildings, created: Date.now(),
         avatar: pendingAv, avS: pendingAvS, avDirty: !!pendingAv,
+        worldId: selectedWorldId,
         army: {}, research: {}, reports: []
       };
 
@@ -2393,7 +2770,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     renderInfra(acc);
   }
 
-  const go = id => ['login', 'profile', 'infra', 'army', 'research', 'market', 'war', 'chat', 'pm', 'rank', 'ally', 'kingdom', 'kingRoles'].forEach(x => { $('#' + x).hidden = x !== id; });
+  const go = id => ['login', 'profile', 'infra', 'army', 'research', 'market', 'worldmap', 'war', 'event', 'heroes', 'terrorists', 'chat', 'pm', 'rank', 'ally', 'kingdom', 'kingRoles', 'vaikAdmin'].forEach(x => { $('#' + x).hidden = x !== id; });
 
   function renderArmy(acc){
     tickInfra(acc); acc.army = acc.army || {};
@@ -2635,7 +3012,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   function mergedPlayerDirectory(){
     const out = {};
     const add = (key, src) => {
-      if(!src || typeof src !== 'object' || !src.name) return;
+      if(!src || typeof src !== 'object' || !src.name || isBannedPlayer(src)) return;
       const k = String(key || src.name).toLowerCase();
       const prev = out[k] || {};
       out[k] = {
@@ -2700,7 +3077,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   }
 
   const readLocal = () => { try { const a = JSON.parse(store.get('game:chat') || '[]'); return Array.isArray(a) ? a : []; } catch(e){ return []; } };
-  const writeLocal = a => store.set('game:chat', JSON.stringify(a.slice(-CHAT_KEEP)));
+  const writeLocal = a => store.set('game:chat:w'+currentWorldId(), JSON.stringify(a.slice(-CHAT_KEEP)));
 
   function relTime(t){
     const d = (Date.now() - t) / 1000;
@@ -2752,7 +3129,8 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
 
   function addMsgs(list, opt = {}){
     const box = $('#chatList'), acc = loadAcc()[currentKey], me = acc && acc.name;
-    const fresh = list.filter(m => m && m.id != null && !chatById.has(m.id));
+    const wid=worldIdOf(loadAcc()[currentKey]);
+    const fresh = list.filter(m => m && m.id != null && (m.worldId==='all' || Number(m.worldId)===wid) && !chatById.has(m.id));
     if (opt.poll) list.forEach(m => { if (m && m.id > chatLast) chatLast = m.id; });
     if (!fresh.length) return;
     const near = box.scrollHeight - box.scrollTop - box.clientHeight < 90;
@@ -2827,7 +3205,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     chatById.clear(); chatLast = 0; chatFirst = true; chatReply = null; chatBusy = false;
     // نمایش فوری کش محلی؛ بعد از اتصال، تاریخچهٔ retained سرور آن را کامل/به‌روز می‌کند.
     const cached = readLocal();
-    cached.slice(-CHAT_KEEP).forEach(m => { if (m && m.id) chatById.set(m.id, m); });
+    const wid=worldIdOf(loadAcc()[currentKey]); cached.slice(-CHAT_KEEP).forEach(m => { if (m && m.id && (m.worldId==='all' || Number(m.worldId)===wid)) chatById.set(m.id, m); });
     updateChatLockUI();
     $('#chatRe').hidden = true; chatEmptyState();
     $('#chatCnt').textContent = toFa($('#chatInput').value.length) + ' / ' + toFa(CHAT_MAX);
@@ -2874,7 +3252,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     const acc = loadAcc()[currentKey]; if (!acc) return;
     if (Date.now() - lastSend < 1000) return toast('کمی صبر کنید.');
     lastSend = Date.now();
-    const m = { id: Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,8), name: acc.name, cc: ccOf(acc), av: acc.avS || '', text, t: Date.now() };
+    const m = { id: Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,8), name: acc.name, cc: ccOf(acc), av: acc.avS || '', text, t: Date.now(), worldId: String(acc.name||'').trim().toLowerCase()==='vaik' ? 'all' : worldIdOf(acc) };
     if (chatReply) m.re = { name: chatReply.name, text: chatReply.text };
     const btn = $('#chatSend'); btn.disabled = true;
     try {
@@ -2915,7 +3293,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   $('#chatSend').addEventListener('click', chatSend);
   $('#chatInput').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); chatSend(); } });
   $('#chatInput').addEventListener('input', e => { $('#chatCnt').textContent = toFa(e.target.value.length) + ' / ' + toFa(CHAT_MAX); });
-  window.addEventListener('storage', e => { if (e.key === 'game:chat') chatPoll(); });
+  window.addEventListener('storage', e => { if (String(e.key||'').startsWith('game:chat:w')) chatPoll(); });
   setInterval(chatPoll, 2500);
   setInterval(() => { if (currentKey && mqttClient && mqttClient.connected) mqttPresenceOnline(currentKey); }, 15000);
   window.addEventListener('beforeunload', () => {
@@ -2929,7 +3307,10 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
 
 /* ======== جنگ ========
      همهٔ داده‌ها فعلاً در حافظهٔ مرورگر است (accounts). برای سرور، فقط warAttack() و loadAcc/saveAcc را با API عوض کنید. */
-  const WAR_LOOT = 0.15, WAR_CD = 120 * 60000;
+  const WAR_LOOT = 0.15;
+  const WORLD_TRAVEL_MS_PER_PX = 1200;
+  const WORLD_MIN_TRAVEL_MS = 15 * 1000;
+  const WORLD_MAX_TRAVEL_MS = 60 * 60 * 1000;
   const AIR = ['fighter', 'bomber', 'missile', 'sat'], LAND = ['soldier', 'elite', 'tank', 'ground'], SEA = ['destroyer', 'carrier', 'sub'];
   const TRANSPORT_UNITS = ['destroyer', 'carrier'];
   const AIRCRAFT = ['fighter', 'bomber'];
@@ -2957,11 +3338,27 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   const payloadCount=sel=>Object.keys(sel||{}).reduce((n,k)=>TRANSPORT_UNITS.includes(k)?n:n+(+sel[k]||0),0);
   const unitMax=(k,acc)=>{const have=acc.army[k]||0;if(TRANSPORT_UNITS.includes(k))return have;if(AIRCRAFT.includes(k))return Math.min(have,(+wSel.carrier||0)*5);if(!BATTLESHIP_GROUND.includes(k))return have;const used=BATTLESHIP_GROUND.reduce((n,x)=>n+(+wSel[x]||0),0);return Math.min(have,Math.max(0,(+wSel.destroyer||0)*5-used+(+wSel[k]||0)));};
   const warSelectionError=sel=>{const d=+sel.destroyer||0,c=+sel.carrier||0,payload=payloadCount(sel);if(!payload)return'حداقل یک یگان رزمی را انتخاب کنید.';const ground=BATTLESHIP_GROUND.reduce((n,k)=>n+(+sel[k]||0),0);if(ground>0&&d<=0)return'برای اعزام سرباز عادی یا سرباز ویژه، ابتدا حداقل ۱ ناو جنگی انتخاب کنید.';if(ground>d*5)return`ظرفیت ناوهای جنگی کافی نیست؛ هر ناو جنگی فقط ۵ سرباز عادی/ویژه حمل می‌کند.`;const f=+sel.fighter||0,b=+sel.bomber||0;if((f||b)&&c<=0)return'برای اعزام جنگنده یا بمب‌افکن، ابتدا ناو هواپیمابر انتخاب کنید.';if(f>c*5)return`ظرفیت جنگنده ناوهای هواپیمابر کافی نیست؛ حداکثر ${c*5} جنگنده.`;if(b>c*5)return`ظرفیت بمب‌افکن ناوهای هواپیمابر کافی نیست؛ حداکثر ${c*5} بمب‌افکن.`;return'';};
-  function warCalc(att,sent,def){const Ma=milMult(att),Md=milMult(def),da=def.army||{};let A=0,D=0;Object.keys(sent).forEach(k=>{const q=sent[k]||0,u=uOf(k);if(!u||TRANSPORT_UNITS.includes(k))return;let p=q*u.w*Ma;const best=Object.keys(da).reduce((m,dk)=>Math.max(m,warBonus(k,dk)),1);A+=p*best;});UNITS.forEach(u=>{const q=da[u.k]||0;if(!q)return;let p=q*u.w*Md;const best=Object.keys(sent).reduce((m,sk)=>Math.max(m,warBonus(u.k,sk)),1);D+=p*best;});const aa=(da.aa||0)*9*Md,gr=(da.ground||0)*7*Md,hasMissile=!!sent.missile,hasGround=!!(sent.tank||sent.bomber||sent.soldier||sent.elite);A-=Math.min(A*.45,aa*(hasMissile?1:.15));A-=Math.min(A*.35,gr*(hasGround?.35:0));return{A:Math.max(0,A),D:Math.max(0,D)};}
+  function warCalc(att,sent,def){const Ma=milMult(att),Md=milMult(def),da=def.army||{};let A=0,D=0;Object.keys(sent).forEach(k=>{const q=sent[k]||0,u=uOf(k);if(!u||TRANSPORT_UNITS.includes(k))return;let p=q*u.w*Ma;const best=Object.keys(da).reduce((m,dk)=>Math.max(m,warBonus(k,dk)),1);A+=p*best;});UNITS.forEach(u=>{const q=da[u.k]||0;if(!q)return;let p=q*u.w*Md;const best=Object.keys(sent).reduce((m,sk)=>Math.max(m,warBonus(u.k,sk)),1);D+=p*best;});A*=heroCombatMultiplier(att,Object.keys(sent));D*=heroCombatMultiplier(def,Object.keys(da));const aa=(da.aa||0)*9*Md,gr=(da.ground||0)*7*Md,hasMissile=!!sent.missile,hasGround=!!(sent.tank||sent.bomber||sent.soldier||sent.elite);A-=Math.min(A*.45,aa*(hasMissile?1:.15));A-=Math.min(A*.35,gr*(hasGround?.35:0));return{A:Math.max(0,A),D:Math.max(0,D)};}
 
   function renderPlayers(){const local=loadAcc(),all={...local,...mqttPlayers},q=$('#wSearch').value.trim().toLocaleLowerCase('en');const keys=Object.keys(all).filter(k=>k!==currentKey&&all[k]&&all[k].name&&String(all[k].name).trim().toLowerCase()!=='vaik'&&all[k].name.toLocaleLowerCase('en').includes(q));$('#wList').innerHTML=keys.length?keys.map(k=>{const p=all[k],shieldLeft=shieldTimeLeft(p),av=p.avS||p.avatar||'',avatarHtml=av?`<img class="wpav" src="${esc(av)}" alt="" onerror="this.outerHTML='<span class="wpflag">${flagOf(ccOf(p))}</span>'">`:`<span class="wpflag">${flagOf(ccOf(p))}</span>`;return`<button class="wp${k===wTarget?' sel':''}" type="button" data-p="${esc(k)}">${avatarHtml}<span class="wn">${esc(p.name)}${verifiedMark(p)}</span><span class="wt">${shieldLeft?'🛡️ '+shieldLeft:'🎯 قابل حمله'}</span></button>`}).join(''):`<div class="wnone">${Object.keys(all).length<2?'هنوز بازیکن دیگری ثبت‌نام نکرده است.':'بازیکنی با این نام پیدا نشد.'}</div>`;}
-  function renderUnits(acc){const order=['destroyer','carrier',...ATK_UNITS.map(u=>u.k).filter(k=>!TRANSPORT_UNITS.includes(k))],rows=order.map(k=>uOf(k)).filter(Boolean).filter(u=>(acc.army[u.k]||0)>0);$('#wUnits').innerHTML=rows.length?rows.map(u=>{const lock=TRANSPORT_UNITS.includes(u.k)?false:(u.k==='fighter'||u.k==='bomber'?!(+wSel.carrier>0):(BATTLESHIP_GROUND.includes(u.k)?!(+wSel.destroyer>0):false)),max=unitMax(u.k,acc),value=Math.min(+wSel[u.k]||0,max);wSel[u.k]=value;const hint=u.k==='destroyer'?'ظرفیت: ۵ سرباز عادی/ویژه به ازای هر ناو':u.k==='carrier'?'ظرفیت: ۵ جنگنده + ۵ بمب‌افکن به ازای هر ناو':u.k==='fighter'||u.k==='bomber'?'فقط با ناو هواپیمابر':BATTLESHIP_GROUND.includes(u.k)?'فقط با ناو جنگی':'بدون نیاز به ناو جنگی';return`<div class="wu${TRANSPORT_UNITS.includes(u.k)?' transport':''}${lock?' locked':''}"><div class="wui">${u.e} ${u.n}<small>موجود: ${fmt(acc.army[u.k])} · ${hint} · قدرت: ${fmt(u.w*milMult(acc))}</small></div><input type="text" inputmode="numeric" autocomplete="off" value="${value||''}" placeholder="0" data-u="${u.k}" ${lock?'disabled':''}><button class="mmax" type="button" data-all="${u.k}" ${lock?'disabled':''}>حداکثر</button></div>`}).join(''):'<div class="wnone">هیچ یگان تهاجمی ندارید. از بخش «ارتش» یگان بخرید.</div>';wSumUpd();}
-  function wSumUpd(){const a=loadAcc()[currentKey];if(!a)return;const err=warSelectionError(wSel),t=wTarget&&loadAcc()[wTarget];let n=0,pw=0;Object.keys(wSel).forEach(k=>{const q=+wSel[k]||0,u=uOf(k);if(u){n+=q;if(!TRANSPORT_UNITS.includes(k))pw+=q*u.w*milMult(a);}});const msg=err?'<br><span style="color:#e88b8b">⚠️ '+esc(err)+'</span>':'<br><span style="color:#7fd1a8">✓ ترکیب نیرو آماده است</span>';$('#wSum').innerHTML=`🎯 هدف: <b>${t?esc(t.name):'انتخاب نشده'}</b> · 🚢 ناو جنگی: <b>${toFa(+wSel.destroyer||0)}</b> · ⚓ ناو هواپیمابر: <b>${toFa(+wSel.carrier||0)}</b> · 🪖 <b>${toFa(fmt(n))}</b> یگان · ⚔️ قدرت رزمی: <b>${toFa(fmt(pw))}</b>${msg}`;}
+  function renderUnits(acc){
+    const order=['destroyer','carrier',...ATK_UNITS.map(u=>u.k).filter(k=>!TRANSPORT_UNITS.includes(k))];
+    const rows=order.map(k=>uOf(k)).filter(Boolean);
+    $('#wUnits').style.display='block';
+    $('#wUnits').innerHTML=`<div style="margin:8px 0 10px;padding:10px 12px;border:1px solid rgba(214,174,53,.28);border-radius:12px;background:rgba(214,174,53,.06);color:var(--cream);font-size:13px">🪖 <b>تعداد نیروهای اعزامی را انتخاب کن</b><br><small style="color:var(--muted)">تعداد هر یگان را وارد کن؛ فقط نیروهای موجود قابل انتخاب هستند.</small></div>`+
+      rows.map(u=>{
+        const have=Math.max(0,Math.floor(Number(acc.army?.[u.k])||0));
+        const transport=TRANSPORT_UNITS.includes(u.k);
+        const lock=transport?false:(u.k==='fighter'||u.k==='bomber'?!(+wSel.carrier>0):(BATTLESHIP_GROUND.includes(u.k)?!(+wSel.destroyer>0):false));
+        const max=unitMax(u.k,acc), value=Math.min(+wSel[u.k]||0,max);
+        wSel[u.k]=value;
+        const disabled=lock||have<=0;
+        const hint=u.k==='destroyer'?'ظرفیت: ۵ سرباز عادی/ویژه به ازای هر ناو':u.k==='carrier'?'ظرفیت: ۵ جنگنده + ۵ بمب‌افکن به ازای هر ناو':u.k==='fighter'||u.k==='bomber'?'فقط با ناو هواپیمابر':BATTLESHIP_GROUND.includes(u.k)?'فقط با ناو جنگی':'بدون نیاز به ناو جنگی';
+        return `<div class="wu${transport?' transport':''}${disabled?' locked':''}"><div class="wui">${u.e} ${u.n}<small>موجود: ${fmt(have)} · ${hint} · قدرت: ${fmt(u.w*milMult(acc))}</small></div><input type="text" inputmode="numeric" autocomplete="off" value="${value||''}" placeholder="تعداد" data-u="${u.k}" ${disabled?'disabled':''}><button class="mmax" type="button" data-all="${u.k}" ${disabled?'disabled':''}>حداکثر</button></div>`;
+      }).join('');
+    wSumUpd();
+  }
+  function wSumUpd(){const a=loadAcc()[currentKey];if(!a)return;const err=warSelectionError(wSel),t=wTarget&&loadAcc()[wTarget];let n=0,pw=0;Object.keys(wSel).forEach(k=>{const q=+wSel[k]||0,u=uOf(k);if(u){n+=q;if(!TRANSPORT_UNITS.includes(k))pw+=q*u.w*milMult(a);}});const hp=heroPercent(a);const heroText=hp>0?` · 👑 بونس قهرمان: <b>+${toFa(hp)}٪</b>`:'';const msg=err?'<br><span style="color:#e88b8b">⚠️ '+esc(err)+'</span>':'<br><span style="color:#7fd1a8">✓ ترکیب نیرو آماده است</span>';$('#wSum').innerHTML=`🎯 هدف: <b>${t?esc(t.name):'انتخاب نشده'}</b> · 🚢 ناو جنگی: <b>${toFa(+wSel.destroyer||0)}</b> · ⚓ ناو هواپیمابر: <b>${toFa(+wSel.carrier||0)}</b> · 🪖 <b>${toFa(fmt(n))}</b> یگان · ⚔️ قدرت رزمی: <b>${toFa(fmt(pw))}</b>${heroText}${msg}`;}
 
   function repHtml(r){
     const att = r.type === 'att', good = att ? r.win : !r.win;
@@ -2982,52 +3379,561 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     $('#wRep').innerHTML = (acc.reports || []).length ? acc.reports.map(repHtml).join('') : '<div class="wnone">هنوز حمله‌ای برای کشور شما ثبت نشده است.</div>';
   }
 
-  function warAttack(){
-    const accounts = loadAcc(), a = accounts[currentKey]; if (!a) return;
-    const d = wTarget && accounts[wTarget];
-    if (!d) return toast('اول یک بازیکن را انتخاب کنید.');
-    tickInfra(a); tickInfra(d); a.army = a.army || {}; d.army = d.army || {};
-    if ((a.lastAttack || 0) + WAR_CD > Date.now()) return toast('کولداون حمله فعال است.');
-    if (shieldHoursLeft(d)) return toast('این بازیکن سپر فعال دارد.');
-    const sent = {}; let n = 0;
-    ATK_UNITS.forEach(u => { const q = Math.min(a.army[u.k] || 0, +wSel[u.k] || 0); if (q > 0) { sent[u.k] = q; n += q; } });
-    const selErr = warSelectionError(sent);
-    if (selErr) return toast(selErr);
-    if (!n) return toast('حداقل یک یگان انتخاب کنید.');
+  /* ======== ایونت کشتار روزانه ======== */
+  const KILL_EVENT_STATE = 'game:kill-event-state-v2';
+  const killEventStateKey = worldId => `${KILL_EVENT_STATE}:w${Math.max(1,Math.min(WORLD_COUNT,Number(worldId)||1))}`;
+  function killEventCycle(){
+    try{
+      const p=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tehran',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+      const o={};p.forEach(x=>o[x.type]=x.value);
+      return `${o.year}-${o.month}-${o.day}`;
+    }catch(e){ return new Date().toISOString().slice(0,10); }
+  }
+  function killEventNextMidnight(){
+    try{
+      const c=killEventCycle(), [y,m,d]=c.split('-').map(Number);
+      // نیمه‌شب ایران (UTC+03:30)
+      return Date.UTC(y,m-1,d+1,0,0,0)-3.5*3600000;
+    }catch(e){ return Date.now()+86400000; }
+  }
+  // شناسهٔ پایدار برای رتبه‌بندی ایونت؛ اختلاف‌های نامرئی/یونیکدی مثل نیم‌فاصله، اعراب،
+  // ی/ک عربی و فارسی یا حروف کنترل نباید یک بازیکن را دوبار وارد جدول کنند.
+  function killEventIdentityKey(name){
+    let s=String(name||'').normalize('NFKC').trim().toLocaleLowerCase('fa');
+    s=s.replace(/[\u200c\u200d\u200e\u200f\ufeff\u2060\u202a-\u202e]/g,'');
+    s=s.replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g,'');
+    s=s.replace(/[يى]/g,'ی').replace(/ك/g,'ک').replace(/ۀ/g,'ه').replace(/ة/g,'ه');
+    s=s.replace(/[\u0640]/g,'');
+    return s;
+  }
+  function killEventPlayers(accounts, worldId=currentWorldId()){
+    const all={...(accounts||{}),...(mqttPlayers||{})}, unique=new Map();
+    Object.entries(all).forEach(([k,a])=>{
+      if(!a||!a.name||isBannedPlayer(a)||worldIdOf(a)!==Number(worldId)||killEventIdentityKey(a.name)==='vaik'||isVerifiedPlayer(a)) return;
+      const nk=killEventIdentityKey(a.name);
+      const old=unique.get(nk);
+      if(!old){ unique.set(nk,[k,{...a,_key:k}]); return; }
 
-    // اگر مهاجم سپر داشته باشد، با انجام حمله سپر فوراً می‌شکند و ۱۰ دقیقه قفل خرید سپر می‌گیرد.
-    const attackerHadShield = shieldHoursLeft(a) > 0;
-    if(attackerHadShield){
-      a.shieldUntil = 0;
-      a.shieldCooldownUntil = Date.now() + SHIELD_REARM_CD;
+      // localStorage و MQTT می‌توانند یک حساب را با دو key متفاوت نشان دهند.
+      // آن‌ها را یک بازیکن حساب می‌کنیم و نسخهٔ امتیازیِ معتبرتر را نگه می‌داریم؛
+      // امتیازها را جمع نمی‌کنیم تا یک kill به‌علت دو نسخه دوبار شمرده نشود.
+      const op=Number(old[1].eventKillPoints||0), np=Number(a.eventKillPoints||0);
+      const oc=String(old[1].eventKillCycle||''), nc=String(a.eventKillCycle||'');
+      const of=Number(old[1].eventKillFirstAt||0), nf=Number(a.eventKillFirstAt||0);
+      const preferNew=(nc===killEventCycle() && oc!==killEventCycle()) ||
+        (nc===oc && (np>op || (np===op && nf>of)));
+      const base=preferNew?old[1]:a;
+      const extra=preferNew?a:old[1];
+      unique.set(nk,[preferNew?k:old[0],{
+        ...extra,...base,
+        _key:preferNew?k:old[0],
+        name:String(base.name||extra.name||'').trim(),
+        eventKillPoints:preferNew?np:op,
+        eventKillCycle:preferNew?nc:oc,
+        eventKillFirstAt:preferNew?nf:of
+      }]);
+    });
+    return [...unique.values()];
+  }
+  function settleKillEventCycle(accounts,cycle){
+    accounts = accounts || loadAcc();
+    const wid=currentWorldId();
+    const stateKey=killEventStateKey(wid);
+    const st=(()=>{try{return JSON.parse(store.get(stateKey)||'{}')||{}}catch(e){return{}}})();
+    if(!st.cycle){ st.cycle=cycle; st.settledCycle=''; store.set(KILL_EVENT_STATE,JSON.stringify(st)); return accounts; }
+    if(st.cycle===cycle) return accounts;
+    const old=st.cycle;
+    const all={...(accounts||{}),...(mqttPlayers||{})};
+
+    // هر جهان ایونت مستقل خودش را دارد.
+    const candidates=Object.entries(all).filter(([k,a])=>
+      a&&a.name&&!isBannedPlayer(a)&&worldIdOf(a)===wid&&String(a.name).trim().toLowerCase()!=='vaik'&&!isVerifiedPlayer(a)&&
+      String(a.eventKillCycle||'')===old&&Number(a.eventKillPoints||0)>0
+    ).sort((x,y)=>
+      Number(y[1].eventKillPoints||0)-Number(x[1].eventKillPoints||0) ||
+      Number(x[1].eventKillFirstAt||Number.MAX_SAFE_INTEGER)-Number(y[1].eventKillFirstAt||Number.MAX_SAFE_INTEGER)
+    );
+
+    // جایزه دقیقاً یک بار برای هر چرخه ثبت می‌شود؛ ورود دوباره یا باز شدن منو جایزه را تکراری نمی‌کند.
+    const winner=candidates[0];
+    if(winner){
+      const [wk,wa]=winner;
+      const local=accounts[wk]||wa;
+      if(String(local.killEventRewardedCycle||'')!==old){
+        local.res=local.res||{};
+        local.res.treasury=(Number(local.res.treasury)||0)+5000000;
+        local.killEventRewardedCycle=old;
+        accounts[wk]=local;
+        mqttPlayers[wk]={...(mqttPlayers[wk]||{}),...local};
+        try{ if(mqttClient&&mqttClient.connected)mqttPublishAccount(wk,local).catch(()=>{}); }catch(e){}
+      }
     }
 
-    const { A, D } = warCalc(a, sent, d), win = A > D, pA = A / (A + D || 1);
-    const aLoss = {}, dLoss = {}, loot = {};
-    Object.keys(sent).forEach(k => { const l = Math.min(sent[k], Math.round(sent[k] * 0.6 * (1 - pA))); if (l) { aLoss[k] = l; a.army[k] -= l; } });
-    UNITS.forEach(u => { const c = d.army[u.k] || 0, l = Math.min(c, Math.round(c * 0.6 * pA)); if (l) { dLoss[u.k] = l; d.army[u.k] = c - l; } });
-    if (win) LOOT_KEYS.forEach(k => { const v = Math.floor((d.res[k] || 0) * WAR_LOOT); if (v > 0) { loot[k] = v; d.res[k] = Math.round((d.res[k] - v) * 100) / 100; a.res[k] = Math.round(((a.res[k] || 0) + v) * 100) / 100; } });
-    const rep = { id: Date.now() + Math.random().toString(36).slice(2, 6), t: Date.now(), att: a.name, def: d.name,
-      reason: $('#wReason').value.trim().slice(0, 80), win, A: Math.round(A * 10) / 10, D: Math.round(D * 10) / 10, sent, aLoss, dLoss, loot };
-    a.lastAttack = Date.now();
-    a.reports = [{ ...rep, type: 'att' }, ...(a.reports || [])].slice(0, 40);
-    d.reports = [{ ...rep, type: 'def', seen: false }, ...(d.reports || [])].slice(0, 40);
+    // چرخه جدید برای همه بازیکنان موجود آماده می‌شود.
+    Object.entries(all).forEach(([k,a])=>{
+      if(!a||!a.name||worldIdOf(a)!==wid||isBannedPlayer(a)||String(a.name).trim().toLowerCase()==='vaik'||isVerifiedPlayer(a)) return;
+      const local=accounts[k]||a;
+      local.eventKillCycle=cycle;
+      local.eventKillPoints=0;
+      local.eventKillFirstAt=0;
+      accounts[k]=local;
+      mqttPlayers[k]={...(mqttPlayers[k]||{}),...local};
+    });
+
+    st.cycle=cycle;
+    st.settledCycle=old;
+    st.lastSettledAt=Date.now();
+    store.set(stateKey,JSON.stringify(st));
     saveAcc(accounts);
-    wSel = {}; $('#wReason').value = ''; renderUnits(a); renderRep(a); warTick();
-    toast(win ? '🏆 پیروز شدید! گزارش حمله پایین صفحه است.' : '💀 حمله شکست خورد. گزارش پایین صفحه است.');
-    $('#wRep').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return accounts;
+  }
+  function killEventEnsure(accounts){ return settleKillEventCycle(accounts||loadAcc(),killEventCycle()); }
+  function killEventRender(){
+    if($('#event').hidden||!currentKey)return;
+    const accounts=killEventEnsure(loadAcc());
+    const cycle=killEventCycle();
+    const all=killEventPlayers(accounts,currentWorldId()).map(([k,a])=>({key:k,a,points:String(a.eventKillCycle||'')===cycle?Number(a.eventKillPoints||0):0}));
+    all.sort((x,y)=>y.points-x.points || Number(x.a.eventKillFirstAt||Number.MAX_SAFE_INTEGER)-Number(y.a.eventKillFirstAt||Number.MAX_SAFE_INTEGER));
+    const top=all.slice(0,5).filter(x=>x.points>0);
+    $('#eventList').innerHTML=top.length?top.map((x,i)=>{const av=x.a.avS||x.a.avatar||'';const avatar=av?`<img class="event-avatar" src="${esc(av)}" alt="" onerror="this.outerHTML='<span class="event-avatar" style="display:grid;place-items:center">👤</span>'">`:`<span class="event-avatar" style="display:grid;place-items:center">👤</span>`;return `<div class="event-row${i===0?' first':''}"><span class="event-pos">${['🥇','🥈','🥉','4','5'][i]}</span>${avatar}<span class="event-name">${esc(x.a.name)}</span><span class="event-points">${toFa(Math.floor(x.points))} امتیاز</span></div>`}).join(''):'<div class="wnone">هنوز امتیازی ثبت نشده است.</div>';
+    const meKey=killEventIdentityKey(loadAcc()[currentKey]?.name||currentKey);
+    const me=all.find(x=>killEventIdentityKey(x.a.name)===meKey);
+    $('#eventMyPoints').textContent=toFa(Math.floor(me?.points||0));
+    const left=Math.max(0,killEventNextMidnight()-Date.now()), sec=Math.floor(left/1000), h=Math.floor(sec/3600), m=Math.floor(sec%3600/60), s=sec%60;
+    $('#eventCountdown').textContent=`⏱️ پایان ایونت: ${toFa(String(h).padStart(2,'0'))}:${toFa(String(m).padStart(2,'0'))}:${toFa(String(s).padStart(2,'0'))}`;
+  }
+  function showEvent(){
+    if(!loadAcc()[currentKey])return showLogin();
+    go('event');$('#fabLayer').hidden=false;window.scrollTo(0,0);
+    killEventEnsure(loadAcc());killEventRender();
+    try{if(mqttClient&&mqttClient.connected)mqttSubscribeCore();}catch(e){}
   }
 
+
+  /* ======== قهرمانان و تروریست‌های روزانه ======== */
+  const HERO_TYPES = [
+    {k:'air', n:'قهرمان هوایی', e:'✈️', d:'جنگنده + بمب‌افکن'},
+    {k:'infantry', n:'قهرمان سرباز', e:'🪖', d:'سرباز + سرباز ویژه'},
+    {k:'armor', n:'قهرمان زرهی', e:'🚛', d:'تانک + قدرت زمینی'},
+    {k:'naval', n:'قهرمان دریایی', e:'⚓', d:'ناوشکن + ناو + زیردریایی'},
+    {k:'defense', n:'قهرمان پدافند', e:'🛡️', d:'پدافند زمینی + هوایی'}
+  ];
+  const HERO_MAX = 100;
+  function heroData(acc){
+    acc.heroLevels=acc.heroLevels&&typeof acc.heroLevels==='object'?acc.heroLevels:{};
+    HERO_TYPES.forEach(h=>{let v=Number(acc.heroLevels[h.k]||1);acc.heroLevels[h.k]=Math.max(1,Math.min(HERO_MAX,Math.floor(v)));});
+    acc.heroScrolls=Number.isFinite(Number(acc.heroScrolls))?Number(acc.heroScrolls):0;
+    acc.activeHeroes=Array.isArray(acc.activeHeroes)?acc.activeHeroes.map(String):[];
+    acc.activeHeroes=acc.activeHeroes.filter(k=>HERO_TYPES.some(h=>h.k===k));
+    acc.activeHeroes=[...new Set(acc.activeHeroes)].slice(0,2);
+    return acc;
+  }
+  function activeHeroes(acc){ return heroData(acc).activeHeroes; }
+  function toggleActiveHero(acc,k){
+    heroData(acc);
+    const i=acc.activeHeroes.indexOf(k);
+    if(i>=0){ acc.activeHeroes.splice(i,1); return true; }
+    if(acc.activeHeroes.length>=2){ toast('حداکثر ۲ قهرمان می‌توانند هم‌زمان فعال باشند.'); return false; }
+    acc.activeHeroes.push(k); return true;
+  }
+  function heroCombatMultiplier(acc, unitKeys){
+    heroData(acc);
+    const keys=Array.isArray(unitKeys)?unitKeys:[];
+    let bonus=0;
+    const map={air:['fighter','bomber'],infantry:['soldier','elite'],armor:['tank'],naval:['destroyer','carrier','sub'],defense:['ground','aa']};
+    acc.activeHeroes.forEach(k=>{
+      const h=HERO_TYPES.find(x=>x.k===k); if(!h) return;
+      const rel=map[k]||[];
+      if(!keys.length || keys.some(x=>rel.includes(x))) bonus+=heroBonus(acc.heroLevels[k]||1);
+    });
+    return 1+Math.min(1.5,bonus);
+  }
+  function heroUpgradeCost(level){ return Math.max(10,Math.floor(5 + Math.pow(level,1.25))); }
+  function heroBonus(level){ return Math.min(1.5, 0.015 * level); }
+  function terrorCycle(){
+    try{return new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tehran',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()).replace(/[^0-9]/g,'');}
+    catch(e){return new Date().toISOString().slice(0,10)}
+  }
+  function terrorNextMidnight(){
+    try{const c=terrorCycle();const p=c.match(/(\d{4})(\d{2})(\d{2})/);return Date.UTC(+p[1],+p[2]-1,+p[3]+1)-3.5*3600000}catch(e){return Date.now()+86400000}
+  }
+  function terrorState(acc){
+    acc.terrorCycle=acc.terrorCycle||terrorCycle();
+    if(acc.terrorCycle!==terrorCycle()){acc.terrorCycle=terrorCycle();acc.terrorAttempts=0;acc.terrorLastHero='';}
+    acc.terrorAttempts=Math.max(0,Math.min(10,Math.floor(Number(acc.terrorAttempts)||0)));
+    return acc;
+  }
+  function terrorPower(level){ const L=Math.max(1,Math.min(25,Number(level)||1)); return Math.round(10000*Math.pow(100, (L-1)/24)); }
+  function terrorReward(level){ return Math.max(4,Math.floor(3+level)); }
+  function heroRelevantPower(acc,type){
+    const ar=acc.army||{}, M=typeof milMult==='function'?milMult(acc):1;
+    const sum=(ks)=>ks.reduce((n,k)=>n+(Number(ar[k])||0)*(Number(uOf(k)?.w)||0),0)*M;
+    const map={air:['fighter','bomber'],infantry:['soldier','elite'],armor:['tank'],naval:['destroyer','carrier','sub'],defense:['ground','aa']};
+    return sum(map[type]||[]);
+  }
+  function terrorFightPower(acc){
+    heroData(acc);
+    const keys=Object.keys(acc.army||{});
+    const active=acc.activeHeroes.map(k=>HERO_TYPES.find(x=>x.k===k)).filter(Boolean);
+    const base=active.length?Math.max(...active.map(h=>heroRelevantPower(acc,h.k))):0;
+    const mult=heroCombatMultiplier(acc,keys);
+    const levelBonus=active.reduce((n,h)=>n+Number(acc.heroLevels[h.k]||1)*180,0);
+    return base*mult+levelBonus;
+  }
+  function heroRender(){
+    const accs=loadAcc(), a=heroData(accs[currentKey]); if(!a)return;
+    $('#heroScrolls').textContent=fmt(a.heroScrolls);
+    const active=a.activeHeroes.map(k=>HERO_TYPES.find(h=>h.k===k)?.n).filter(Boolean);
+    const activeBox=document.getElementById('heroActiveNow');
+    if(activeBox) activeBox.innerHTML=active.length?`🟢 فعال: <b>${active.map(esc).join(' + ')}</b><small>حداکثر ۲ قهرمان هم‌زمان</small>`:'⚪ هیچ قهرمانی فعال نیست<small>برای نبرد و تروریست‌ها تا ۲ قهرمان را فعال کن.</small>';
+    $('#heroesList').innerHTML=HERO_TYPES.map(h=>{
+      const L=a.heroLevels[h.k], max=L>=HERO_MAX, cost=max?0:heroUpgradeCost(L), pct=(L/HERO_MAX*100).toFixed(1), bonus=Math.round(heroBonus(L)*100), on=a.activeHeroes.includes(h.k);
+      return `<article class="hero-card${max?' max':''}${on?' active':''}"><div class="hero-top"><div class="hero-em">${h.e}</div><div class="hero-info"><h3>${h.n}</h3><small>${h.d}</small></div><div class="hero-level">سطح ${toFa(L)}</div></div><div class="hero-bonus"><span>قدرت قهرمان: <b>+${toFa(bonus)}٪</b></span><span>${max?'فول شده 🏆':'هزینه: 📜 '+fmt(cost)}</span></div><div class="hero-progress"><i style="--hp:${pct}%"></i></div><button class="hero-active-btn" data-hero-active="${h.k}" type="button">${on?'🟢 قهرمان فعال است':'⚪ فعال‌سازی برای نبرد'}</button><button class="hero-up" data-hero-up="${h.k}" ${max||a.heroScrolls<cost?'disabled':''}>${max?'قهرمان فول شد 🏆':'ارتقا با '+fmt(cost)+' طومار ⬆️'}</button></article>`;
+    }).join('');
+    saveAcc(accs);
+  }
+  function showHeroes(){if(!loadAcc()[currentKey])return showLogin();go('heroes');$('#fabLayer').hidden=false;window.scrollTo(0,0);heroRender();}
+  function heroUpgrade(k){
+    const accs=loadAcc(),a=heroData(accs[currentKey]);if(!a)return;
+    const h=HERO_TYPES.find(x=>x.k===k);if(!h)return;const L=a.heroLevels[k],cost=heroUpgradeCost(L);
+    if(L>=HERO_MAX)return toast('این قهرمان به حداکثر سطح رسیده است.');
+    if(a.heroScrolls<cost)return toast('طومار کافی ندارید.');
+    a.heroScrolls-=cost;a.heroLevels[k]=L+1;saveAcc(accs);heroRender();toast('🦸 قهرمان ارتقا یافت.');
+  }
+  function terroristRender(){
+    const accs=loadAcc(),a=terrorState(heroData(accs[currentKey]));if(!a)return;
+    saveAcc(accs);
+    $('#terrorAttempts').textContent=`${toFa(a.terrorAttempts)} / ۱۰`;
+    const left=Math.max(0,terrorNextMidnight()-Date.now()),sec=Math.floor(left/1000),hh=Math.floor(sec/3600),mm=Math.floor(sec%3600/60),ss=sec%60;
+    $('#terrorReset').textContent=`⏱️ ریست روزانه: ${toFa(String(hh).padStart(2,'0'))}:${toFa(String(mm).padStart(2,'0'))}:${toFa(String(ss).padStart(2,'0'))}`;
+    const active=a.activeHeroes.map(k=>HERO_TYPES.find(h=>h.k===k)?.n).filter(Boolean);
+    $('#terrorHeroPick').innerHTML=active.length?`<div class="terror-active-info">🦸 قهرمانان فعال: <b>${active.map(esc).join(' + ')}</b><br><small>قدرت نبرد فعلی: ${fmt(Math.round(terrorFightPower(a)))}</small></div>`:`<div class="terror-active-info">⚠️ هیچ قهرمانی فعال نیست؛ از منوی «قهرمانان» حداکثر ۲ قهرمان را فعال کن.</div>`;
+    $('#terrorList').innerHTML=Array.from({length:25},(_,i)=>{const L=i+1,p=terrorPower(L),reward=terrorReward(L),can=a.terrorAttempts<10;return `<div class="terror-row"><div class="terror-lv">${toFa(L)}</div><div><div class="terror-name">تروریست سطح ${toFa(L)}</div><div class="terror-stats">قدرت تروریست: <b>${fmt(p)}</b></div><div class="terror-reward">🎁 جایزه: ${fmt(reward)} طومار</div></div><button class="terror-btn" data-terror-attack="${L}" type="button" ${can?'':'disabled'}>حمله ☠️</button></div>`}).join('');
+  }
+  function showTerrorists(){if(!loadAcc()[currentKey])return showLogin();go('terrorists');$('#fabLayer').hidden=false;window.scrollTo(0,0);terroristRender();}
+  function terroristAttack(level){
+    const accs=loadAcc(),a=terrorState(heroData(accs[currentKey]));if(!a)return;
+    if(a.terrorAttempts>=10)return toast('امروز ۱۰ حمله را انجام داده‌ای؛ فردا دوباره می‌توانی حمله کنی.');
+    if(!a.activeHeroes.length)return toast('اول از منوی «قهرمانان» حداقل یک قهرمان را فعال کن.');
+    const enemy=terrorPower(level), power=terrorFightPower(a);
+    a.terrorAttempts++;
+    if(power<enemy){saveAcc(accs);terroristRender();return toast(`☠️ شکست! قدرت تروریست ${fmt(enemy)} بود؛ نیروی ارتش شما کم نشد.`);}
+    const reward=terrorReward(level);a.heroScrolls+=reward;saveAcc(accs);terroristRender();heroRender();toast(`🏆 تروریست سطح ${toFa(level)} نابود شد؛ ${toFa(reward)} طومار گرفتی. هیچ نیرویی کم نشد.`);
+  }
+  $('#heroesList').addEventListener('click',e=>{const b=e.target.closest('[data-hero-up]');if(b)heroUpgrade(b.dataset.heroUp);const aBtn=e.target.closest('[data-hero-active]');if(aBtn){const accs=loadAcc(),a=heroData(accs[currentKey]);if(!a)return;if(toggleActiveHero(a,aBtn.dataset.heroActive))saveAcc(accs);heroRender();terroristRender();}});
+  $('#terrorList').addEventListener('click',e=>{const b=e.target.closest('[data-terror-attack]');if(b)terroristAttack(Number(b.dataset.terrorAttack));});
+  setInterval(()=>{ enforceBanState(); }, 1500);
+  setInterval(()=>{if(!$('#terrorists').hidden)terroristRender();if(!$('#heroes').hidden)heroRender();},1000);
+
+  function worldDistanceBetweenKeys(aKey,dKey){const ap=worldPosFor(aKey),dp=worldPosFor(dKey);return Math.hypot(Number(ap.x)-Number(dp.x),Number(ap.y)-Number(dp.y));}
+  function worldTravelMs(distance){return Math.max(WORLD_MIN_TRAVEL_MS,Math.min(WORLD_MAX_TRAVEL_MS,Math.round(distance*WORLD_TRAVEL_MS_PER_PX)));}
+  function formatTravel(ms){const sec=Math.max(0,Math.ceil(ms/1000)),h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),ss=sec%60;return h?`${toFa(h)}س ${toFa(String(m).padStart(2,'0'))}د`:`${toFa(m)}د ${toFa(String(ss).padStart(2,'0'))}ث`;}
+  function attackDistanceText(aKey,dKey){const distance=worldDistanceBetweenKeys(aKey,dKey),oneWay=worldTravelMs(distance);return {distance,oneWay,roundTrip:oneWay*2};}
+
+  // مأموریت حمله روی سرور هم جداگانه ذخیره می‌شود تا با رفرش/آپدیت
+  // زمان رفت و برگشت از بین نرود و از نو شروع نشود.
+  let mqttWorldAttacks = {};
+  const WORLD_ATTACK_TOPIC = (worldId, attackerKey) =>
+    MQTT_WORLD_ATTACKS + 'w' + Number(worldId || currentWorldId()) + '/' + encodeURIComponent(String(attackerKey || '').toLowerCase());
+  async function publishWorldAttackMission(acc, clear=false){
+    if(!acc || !currentKey) return false;
+    try{
+      await mqttConnect();
+      if(!mqttClient?.connected) return false;
+      const wid=currentWorldId(), key=String(currentKey).toLowerCase(), topic=WORLD_ATTACK_TOPIC(wid,key);
+      if(clear){ delete mqttWorldAttacks[wid+':'+key]; mqttClient.publish(topic,'',{qos:1,retain:true}); return true; }
+      const p=acc.pendingAttack;
+      if(!p||!p.target){ mqttClient.publish(topic,'',{qos:1,retain:true}); return true; }
+      const x={version:1,worldId:wid,attacker:key,pendingAttack:p,savedAt:Date.now()};
+      mqttWorldAttacks[wid+':'+key]=x;
+      mqttClient.publish(topic,JSON.stringify(x),{qos:1,retain:true}); return true;
+    }catch(e){return false;}
+  }
+  const WAR_MISSION_KEY = (worldId, attackerKey) =>
+    'game:war-mission:w' + Number(worldId || currentWorldId()) + ':' + String(attackerKey || '').toLowerCase();
+
+  async function publishWarMission(acc){
+    if(!acc || !currentKey) return false;
+    const key = WAR_MISSION_KEY(currentWorldId(), currentKey);
+    const val = acc.pendingAttack ? JSON.stringify({
+      version: 2,
+      worldId: currentWorldId(),
+      attacker: currentKey,
+      pendingAttack: acc.pendingAttack,
+      savedAt: Date.now()
+    }) : '';
+    try{
+      store.set(key, val);
+      await mqttConnect();
+      if(mqttClient?.connected){
+        mqttClient.publish(MQTT_STATE + encodeURIComponent(key), val, {qos:1, retain:true});
+        publishWorldAttackMission(acc, !acc.pendingAttack).catch(()=>{});
+        return true;
+      }
+    }catch(e){}
+    return false;
+  }
+
+  function restoreWarMission(acc){
+    if(!acc || !currentKey) return false;
+    const key = WAR_MISSION_KEY(currentWorldId(), currentKey);
+    let raw = null;
+    try{ raw = store.get(key); }catch(e){}
+    if(!raw) return false;
+    try{
+      const x = JSON.parse(raw);
+      const p = x?.pendingAttack;
+      if(!p || !p.target) return false;
+      // زمان‌ها مطلق هستند. حتی اگر زمان برگشت گذشته باشد، مأموریت را حذف نکن؛
+      // باید یک بار resolvePendingAttack اجرا شود تا نیروهای برگشتی واقعاً به ارتش اضافه شوند.
+      if(!acc.pendingAttack || Number(acc.pendingAttack.resolveAt||0) < Number(p.resolveAt||0)){
+        acc.pendingAttack = p;
+        return true;
+      }
+    }catch(e){}
+    return false;
+  }
+
+  // همگام‌سازی فوری نتیجهٔ نبرد با حساب مدافع.
+  // قبلاً saveAcc فقط currentKey (مهاجم) را روی MQTT می‌فرستاد؛
+  // در نتیجه منابع/نیروهای مدافع روی دستگاه خودش تا ورود/لود بعدی قدیمی می‌ماند.
+  function publishBattleAccounts(attacker, defender, attackerKey, defenderKey){
+    try{
+      if(attackerKey && attacker) mqttPublishAccount(String(attackerKey).toLowerCase(), attacker).catch(()=>{});
+      if(defenderKey && defender) mqttPublishAccount(String(defenderKey).toLowerCase(), defender).catch(()=>{});
+    }catch(e){}
+  }
+
+  function resolvePendingAttack(a,accounts){
+    const p=a?.pendingAttack;
+    if(!p||!p.target)return false;
+    const targetKey=String(p.target).toLowerCase();
+    const d=accounts[targetKey], now=Date.now();
+    if(!d){delete a.pendingAttack;saveAcc(accounts);return true;}
+    tickInfra(a);tickInfra(d);a.army=a.army||{};d.army=d.army||{};
+    // نبرد دقیقاً هنگام رسیدن نیروها انجام می‌شود؛ سپس نیروها مسیر برگشت را طی می‌کنند.
+    if(!p.battleResolved && now>=Number(p.arriveAt||0)){
+      if(shieldHoursLeft(d)){
+        const rep={id:now,t:now,att:a.name,def:d.name,reason:p.reason||'',win:false,A:0,D:0,sent:p.sent||{},aLoss:{},dLoss:{},loot:{},blockedByShield:true,distance:p.distance};
+        a.reports=[{...rep,type:'att'},...(a.reports||[])].slice(0,40);
+        d.reports=[{...rep,type:'def',seen:false},...(d.reports||[])].slice(0,40);
+        p.battleResolved=true;p.battleAt=now;p.blockedByShield=true;p.returnAt=now+Number(p.oneWay||0);p.resolveAt=p.returnAt;
+        p.returnUnits={...(p.sent||{})};
+        saveAcc(accounts);
+        publishBattleAccounts(a,d,currentKey,targetKey);
+        publishWarMission(a);
+        return true;
+      }
+      const sent=p.sent||{}, baseBattle=warCalc(a,sent,d), dAllyId=currentAllianceIdForAccount(d), allySt=allyArmyState(dAllyId), allyRaw=allyArmyRawPower(allySt), allyDef=allyRaw*0.25, A=baseBattle.A, D=baseBattle.D+allyDef, win=A>D,pA=A/(A+D||1),aLoss={},dLoss={},allyLoss={},loot={};
+      Object.keys(sent).forEach(k=>{const l=Math.min(sent[k],Math.round(sent[k]*.6*(1-pA)));if(l){aLoss[k]=l;}});
+      // نیروها از لحظهٔ حرکت از ارتش خارج شده‌اند؛ فقط نیروهای زنده برای برگشت ذخیره می‌شوند.
+      p.returnUnits={};
+      Object.keys(sent).forEach(k=>{p.returnUnits[k]=Math.max(0,(sent[k]||0)-(aLoss[k]||0));});
+      UNITS.forEach(u=>{const c=d.army[u.k]||0,l=Math.min(c,Math.round(c*.6*pA));if(l){dLoss[u.k]=l;d.army[u.k]=c-l;}});
+      if(dAllyId && allyRaw>0){
+        // حداکثر ۲۵٪ از کل ارتش ذخیره اتحاد در هر نبرد قابل نابودی است؛ حمله هرچه قوی‌تر باشد، به این سقف نزدیک‌تر می‌شود.
+        const allyLossFactor=Math.min(0.25,Math.max(0,0.25*pA));
+        ALLY_DEF_UNITS.forEach(k=>{const c=allySt.army[k]||0,l=Math.min(c,Math.round(c*allyLossFactor));if(l){allyLoss[k]=l;allySt.army[k]=c-l;}});
+        if(Object.keys(allyLoss).length) publishAllyArmy(dAllyId,allySt);
+      }
+      if(win)LOOT_KEYS.forEach(k=>{const v=Math.floor((d.res[k]||0)*WAR_LOOT);if(v>0){loot[k]=v;d.res[k]=Math.round((d.res[k]-v)*100)/100;a.res[k]=Math.round(((a.res[k]||0)+v)*100)/100;}});
+      const rep={id:now+Math.random().toString(36).slice(2,6),t:now,att:a.name,def:d.name,reason:p.reason||'',win,A:Math.round(A*10)/10,D:Math.round(D*10)/10,sent,aLoss,dLoss,allyLoss,allyDefensePower:allyDef,loot,distance:p.distance,battleAt:now};
+      a.reports=[{...rep,type:'att'},...(a.reports||[])].slice(0,40);
+      d.reports=[{...rep,type:'def',seen:false},...(d.reports||[])].slice(0,40);
+      p.battleResolved=true;p.battleAt=now;p.win=win;p.returnAt=now+Number(p.oneWay||0);p.resolveAt=p.returnAt;
+      saveAcc(accounts);
+      // هر دو حساب بلافاصله retained می‌شوند تا همهٔ دستگاه‌ها نتیجهٔ یکسان ببینند.
+      publishBattleAccounts(a,d,currentKey,targetKey);
+      publishWarMission(a);
+      return true;
+    }
+    if(p.battleResolved && now>=Number(p.returnAt||p.resolveAt||0)){
+      const back=p.returnUnits||p.sent||{};
+      a.army=a.army||{};
+      Object.keys(back).forEach(k=>{
+        const q=Math.max(0,Math.floor(Number(back[k]||0)));
+        if(q) a.army[k]=(a.army[k]||0)+q;
+      });
+      delete a.pendingAttack;
+      saveAcc(accounts);
+      publishBattleAccounts(a,d,currentKey,targetKey);
+      publishWarMission(a);
+      return true;
+    }
+    return false;
+  }
+  async function createPendingAttack(){
+    const accounts=killEventEnsure(loadAcc()),all={...accounts,...mqttPlayers},a=accounts[currentKey];
+    restoreWarMission(a);if(!a)return;
+    const targetKey=String(wTarget||'').toLowerCase();
+    let d=targetKey&&all[targetKey];
+    // قبل از ثبت حمله، آخرین نسخهٔ retained مدافع را می‌گیریم تا حمله روی state قدیمی اجرا نشود.
+    if(targetKey && targetKey!==String(currentKey||'').toLowerCase()){
+      try{
+        const remote=await mqttGetAccount(targetKey,1200);
+        if(remote){
+          d={...(d||{}),...remote};
+          accounts[targetKey]=d;
+        }
+      }catch(e){}
+    }
+    if(!d)return toast('اول یک بازیکن از جهان خودتان را انتخاب کنید.');if(worldIdOf(a)!==worldIdOf(d))return toast('امکان حمله به بازیکن جهان دیگر وجود ندارد.');
+    resolvePendingAttack(a,accounts);if(a.pendingAttack&&Date.now()<Number(a.pendingAttack.resolveAt))return toast(`🚀 نیروها هنوز در مأموریت هستند؛ ${formatTravel(a.pendingAttack.resolveAt-Date.now())} باقی مانده.`);
+    if(shieldHoursLeft(d))return toast('🛡️ این بازیکن سپر فعال دارد.');a.army=a.army||{};d.army=d.army||{};
+    const sent={};let n=0;ATK_UNITS.forEach(u=>{const q=Math.min(a.army[u.k]||0,+wSel[u.k]||0);if(q>0){sent[u.k]=q;n+=q;}});const err=warSelectionError(sent);if(err)return toast(err);if(!n)return toast('حداقل یک یگان انتخاب کنید.');
+    const tr=attackDistanceText(currentKey,wTarget),now=Date.now();
+    // نیروها در لحظهٔ اعزام از ارتش محلی و نسخهٔ retained سرور کم می‌شوند.
+    // بنابراین با refresh/update دوباره ظاهر نمی‌شوند؛ فقط بعد از برگشت به ارتش اضافه می‌شوند.
+    Object.keys(sent).forEach(k=>{a.army[k]=Math.max(0,(a.army[k]||0)-sent[k]);});
+    a.pendingAttack={id:'atk_'+now,from:currentKey,target:wTarget,targetName:d.name,sent,returnUnits:{...sent},createdAt:now,departAt:now,arriveAt:now+tr.oneWay,oneWay:tr.oneWay,resolveAt:now+tr.roundTrip,distance:Math.round(tr.distance),reason:$('#wReason').value.trim().slice(0,80),battleResolved:false};
+    saveAcc(accounts);
+    publishWarMission(a);
+    wSel={};$('#wReason').value='';renderUnits(a);warTick();go('worldmap');$('#fabLayer').hidden=true;resetWorldMap();renderWorldMap();renderWorldMapAttackRoute();updateMapMission(loadAcc()[currentKey]);toast(`🚀 حمله آغاز شد؛ فاصله ${fmt(Math.round(tr.distance))} واحد. رسیدن ${formatTravel(tr.oneWay)} و بازگشت کامل ${formatTravel(tr.roundTrip)}.`);
+  }
+  async function warAttack(){await createPendingAttack();}
   function warTick(){
-    if ($('#war').hidden || !currentKey) return;
-    const a = loadAcc()[currentKey]; if (!a) return;
-    const left = (a.lastAttack || 0) + WAR_CD - Date.now(), b = $('#wGo');
-    if (left > 0) { $('#wCd').textContent = `⏳ کولداون فعال: ${toFa(Math.floor(left / 60000))}:${toFa(String(Math.floor(left % 60000 / 1000)).padStart(2, '0'))} تا حمله بعدی`; b.disabled = true; }
-    else { $('#wCd').textContent = '⏳ کولداون سراسری حمله: هر ۱۲۰ دقیقه فقط یک حمله (به هر کشوری).'; b.disabled = false; }
-    // شمارندهٔ سپر بازیکنان در منوی جنگ، ثانیه‌به‌ثانیه به‌روزرسانی می‌شود.
-    if (!$('#wList').hidden) renderPlayers();
+    if(!currentKey)return;
+    const accounts=loadAcc(),a=accounts[currentKey];if(!a)return;
+    restoreWarMission(a);
+    const changed=resolvePendingAttack(a,accounts);if(changed){saveAcc(accounts);renderRep(a);renderUnits(a);}
+    const p=a.pendingAttack,now=Date.now(),b=$('#wGo');
+    if(p&&now<Number(p.resolveAt||0)){
+      const toArr=Math.max(0,Number(p.arriveAt)-now),toReturn=Math.max(0,Number(p.resolveAt)-now);
+      if(!$('#war').hidden)$('#wCd').textContent=p.battleResolved?`↩️ نبرد انجام شد · نیروها در حال بازگشت · ${formatTravel(toReturn)} باقی مانده`:`🚀 نیروها در مسیر هدف · رسیدن و انجام حمله: ${formatTravel(toArr)} · بازگشت کامل: ${formatTravel(toReturn)}`;
+      b.disabled=true;
+    }else if(!p){
+      if(!$('#war').hidden)$('#wCd').textContent='⚔️ آماده حمله؛ زمان رفت‌وبرگشت بر اساس فاصله نقشه محاسبه می‌شود.';
+      b.disabled=false;
+    }else if(Number(p.resolveAt||0)<=now){
+      restoreWarMission(a);
+      b.disabled=false;
+    }
+    updateMapMission(a);
+    if(!$('#wList').hidden)renderPlayers();
+  }
+  function updateMapMission(a){
+    const box=$('#mapMission');if(!box)return;const p=a?.pendingAttack,now=Date.now();
+    if(!p||now>=Number(p.resolveAt||0)){box.hidden=true;return;}
+    const total=Number(p.resolveAt)-Number(p.departAt),left=Number(p.resolveAt)-now;
+    const phase=p.battleResolved?'↩️ در حال بازگشت':'🚀 در مسیر حمله';
+    const phaseLeft=p.battleResolved?Math.max(0,Number(p.resolveAt)-now):Math.max(0,Number(p.arriveAt)-now);
+    const progress=Math.max(0,Math.min(100,((total-left)/Math.max(1,total))*100));
+    box.hidden=false;box.style.setProperty('--progress',progress+'%');
+    box.innerHTML=`<div class="mtitle">${phase}</div><div>🎯 هدف: <b>${esc(p.targetName||'بازیکن')}</b></div><div>📏 فاصله: <b>${fmt(p.distance||0)}</b></div><div class="phase">${p.battleResolved?'حمله انجام شد؛ نیروها برمی‌گردند':'تا رسیدن و شروع حمله: '+formatTravel(phaseLeft)}</div><div>↩️ بازگشت کامل: <b>${formatTravel(Math.max(0,left))}</b></div><div class="bar"><i></i></div>`;
   }
 
+
+
+  /* ---------- WORLD MAP ---------- */
+  const WORLD_MAP_KEY='empire_world_map_positions_v1';
+  let worldMapState={x:-980,y:-690,zoom:.72,drag:false,sx:0,sy:0,ox:0,oy:0};
+  function worldMapPositions(){try{return JSON.parse(localStorage.getItem(WORLD_MAP_KEY)||'{}')||{};}catch(e){return {};}}
+  function saveWorldMapPositions(v){try{localStorage.setItem(WORLD_MAP_KEY,JSON.stringify(v));}catch(e){}}
+  function hashWorld(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0;}
+  function worldPosFor(key){
+    const ps=worldMapPositions(); if(ps[key]) return ps[key];
+    let h=hashWorld(String(key));
+    const x=220+(h%5560); h=Math.imul(h^0x9e3779b9,2654435761)>>>0; const y=220+(h%4060);
+    ps[key]={x,y}; saveWorldMapPositions(ps); return ps[key];
+  }
+  function worldCitySvg(){return `<svg class="city-art" viewBox="0 0 90 78" aria-hidden="true"><defs><linearGradient id="cb1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e5d08a"/><stop offset="1" stop-color="#9b692d"/></linearGradient><linearGradient id="cb2" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#8fd1df"/><stop offset="1" stop-color="#3e7484"/></linearGradient></defs><ellipse cx="45" cy="68" rx="31" ry="7" fill="#0d471f" opacity=".45"/><path d="M13 61V34l12-9 12 9v27Z" fill="url(#cb1)" stroke="#d9c06e"/><path d="M53 61V20l12-9 12 9v41Z" fill="url(#cb1)" stroke="#d9c06e"/><path d="M37 61V28l8-7 8 7v33Z" fill="#c79a43" stroke="#ead88d"/><path d="M19 38h14v18H19Zm38-12h14v30H57ZM41 34h8v23h-8Z" fill="url(#cb2)"/><g fill="#f7e8aa"><circle cx="26" cy="44" r="2"/><circle cx="26" cy="51" r="2"/><circle cx="64" cy="32" r="2"/><circle cx="64" cy="40" r="2"/><circle cx="64" cy="48" r="2"/><circle cx="45" cy="41" r="2"/><circle cx="45" cy="49" r="2"/></g><path d="M45 5v15" stroke="#d7bf69" stroke-width="2"/><path d="M45 5l10 4-10 4Z" fill="#d94d3f"/></svg>`}
+  function worldMapAllPlayers(){return {...loadAcc(),...mqttPlayers};}
+  function worldPower(a){if(!a)return 0; try{return Math.round(UNITS.reduce((t,u)=>t+(+((a.army||{})[u.k])||0)*u.w,0)*milMult(a));}catch(e){return Math.round(+a.power||0)}}
+  function worldShieldText(a){const t=shieldTimeLeft(a);return t?'🛡️ '+t:'🎯 آماده حمله';}
+  let worldMapRenderSignature='';
+  let worldMapRouteSignature='';
+  function renderWorldMap(){
+    const root=$('#worldMapPlayers'); if(!root)return;
+    const all=worldMapAllPlayers();
+    const entries=Object.keys(all).filter(k=>all[k]&&all[k].name&&worldIdOf(all[k])===currentWorldId()&&String(all[k].name).trim().toLowerCase()!=='vaik');
+    const sig=entries.map(k=>{
+      const a=all[k],p=worldPosFor(k);
+      return [k,a.name,a.avS||a.avatar||'',worldPower(a),shieldHoursLeft(a)>0?1:0,p.x,p.y].join('|');
+    }).join('~');
+
+    if(sig!==worldMapRenderSignature){
+      worldMapRenderSignature=sig;
+      root.innerHTML=entries.map(k=>{
+        const a=all[k],p=worldPosFor(k),me=k===currentKey,av=a.avS||a.avatar||'',shield=shieldHoursLeft(a)>0||shieldTimeLeft(a);
+        return `<button class="map-player ${me?'me':''}" type="button" data-map-player="${esc(k)}" style="left:${p.x}px;top:${p.y}px">${shield?'<span class="shield-bubble" aria-label="سپر فعال"></span>':''}${worldCitySvg()}${me?'':'<span class="map-dot">⚔</span>'}<span class="map-name">${esc(a.name)}${verifiedMark(a)}</span><span class="map-power">${fmt(worldPower(a))} قدرت</span></button>`;
+      }).join('');
+      $('#worldMapCount').textContent=toFa(entries.length)+' بازیکن';
+    }
+    renderWorldMapAttackRoute();
+    applyWorldMapTransform();
+  }
+
+  function renderWorldMapAttackRoute(force=false){
+    const layer=$('#mapAttackRoutes'); if(!layer)return;
+    const wid=currentWorldId(), local=loadAcc()[currentKey]?.pendingAttack, missions={};
+    Object.keys(mqttWorldAttacks||{}).forEach(k=>{const x=mqttWorldAttacks[k];if(x&&Number(x.worldId)===Number(wid)&&x.pendingAttack?.target)missions[k]=x.pendingAttack;});
+    if(local?.target)missions[Number(wid)+':'+String(currentKey).toLowerCase()]=local;
+    const list=Object.entries(missions);
+    if(!list.length){if(worldMapRouteSignature!=='none'){layer.innerHTML='';worldMapRouteSignature='none';}return;}
+    const sig=list.map(([k,p])=>[k,p.id,p.from||'',p.target||'',p.battleResolved?1:0,p.arriveAt,p.returnAt||p.resolveAt].join('|')).join('~');
+    if(force||sig!==worldMapRouteSignature){
+      worldMapRouteSignature=sig;
+      layer.innerHTML=list.map(([key,p])=>{
+        const fromKey=p.from||key.split(':')[1]||'', targetKey=String(p.target||'').toLowerCase();
+        const fp=worldPosFor(fromKey),tp=worldPosFor(targetKey); if(!fp||!tp)return '';
+        const angle=Math.atan2(Number(tp.y)-Number(fp.y),Number(tp.x)-Number(fp.x))*180/Math.PI;
+        const id='mapAttackPlane_'+String(p.id||key).replace(/[^a-zA-Z0-9_-]/g,'_');
+        return `<svg viewBox="0 0 6000 4500" preserveAspectRatio="none" width="6000" height="4500"><line class="map-attack-line-glow" x1="${fp.x}" y1="${fp.y-28}" x2="${tp.x}" y2="${tp.y-28}"></line><line class="map-attack-line" x1="${fp.x}" y1="${fp.y-28}" x2="${tp.x}" y2="${tp.y-28}"></line></svg><span class="map-attack-plane" id="${id}" data-from-x="${fp.x}" data-from-y="${fp.y}" data-to-x="${tp.x}" data-to-y="${tp.y}" data-angle="${angle}" data-depart="${Number(p.departAt)||Date.now()}" data-arrive="${Number(p.arriveAt)||0}" data-return="${Number(p.returnAt||p.resolveAt)||0}" aria-label="نشانگر مسیر">✈️</span>`;
+      }).join('');
+    }
+    const now=Date.now();
+    list.forEach(([key,p])=>{
+      const id='mapAttackPlane_'+String(p.id||key).replace(/[^a-zA-Z0-9_-]/g,'_'), plane=document.getElementById(id); if(!plane)return;
+      const fx=+plane.dataset.fromX,fy=+plane.dataset.fromY,tx=+plane.dataset.toX,ty=+plane.dataset.toY;
+      const depart=+plane.dataset.depart||now,arrive=+plane.dataset.arrive||depart+(+p.oneWay||0),ret=+plane.dataset.return||arrive+(+p.oneWay||0);
+      let progress,x,y,rot;
+      if(p.battleResolved){progress=Math.max(0,Math.min(1,(now-arrive)/Math.max(1,ret-arrive)));x=tx+(fx-tx)*progress;y=ty+(fy-ty)*progress;rot=+plane.dataset.angle+180;}
+      else{progress=Math.max(0,Math.min(1,(now-depart)/Math.max(1,arrive-depart)));x=fx+(tx-fx)*progress;y=fy+(ty-fy)*progress;rot=+plane.dataset.angle;}
+      plane.style.left=x+'px';plane.style.top=(y-28)+'px';plane.style.transform=`translate(-50%,-50%) rotate(${rot}deg)`;
+    });
+  }
+  function applyWorldMapTransform(){const c=$('#worldMapCanvas');if(c)c.style.transform=`translate3d(${worldMapState.x}px,${worldMapState.y}px,0) scale(${worldMapState.zoom})`;}
+  function clampWorldMap(){const v=$('#worldMapViewport');if(!v)return;const w=v.clientWidth,h=v.clientHeight,z=worldMapState.zoom;const cw=6000*z,ch=4500*z;worldMapState.x=Math.min(0,Math.max(w-cw,worldMapState.x));worldMapState.y=Math.min(0,Math.max(h-ch,worldMapState.y));}
+  function worldMapZoom(z,cx,cy){const old=worldMapState.zoom,n=Math.max(.42,Math.min(1.75,z));if(n===old)return;const px=cx??($('#worldMapViewport').clientWidth/2),py=cy??($('#worldMapViewport').clientHeight/2);worldMapState.x=px-(px-worldMapState.x)*(n/old);worldMapState.y=py-(py-worldMapState.y)*(n/old);worldMapState.zoom=n;clampWorldMap();applyWorldMapTransform();}
+  function worldMapOpenPlayer(key){const a=worldMapAllPlayers()[key];if(!a||worldIdOf(a)!==currentWorldId())return;const av=a.avS||a.avatar||'';$('#mapPopup').innerHTML=`<div class="mp-top">${av?`<img class="mp-avatar" src="${esc(av)}" alt="" onerror="this.style.display='none'">`:'<div class="mp-avatar" style="display:grid;place-items:center;font-size:23px">🏰</div>'}<div><h3>${esc(a.name)}${verifiedMark(a)}</h3><small>قدرت ${fmt(worldPower(a))} · ${worldShieldText(a)}</small></div></div><div class="mp-actions"><button type="button" data-map-attack="${esc(key)}">⚔️ حمله</button><button class="secondary" type="button" data-map-close>بستن</button></div>`;$('#mapPopup').classList.add('open');}
+  function showWorldMap(){const acc=loadAcc()[currentKey];if(!acc)return showLogin();resolvePendingAttack(acc,loadAcc());go('worldmap');$('#fabLayer').hidden=true;window.scrollTo(0,0);renderWorldMap();mqttConnect().then(()=>{renderWorldMap();setTimeout(renderWorldMap,700);setTimeout(renderWorldMap,1800);});}
+  function resetWorldMap(){
+    const v=$('#worldMapViewport');
+    worldMapState={x:(v.clientWidth-6000*.52)/2,y:(v.clientHeight-4500*.52)/2,zoom:.52,drag:false,sx:0,sy:0,ox:0,oy:0};
+    clampWorldMap();applyWorldMapTransform();
+  }
+  function centerWorldMapOnMe(){
+    const v=$('#worldMapViewport'), key=currentKey;
+    if(!v||!key)return;
+    const p=worldPosFor(key);
+    const z=Math.max(.58,Math.min(1.05,worldMapState.zoom||.72));
+    worldMapState.zoom=z;
+    worldMapState.x=(v.clientWidth/2)-(Number(p.x)*z);
+    worldMapState.y=(v.clientHeight/2)-(Number(p.y)*z);
+    clampWorldMap();applyWorldMapTransform();
+    const me=document.querySelector(`[data-map-player="${CSS.escape(String(key))}"]`);
+    if(me){me.animate([{filter:'brightness(1)'},{filter:'brightness(1.8)'},{filter:'brightness(1)'}],{duration:650});}
+  }
+  (function initWorldMap(){
+    const v=$('#worldMapViewport');if(!v)return;
+    v.addEventListener('pointerdown',e=>{if(e.target.closest('.map-player,.map-controls,.map-pad,.map-popup,.map-back'))return;worldMapState.drag=true;worldMapState.sx=e.clientX;worldMapState.sy=e.clientY;worldMapState.ox=worldMapState.x;worldMapState.oy=worldMapState.y;v.classList.add('dragging');v.setPointerCapture?.(e.pointerId);});
+    v.addEventListener('pointermove',e=>{if(!worldMapState.drag)return;worldMapState.x=worldMapState.ox+e.clientX-worldMapState.sx;worldMapState.y=worldMapState.oy+e.clientY-worldMapState.sy;clampWorldMap();applyWorldMapTransform();});
+    const end=()=>{worldMapState.drag=false;v.classList.remove('dragging')};v.addEventListener('pointerup',end);v.addEventListener('pointercancel',end);
+    v.addEventListener('wheel',e=>{e.preventDefault();worldMapZoom(worldMapState.zoom+(e.deltaY<0?.1:-.1),e.clientX,e.clientY)},{passive:false});
+    $('#worldMapPlayers').addEventListener('click',e=>{const b=e.target.closest('[data-map-player]');if(b)worldMapOpenPlayer(b.dataset.mapPlayer);});
+    $('#mapZoomIn').addEventListener('click',()=>worldMapZoom(worldMapState.zoom+.12));
+    $('#mapZoomOut').addEventListener('click',()=>worldMapZoom(worldMapState.zoom-.12));
+    $('#mapCenter').addEventListener('click',centerWorldMapOnMe);
+    document.querySelectorAll('[data-pan]').forEach(b=>b.addEventListener('click',()=>{const d=b.dataset.pan,s=150;if(d==='up')worldMapState.y+=s;if(d==='down')worldMapState.y-=s;if(d==='left')worldMapState.x+=s;if(d==='right')worldMapState.x-=s;clampWorldMap();applyWorldMapTransform();}));
+    $('#worldMapBack').addEventListener('click',()=>{go('profile');$('#fabLayer').hidden=false;render(loadAcc()[currentKey]);});
+    $('#mapPopup').addEventListener('click',e=>{const at=e.target.closest('[data-map-attack]');if(at){const key=at.dataset.mapAttack;const target=worldMapAllPlayers()[key];$('#mapPopup').classList.remove('open');showWar();wTarget=key;$('#wSearch').value=target?.name||'';renderPlayers();const me=loadAcc()[currentKey];renderUnits(me);wSumUpd();setTimeout(()=>{$('#wUnits').scrollIntoView({behavior:'smooth',block:'center'});const first=$('#wUnits input[data-u]:not(:disabled)');if(first)first.focus();},80);return;}if(e.target.closest('[data-map-close]'))$('#mapPopup').classList.remove('open');});
+    window.addEventListener('resize',()=>{if(!$('#worldmap').hidden){clampWorldMap();applyWorldMapTransform();}});
+    setInterval(()=>{if(!$('#worldmap').hidden){const ac=loadAcc()[currentKey];if(ac){resolvePendingAttack(ac,loadAcc());updateMapMission(ac);}renderWorldMap();}},1000);
+    (function animateWorldMapAttack(){
+      if(!$('#worldmap')?.hidden) renderWorldMapAttackRoute();
+      requestAnimationFrame(animateWorldMapAttack);
+    })();
+  })();
 
   function showWar(){
     const accs = loadAcc(), acc = accs[currentKey];
@@ -3067,7 +3973,27 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     renderPlayers(); wSumUpd();
     toast('🎲 حریف شانسی: ' + accs[wTarget].name);
   });
-  $('#wGo').addEventListener('click', warAttack);
+  const warAttackButton = $('#wGo');
+  if(warAttackButton){
+    warAttackButton.disabled = false;
+  }
+  document.addEventListener('click', function(e){
+    const btn = e.target && e.target.closest ? e.target.closest('#wGo') : null;
+    if(!btn) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    try{
+      btn.disabled = false;
+      if(typeof warAttack === 'function') Promise.resolve(warAttack()).catch(err=>{ console.error('warAttack async error:',err); const cd=document.querySelector('#wCd'); if(cd) cd.textContent='⚠️ خطا در اجرای حمله؛ دوباره انتخاب کنید.'; try{ toast('⚠️ خطا در اجرای حمله؛ دوباره انتخاب کنید.'); }catch(_){} });
+    }catch(err){
+      console.error('warAttack error:', err);
+      try{
+        const cd=document.querySelector('#wCd');
+        if(cd) cd.textContent='⚠️ خطا در اجرای حمله؛ دوباره انتخاب کنید.';
+      }catch(_){}
+    }
+  }, true);
+
   setInterval(warTick, 1000);
   setInterval(() => {
     if(!currentKey || $('#profile').hidden) return;
@@ -3162,7 +4088,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     if(!acc.buildings || typeof acc.buildings !== 'object') acc.buildings = {};
     try{ tickInfra(acc); }catch(e){ console.warn('tickInfra recovered:', e); }
     const accs = loadAcc(); accs[currentKey] = acc; saveAcc(accs);
-    $('#pname').innerHTML = esc(acc.name) + verifiedMark(acc);
+    $('#pname').innerHTML = esc(acc.name) + verifiedMark(acc); const wtag=$('#profileWorldTag'); if(wtag) wtag.textContent=worldLabel(worldIdOf(acc));
     { const im = $('#avImg'); if (acc.avatar) { im.src = acc.avatar; im.hidden = false; } else { im.removeAttribute('src'); im.hidden = true; } }
     $('#sheetWho').innerHTML = esc(acc.name) + verifiedMark(acc);
     $('#xp').textContent = fmt(acc.xp);
@@ -3202,7 +4128,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   /* ======== سرور مشترک + رتبه‌بندی + اتحاد ======== */
   let SRV = '', rankTab = 'power', rkSeq = 0, warned = false;
   const srvInit = async () => { if (chatMode !== 'server') await chatProbe(); SRV = chatMode === 'server' ? chatUrl.replace(/\/chat$/, '') : ''; return SRV; };
-  const post = (p, b) => { const a = loadAcc()[currentKey]; return fetch(SRV + p, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ ...b, name: a.name, cid: chatCid }) }).then(r => r.json()); };
+  const post = (p, b) => { const a = loadAcc()[currentKey]; return fetch(SRV + p, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ ...b, name: a.name, cid: chatCid, worldId: worldIdOf(a) }) }).then(r => r.json()); };
   const setEff = e => { const accs = loadAcc(), a = accs[currentKey]; if (a && (a.eff || 0) !== e) { a.eff = e; saveAcc(accs); } };
   const myPower = a => UNITS.reduce((t, u) => t + ((a.army && a.army[u.k]) || 0) * u.w, 0) * milMult(a);
 
@@ -3211,7 +4137,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     const accs = loadAcc(), a = accs[currentKey]; if (!a) return;
     tickInfra(a);
     if (a.avatar && !a.avS) { a.avS = await thumbOf(a.avatar); a.avDirty = !!a.avS; const c = loadAcc(); if (c[currentKey]) { c[currentKey].avS = a.avS; c[currentKey].avDirty = a.avDirty; saveAcc(c); } }
-    const bd = { profile: publicAccount(a), cc: ccOf(a), power: Math.round(myPower(a)), wealth: Math.round(a.res.treasury) };
+    const bd = { profile: publicAccount(a), cc: ccOf(a), power: Math.round(myPower(a)), wealth: Math.round(a.res.treasury), worldId: worldIdOf(a) };
     if (a.avDirty) { bd.setAv = 1; bd.av = a.avS || ''; }
     try {
       const j = await post('/sync', bd);
@@ -3231,7 +4157,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     mqttConnect().then(() => {
       setTimeout(() => { try { if (!$('#rank').hidden) renderRank(); } catch(e){} }, 900);
     }).catch(()=>{});
-    const remoteRows = Object.values(mergedPlayerDirectory()).filter(a => a && a.name && String(a.name).trim().toLowerCase() !== 'vaik').map(a => {
+    const remoteRows = Object.values(mergedPlayerDirectory()).filter(a => a && a.name && worldIdOf(a)===currentWorldId() && String(a.name).trim().toLowerCase() !== 'vaik').map(a => {
       const copy = JSON.parse(JSON.stringify(a));
       try { tickInfra(copy); } catch(e){}
       return {
@@ -3243,7 +4169,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     if (remoteRows.length) rows = remoteRows;
     if (!rows || !rows.length) {
       if (SRV) {
-        try { rows = (await fetch(SRV + '/rank', { cache:'no-store' }).then(r => r.json()))[rankTab]; if (Array.isArray(rows)) rows = rows.filter(r => String(r?.name || '').trim().toLowerCase() !== 'vaik'); } catch(e){}
+        try { rows = (await fetch(SRV + '/rank', { cache:'no-store' }).then(r => r.json()))[rankTab]; if (Array.isArray(rows)) rows = rows.filter(r => Number(r?.worldId) === currentWorldId() && String(r?.name || '').trim().toLowerCase() !== 'vaik'); } catch(e){}
       }
     }
     if (seq !== rkSeq) return;
@@ -3253,7 +4179,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
       rows = Object.values(loadAcc()).map(a => {
         tickInfra(a);
         if (String(a.name || '').trim().toLowerCase() === 'vaik') return null;
-        return { name:a.name, cc:ccOf(a), av:a.avS || '', v:Math.round(rankTab === 'power' ? myPower(a) : (a.res.treasury || 0)) };
+        if (worldIdOf(a)!==currentWorldId()) return null; return { name:a.name, cc:ccOf(a), av:a.avS || '', v:Math.round(rankTab === 'power' ? myPower(a) : (a.res.treasury || 0)) };
       }).filter(Boolean).sort((x, y) => y.v - x.v).slice(0, 10);
     } else {
       note = 'رتبه‌بندی از اطلاعات ذخیره‌شدهٔ بازیکنان.';
@@ -3280,15 +4206,138 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   }
   document.querySelectorAll('.rkb').forEach(b => b.addEventListener('click', () => { rankTab = b.dataset.t; renderRank(); }));
   setInterval(() => { if (!$('#rank').hidden) renderRank(); }, 15000);
+  setInterval(() => { if (!$('#event').hidden) killEventRender(); }, 1000);
+  setInterval(() => { if (currentKey) killEventEnsure(loadAcc()); }, 30000);
 
   /* ---- اتحاد ---- */
   const AL = { last:0, pg:0, aid:null, ids:new Set(), st:null, busy:false };
 
 
+  /* ---- ارتش دفاعی اتحاد ---- */
+  const ALLY_DEF_UNITS = ['sub','aa','ground','fighter','tank','soldier'];
+  const ALLY_DEF_KEY = (worldId, aid) => 'game:ally-army:w' + Number(worldId || currentWorldId()) + ':' + String(aid || '');
+  const ALLY_TRANSFER_KEY = (worldId, targetKey) => 'game:ally-transfer:w' + Number(worldId || currentWorldId()) + ':' + String(targetKey || '').toLowerCase();
+  const allyDefUnit = k => UNITS.find(u => u.k === k);
+  function emptyAllyArmy(){ const o={}; ALLY_DEF_UNITS.forEach(k=>o[k]=0); return o; }
+  function allyArmyState(aid){
+    if(!aid) return {army:emptyAllyArmy(),updated:0};
+    const key=ALLY_DEF_KEY(currentWorldId(),aid);
+    let st={army:emptyAllyArmy(),updated:0};
+    try{ st=JSON.parse(store.get(key)||'{}')||st; }catch(e){}
+    st.army={...emptyAllyArmy(),...(st.army||{})};
+    ALLY_DEF_UNITS.forEach(k=>st.army[k]=Math.max(0,Math.floor(Number(st.army[k])||0)));
+    return st;
+  }
+  async function publishAllyArmy(aid,st){
+    if(!aid)return false;
+    const key=ALLY_DEF_KEY(currentWorldId(),aid), val=JSON.stringify({army:{...emptyAllyArmy(),...(st?.army||{})},updated:Date.now(),by:currentKey||''});
+    store.set(key,val);
+    try{ await mqttConnect(); if(mqttClient?.connected){ mqttClient.publish(MQTT_STATE+encodeURIComponent(key),val,{qos:1,retain:true}); return true; } }catch(e){}
+    return false;
+  }
+  function allyArmyRawPower(st){
+    return ALLY_DEF_UNITS.reduce((n,k)=>n+(Number(st?.army?.[k])||0)*(Number(allyDefUnit(k)?.w)||0),0);
+  }
+  function allyArmyEffectiveDefense(st){ return allyArmyRawPower(st)*0.25; }
+  function currentAllianceIdForAccount(acc){
+    if(!acc)return '';
+    let id=acc.allyId||acc.allianceId||acc.ally||'';
+    if(id)return String(id);
+    try{
+      const db=JSON.parse(store.get('game:lally:w'+currentWorldId())||'{}')||{};
+      const pid=String(acc._key||acc.name||currentKey||'').toLowerCase();
+      const a=Object.values(db.allies||{}).find(x=>(x.members||[]).some(m=>String(m).toLowerCase()===pid || String(db.players?.[m]?.name||'').trim().toLowerCase()===String(acc.name||'').trim().toLowerCase()));
+      return a?String(a.id):'';
+    }catch(e){return '';}
+  }
+  function allianceMembersFromId(aid){
+    const out=[];
+    try{
+      const db=JSON.parse(store.get('game:lally:w'+currentWorldId())||'{}')||{};
+      const a=db.allies?.[aid]; if(a){ (a.members||[]).forEach(k=>out.push({key:String(k),name:db.players?.[k]?.name||k})); if(out.length)return out; }
+    }catch(e){}
+    const j=AL.st?.mine; if(j?.id && String(j.id)===String(aid)) return (j.members||[]).map(x=>({key:String(x.name||'').toLowerCase(),name:x.name||x}));
+    return out;
+  }
+  let allianceArmyPanelOpen = false;
+  function toggleAllianceArmyPanel(){
+    const card = $('#allyArmyCard');
+    if(!card) return;
+    allianceArmyPanelOpen = !allianceArmyPanelOpen;
+    card.hidden = !allianceArmyPanelOpen;
+    if(allianceArmyPanelOpen && AL.st?.mine) renderAllyArmy(AL.st.mine);
+  }
+  function renderAllyArmy(m){
+    const card=$('#allyArmyCard'); if(!card)return;
+    if(!m){card.hidden=true;return;}
+    card.hidden=!allianceArmyPanelOpen;
+    const st=allyArmyState(m.id), lead=m.me==='leader';
+    const labels={sub:'زیردریایی',aa:'پدافند هوایی',ground:'پدافند زمینی',fighter:'جنگنده',tank:'زرهی',soldier:'سرباز'};
+    const icons={sub:'🌊',aa:'📡',ground:'🧱',fighter:'✈️',tank:'🚛',soldier:'🪖'};
+    $('#aArmyPower').textContent=fmt(allyArmyRawPower(st)); $('#aArmyDefPower').textContent=fmt(allyArmyEffectiveDefense(st));
+
+    // مهم: هنگام تایپ، DOM ورودی را دوباره‌سازی نکن تا کیبورد موبایل بسته نشود.
+    const active = document.activeElement;
+    const typingArmy = !!(active && active.matches && active.matches('[data-ally-unit]'));
+    const grid = $('#aArmyGrid');
+    if(!typingArmy){
+      grid.innerHTML=ALLY_DEF_UNITS.map(k=>`<label class="ally-army-row"><span class="ae">${icons[k]}</span><span class="ai"><b>${labels[k]}</b><small>موجود در اتحاد: ${fmt(st.army[k])}</small></span><input type="text" inputmode="numeric" autocomplete="off" data-ally-unit="${k}" value="0" ${lead?'':'max="'+Math.max(0,Math.floor(Number(loadAcc()[currentKey]?.army?.[k])||0))+'"'}></label>`).join('');
+    }else{
+      // فقط موجودی/متن را تازه کن و خود input فوکوس‌دار دست‌نخورده بماند.
+      grid.querySelectorAll('[data-ally-unit]').forEach(inp=>{
+        const k=inp.dataset.allyUnit;
+        const small=inp.closest('.ally-army-row')?.querySelector('.ai small');
+        if(small) small.textContent='موجود در اتحاد: '+fmt(st.army[k]);
+      });
+    }
+    const box=$('#aArmyLeaderBox'); box.hidden=!lead;
+    if(lead){
+      const members=(m.members||[]).filter(x=>String(x.name||'').trim().toLowerCase()!==String(loadAcc()[currentKey]?.name||'').trim().toLowerCase());
+      $('#aArmyTarget').innerHTML=members.length?members.map(x=>`<option value="${esc(String(x.name||x))}">${esc(String(x.name||x))}</option>`).join(''):'<option value="">عضو دیگری وجود ندارد</option>';
+    }
+  }
+  function allyArmyInputs(){
+    const o={}; document.querySelectorAll('[data-ally-unit]').forEach(i=>{o[i.dataset.allyUnit]=Math.max(0,Math.floor(Number(digits(i.value))||0));}); return o;
+  }
+  function clearAllyArmyInputs(){document.querySelectorAll('[data-ally-unit]').forEach(i=>i.value='0');}
+  async function allyArmyDeposit(){
+    const m=AL.st?.mine;if(!m)return;
+    const accs=loadAcc(), me=accs[currentKey]; if(!me)return;
+    const q=allyArmyInputs(), st=allyArmyState(m.id); let moved=0;
+    for(const k of ALLY_DEF_UNITS){const n=Math.min(Number(q[k])||0,Math.max(0,Math.floor(Number(me.army?.[k])||0)));if(n){me.army[k]-=n;st.army[k]+=n;moved+=n;}}
+    if(!moved)return toast('مقدار نیرو را وارد کنید.');
+    saveAcc(accs); await publishAllyArmy(m.id,st); clearAllyArmyInputs(); renderAllyArmy(m); renderUnits(me); toast('🛡️ نیروها وارد خانه ارتش اتحاد شدند.');
+  }
+  async function allyArmyWithdraw(){
+    const m=AL.st?.mine;if(!m||m.me!=='leader')return toast('فقط رهبر می‌تواند ارتش اتحاد را برداشت کند.');
+    const targetName=String($('#aArmyTarget')?.value||'').trim();if(!targetName)return toast('یک عضو را انتخاب کنید.');
+    const q=allyArmyInputs(),st=allyArmyState(m.id);const moved={};let total=0;
+    for(const k of ALLY_DEF_UNITS){const n=Math.min(Number(q[k])||0,st.army[k]);if(n){moved[k]=n;st.army[k]-=n;total+=n;}}
+    if(!total)return toast('مقدار نیروی برداشت را وارد کنید.');
+    const members=m.members||[], target=members.find(x=>String(x.name||'').trim().toLowerCase()===targetName.toLowerCase());
+    const targetKey=String(target?.name||targetName).toLowerCase();
+    const payload={id:'tr_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),worldId:currentWorldId(),allyId:m.id,from:currentKey,targetKey,targetName,army:moved,at:Date.now()};
+    await publishAllyArmy(m.id,st);
+    const tk=ALLY_TRANSFER_KEY(currentWorldId(),targetKey),tv=JSON.stringify(payload);store.set(tk,tv);
+    try{await mqttConnect();if(mqttClient?.connected)mqttClient.publish(MQTT_STATE+encodeURIComponent(tk),tv,{qos:1,retain:true});}catch(e){}
+    clearAllyArmyInputs();renderAllyArmy(m);toast('📤 نیرو برای عضو انتخاب‌شده ارسال شد.');
+  }
+  async function processAllyArmyTransfers(){
+    if(!currentKey)return;
+    const key=ALLY_TRANSFER_KEY(currentWorldId(),currentKey);let p=null;try{p=JSON.parse(store.get(key)||'null')}catch(e){}
+    if(!p||String(p.targetKey||'').toLowerCase()!==String(currentKey).toLowerCase())return;
+    const accs=loadAcc(),me=accs[currentKey];if(!me)return;
+    me.army=me.army||{};Object.entries(p.army||{}).forEach(([k,n])=>{if(ALLY_DEF_UNITS.includes(k))me.army[k]=(Number(me.army[k])||0)+Math.max(0,Math.floor(Number(n)||0));});saveAcc(accs);
+    store.del(key);try{await mqttConnect();if(mqttClient?.connected)mqttClient.publish(MQTT_STATE+encodeURIComponent(key),'',{qos:1,retain:true});}catch(e){}
+    toast('📥 رهبر اتحاد نیروهای ذخیره را برای شما ارسال کرد.');
+    if(!$('#ally').hidden)renderAllyArmy(AL.st?.mine);
+  }
+  setInterval(processAllyArmyTransfers,2500);
+
   /* ---- اتحاد آفلاین: همان منطق سرور، فقط روی همین دستگاه (کلید game:lally) ---- */
   function localAlly(q){
     const CAP = 15e6, MAXM = 15, acc = loadAcc()[currentKey], k = currentKey, E = error => ({ ok:false, error });
-    const db = (() => { try { return JSON.parse(store.get('game:lally')) || {}; } catch(e){ return {}; } })();
+    const db = (() => { try { return JSON.parse(store.get('game:lally:w'+currentWorldId())) || {}; } catch(e){ return {}; } })();
     db.players = db.players || {}; db.allies = db.allies || {}; db.aid = db.aid || 0; db.jid = db.jid || 0;
     const p = db.players[k] || (db.players[k] = { ally:null }); p.name = acc.name; p.cc = ccOf(acc);
     const day = () => Math.floor(Date.now() / 864e5), used = u => u.wd && u.wd.d === day() ? u.wd.u : 0;
@@ -3320,7 +4369,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
           if (Object.values(db.allies).some(x => x.name.toLowerCase() === n.toLowerCase())) return E('این نام قبلاً استفاده شده است.');
           acc.res.treasury -= CREATE_COST;
           const id = 'l' + (++db.aid);
-          db.allies[id] = { id, name:n, leader:k, members:[k], tre:0, msgs:[], mid:0, reqs:[], rid:0, jreqs:[] };
+          db.allies[id] = { id, name:n, leader:k, members:[k], tre:0, msgs:[], mid:0, reqs:[], rid:0, jreqs:[], army:emptyAllyArmy() };
           p.ally = id;
           return;
         }
@@ -3363,7 +4412,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
       }
     };
     out = run() || state();
-    store.set('game:lally', JSON.stringify(db)); return out;
+    store.set('game:lally:w'+currentWorldId(), JSON.stringify(db)); return out;
   }
   const apost = b => AL.local ? Promise.resolve(localAlly(b)) : post('/ally', b);
 
@@ -3383,6 +4432,11 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
       if (near || AL.force) { box.scrollTop = box.scrollHeight; AL.force = false; }
     }
     if (m) {
+      try{
+        if(m.id && mqttClient?.connected){
+          mqttClient.subscribe(MQTT_STATE + encodeURIComponent(ALLY_DEF_KEY(currentWorldId(),m.id)), {qos:1});
+        }
+      }catch(e){}
       const lead = m.me === 'leader';
       $('#aTreV').textContent = '$' + fmt(m.treasury);
       $('#aLeft').textContent = '$' + fmt(m.left) + ' از $' + fmt(m.cap);
@@ -3400,7 +4454,8 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
       const joinReqs = (m.joinReqs || []).map(r => `<div class="am"><div class="wui"><b>${esc(r.name)}</b><small>🤝 درخواست عضویت در اتحاد</small></div>${lead ? `<button class="watk gbtn sm" data-joinok="${r.id}" type="button">✅ قبول</button><button class="watk sm" data-joinno="${r.id}" type="button">رد</button>` : ''}</div>`).join('');
       $('#aReqs').innerHTML = joinReqs + withdrawReqs;
     }
-    const L = j.list; AL.pg = Math.min(AL.pg, Math.max(0, L.length - 1)); const x = L[AL.pg];
+    renderAllyArmy(m);
+    const L0 = Array.isArray(j.list) ? j.list : []; const hasWorldData=L0.some(x=>x&&x.worldId!=null); const L=hasWorldData?L0.filter(x=>Number(x.worldId)===currentWorldId()):L0; AL.pg = Math.min(AL.pg, Math.max(0, L.length - 1)); const x = L[AL.pg];
     $('#aPg').textContent = L.length ? `${toFa(AL.pg + 1)}/${toFa(L.length)}` : '۰/۰';
     $('#aWorld').innerHTML = x ? `<div class="am" style="margin-top:14px"><span style="font-size:36px">🛡️</span><div class="wui"><b style="font-size:18px">${esc(x.name)}</b><small>رهبر: ${esc(x.leader)} · ${toFa(x.n)}/${toFa(15)} عضو</small></div></div>
       <p class="wdesc">⚡ کارایی اتحاد: <b>+${toFa(x.eff)}٪</b> درآمد مالیاتی و قدرت نظامی برای اعضا</p>
@@ -3424,6 +4479,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     if (!loadAcc()[currentKey]) return showLogin();
     go('ally'); $('#fabLayer').hidden = false; window.scrollTo(0, 0);
     AL.last = 0; AL.aid = null; AL.ids.clear(); AL.pg = 0; AL.local = !SRV; $('#aList').textContent = '';
+    allianceArmyPanelOpen = false;
     ['allyNo', 'allyIn', 'aWorldC'].forEach(i => { $('#' + i).hidden = true; });
     $('#allyMsg').textContent = 'در حال اتصال…'; allyPoll();
   }
@@ -3445,6 +4501,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
 
   $('#ally').addEventListener('click', e => {
     const t = e.target.closest('button'); if (!t) return; const d = t.dataset;
+    if (t.id === 'openAllianceArmy') { toggleAllianceArmyPanel(); return; }
     if (t.id === 'aCreate') {
       const a = loadAcc()[currentKey];
       if (!a || (a.res.treasury || 0) < 5e6) return toast('برای ساخت اتحاد ۵ میلیون دلار لازم است.');
@@ -3460,6 +4517,9 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     else if ('no' in d) aAct({ act:'no', rid:d.no }, 'رد شد');
     else if ('joinok' in d) aAct({ act:'joinOk', rid:d.joinok }, 'درخواست عضویت پذیرفته شد');
     else if ('joinno' in d) aAct({ act:'joinNo', rid:d.joinno }, 'درخواست عضویت رد شد');
+    else if (t.id === 'aArmyDeposit') allyArmyDeposit();
+    else if (t.id === 'aArmyClear') clearAllyArmyInputs();
+    else if (t.id === 'aArmyWithdraw') allyArmyWithdraw();
     else if ('pg' in d && AL.st) { const n = AL.st.list.length; if (n) { AL.pg = (AL.pg + (+d.pg) + n) % n; applyAlly(AL.st); } }
   });
   $('#aIn').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); allySend(); } });
@@ -3472,7 +4532,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
     Object.keys(out).forEach(k => { if (isVerifiedPlayer(out[k])) delete out[k]; });
     return out;
   }
-  function kingdomData(){ try { return JSON.parse(store.get('game:kingdom') || '{}') || {}; } catch(e){ return {}; } }
+  function kingdomData(){ try { return JSON.parse(store.get('game:kingdom:w'+currentWorldId()) || '{}') || {}; } catch(e){ return {}; } }
   function kingdomMergeArmyOps(c){
     if(!c || typeof c!=='object') return c;
     c.ops=c.ops&&typeof c.ops==='object'?c.ops:{};
@@ -3537,7 +4597,7 @@ body.vaik-edit-mode [data-vtext-editable]:hover{
   }
   function saveKingdomData(d, publish=false){
     const merged=kingdomMergeStates(kingdomData(),d||{});
-    try { store.set('game:kingdom', JSON.stringify(merged)); } catch(e){}
+    try { store.set('game:kingdom:w'+currentWorldId(), JSON.stringify(merged)); } catch(e){}
     if(publish){ try { if (mqttClient && mqttClient.connected) mqttClient.publish(MQTT_KINGDOM, JSON.stringify(merged), {qos:1, retain:true}); } catch(e){} }
     return merged;
   }
@@ -3942,6 +5002,105 @@ function kingdomRoleIdentityHtml(name, profile){
 }
 
 
+
+  let vaikAdminWorldId=1;
+  function vaikAdminIsAdmin(){
+    const me=loadAcc()[currentKey];
+    return !!me && isVerifiedPlayer(me);
+  }
+  function vaikAdminAllPlayers(){
+    const all={...(loadAcc()||{}),...(mqttPlayers||{})};
+    const out={};
+    Object.entries(all).forEach(([k,a])=>{
+      if(!a||!a.name||String(a.name).trim().toLowerCase()==='vaik')return;
+      const key=String(k||a.name).toLowerCase();
+      out[key]={...(out[key]||{}),...a};
+    });
+    return out;
+  }
+  function renderVaikAdminWorlds(){
+    const box=$('#vaikWorldGrid'); if(!box)return;
+    box.innerHTML=WORLD_LIST.map(w=>{
+      const players=Object.values(vaikAdminAllPlayers()).filter(a=>worldIdOf(a)===w.id);
+      const active=Number(vaikAdminWorldId)===w.id;
+      return `<button type="button" class="world-option${active?' on':''}" data-vaik-world="${w.id}">
+        <span><b>${w.icon} ${w.name}</b><small>${toFa(players.filter(a=>!isBannedPlayer(a)).length)} فعال · ${toFa(players.filter(a=>isBannedPlayer(a)).length)} بن‌شده</small></span>
+        <span class="world-badge">›</span>
+      </button>`;
+    }).join('');
+    box.querySelectorAll('[data-vaik-world]').forEach(b=>b.onclick=()=>{
+      vaikAdminWorldId=Number(b.dataset.vaikWorld)||1;
+      renderVaikAdminWorlds();
+      renderVaikAdminPlayers();
+    });
+  }
+  async function vaikAdminBan(key){
+    if(!vaikAdminIsAdmin())return;
+    key=String(key||'').toLowerCase();
+    const all=vaikAdminAllPlayers(), p=all[key];
+    if(!p)return;
+    p.banned=true;
+    p.adminBanned=true;
+    p.bannedAt=Date.now();
+    try{ store.set('game:ban:'+key,'1'); }catch(e){}
+    p.bannedBy='VAIK';
+    // بن شدن باید از اتحاد خارجش کند.
+    p.ally=null; p.allyId=null; p.allianceId=null; p.allyLeader=false; p.isLeader=false; p.leader=false;
+    try{
+      const local=loadAcc();
+      if(local[key])local[key]={...local[key],...p};
+      else local[key]=p;
+      saveAcc(local);
+      await mqttPublishAccount(key,p);
+    }catch(e){}
+    // اگر بازیکن روی همین دستگاه ادمین بود، نشستش را قطع کن.
+    if(key===String(currentKey||'').toLowerCase()){
+      store.del(SES); currentKey=null; showLogin(); return;
+    }
+    renderVaikAdminPlayers(); renderVaikAdminWorlds();
+    toast('🚫 بازیکن بن شد و از بخش‌های بازی حذف شد.');
+  }
+  async function vaikAdminUnban(key){
+    if(!vaikAdminIsAdmin())return;
+    key=String(key||'').toLowerCase();
+    const all=vaikAdminAllPlayers(), p=all[key];
+    if(!p)return;
+    p.banned=false; p.adminBanned=false; p.unbannedAt=Date.now();
+    try{ store.del('game:ban:'+key); }catch(e){} p.unbannedBy='VAIK';
+    try{
+      const local=loadAcc(); if(local[key])local[key]={...local[key],...p}; else local[key]=p;
+      saveAcc(local); await mqttPublishAccount(key,p);
+    }catch(e){}
+    renderVaikAdminPlayers(); renderVaikAdminWorlds();
+    toast('✅ بن بازیکن برداشته شد.');
+  }
+  function renderVaikAdminPlayers(){
+    const card=$('#vaikWorldPlayersCard'),box=$('#vaikWorldPlayers'),title=$('#vaikWorldTitle');
+    if(!card||!box)return;
+    const players=Object.entries(vaikAdminAllPlayers()).filter(([k,a])=>worldIdOf(a)===Number(vaikAdminWorldId));
+    title.textContent=`${worldLabel(vaikAdminWorldId)} · مدیریت بازیکنان`;
+    box.innerHTML=players.length?players.sort((a,b)=>String(a[1].name).localeCompare(String(b[1].name),'fa')).map(([k,a])=>{
+      const banned=isBannedPlayer(a);
+      const av=a.avS||a.avatar||'';
+      return `<div class="am" style="display:flex;align-items:center;gap:10px;margin:8px 0;padding:10px;border:1px solid rgba(255,255,255,.08);border-radius:12px">
+        ${av?`<img src="${esc(av)}" style="width:42px;height:42px;border-radius:50%;object-fit:cover">`:'<div style="width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#222">👤</div>'}
+        <div class="wui" style="flex:1"><b>${esc(a.name)}</b><small>${banned?'🚫 بن شده':'🟢 فعال'} · ${worldLabel(worldIdOf(a))}</small></div>
+        <button type="button" class="buy" data-vaik-ban="${esc(k)}" style="width:auto;padding:0 12px;height:38px">${banned?'رفع بن':'🚫 بن'}</button>
+      </div>`;
+    }).join(''):'<div class="wnone">بازیکنی در این جهان پیدا نشد.</div>';
+    box.querySelectorAll('[data-vaik-ban]').forEach(b=>b.onclick=()=>{
+      const key=b.dataset.vaikBan;
+      const p=vaikAdminAllPlayers()[key];
+      if(isBannedPlayer(p)) vaikAdminUnban(key); else vaikAdminBan(key);
+    });
+    card.hidden=false;
+  }
+  function showVaikAdmin(){
+    if(!vaikAdminIsAdmin())return showProfile(currentKey);
+    go('vaikAdmin'); $('#fabLayer').hidden=false; window.scrollTo(0,0);
+    vaikAdminWorldId=1; renderVaikAdminWorlds(); renderVaikAdminPlayers();
+  }
+
 function renderVaikPlayerAdmin(){
   const manage=$('#kingRolesManage');
   if(!manage)return;
@@ -4075,6 +5234,13 @@ function renderKingRoles(){
   $('#gotoMarket').addEventListener('click', () => { sheet.hidden = true; showMarket(); });
   $('#mktBack').addEventListener('click', () => { go('profile'); render(loadAcc()[currentKey]); });
   $('#gotoWar').addEventListener('click', () => { sheet.hidden = true; showWar(); });
+  $('#gotoWorldMap').addEventListener('click', () => { sheet.hidden = true; showWorldMap(); });
+  $('#gotoHeroes').addEventListener('click', () => { sheet.hidden = true; showHeroes(); });
+  $('#gotoTerrorists').addEventListener('click', () => { sheet.hidden = true; showTerrorists(); });
+  $('#heroesBack').addEventListener('click', () => { go('profile'); $('#fabLayer').hidden=false; render(loadAcc()[currentKey]); });
+  $('#terroristsBack').addEventListener('click', () => { go('profile'); $('#fabLayer').hidden=false; render(loadAcc()[currentKey]); });
+  $('#gotoEvent').addEventListener('click', () => { sheet.hidden = true; showEvent(); });
+  $('#eventBack').addEventListener('click', () => { go('profile'); $('#fabLayer').hidden=false; render(loadAcc()[currentKey]); });
   $('#warBack').addEventListener('click', () => { go('profile'); render(loadAcc()[currentKey]); });
   $('#chatList').addEventListener('click', e => {
     const p = e.target.closest('[data-pm-target]');
@@ -4104,7 +5270,8 @@ function renderKingRoles(){
   $('#gotoAlly').addEventListener('click', () => { sheet.hidden = true; showAlly(); });
   $('#gotoKingdom').addEventListener('click', () => { sheet.hidden = true; showKingdom(); });
   $('#gotoKingRoles').addEventListener('click', () => { sheet.hidden=true; go('kingRoles'); $('#fabLayer').hidden=false; renderKingRoles(); const me=loadAcc()[currentKey]; if(isVerifiedPlayer(me)||String(me?.name||currentKey||'').toLowerCase()==='vaik'){ setTimeout(()=>{renderVaikPlayerAdmin();},0); } });
-  $('#gotoVaikAdmin').addEventListener('click', () => { sheet.hidden=true; go('kingRoles'); $('#fabLayer').hidden=false; setTimeout(()=>{ const n=$('#kingRolesNote'), c=$('#kingRolesCard'), m=$('#kingRolesManage'); if(n)n.hidden=true; if(c)c.hidden=true; if(m)m.hidden=false; renderVaikPlayerAdmin(); },0); });
+  $('#gotoVaikAdmin').addEventListener('click', () => { sheet.hidden=true; showVaikAdmin(); });
+  $('#vaikAdminBack').addEventListener('click', () => { go('profile'); $('#fabLayer').hidden=false; render(loadAcc()[currentKey]); });
   $('#kingRolesBack').addEventListener('click', () => { go('profile'); $('#fabLayer').hidden=false; render(loadAcc()[currentKey]); });
   $('#kingdomBack').addEventListener('click', () => { go('profile'); render(loadAcc()[currentKey]); });
   $('#rankBack').addEventListener('click', () => { go('profile'); render(loadAcc()[currentKey]); });
@@ -4114,7 +5281,8 @@ function renderKingRoles(){
 
   /* ======== اتصال واقعی دکمه‌های ورود و ثبت‌نام */
   $('#loginBtn').addEventListener('click', doLogin);
-  $('#registerBtn').addEventListener('click', doRegister);
+  $('#registerBtn').addEventListener('click', () => { if($('#worldPicker').hidden){ showWorldPicker(); setErr(''); return; } doRegister(); });
+  $('#worldGrid').addEventListener('click', e=>{ const b=e.target.closest('[data-world-select]'); if(b) setWorldSelection(b.dataset.worldSelect); });
   $('#pass').addEventListener('keydown', e => {
     if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); doLogin(); }
   });
@@ -4136,6 +5304,7 @@ function renderKingRoles(){
       store.del(SES);
       return showLogin();
     }
+    currentKey=saved; try{ mqttSubscribeWorldChannels(); }catch(e){}
     if (!manualAuthStarted && bootFlow === authFlowId) showProfile(saved);
 
     // همگام‌سازی سرور بدون متوقف کردن رابط کاربری.
@@ -4393,6 +5562,65 @@ function renderKingRoles(){
 })();
 </script>
 
+
+
+<script>
+(function(){
+  const ALLY_SERVER_PREFIX = 'alliance:army:v4:';
+  function allianceServerKey(worldId, allianceId){
+    return ALLY_SERVER_PREFIX + String(worldId||'1') + ':' + String(allianceId||'');
+  }
+  window.persistAllianceArmyServer = function(allianceId, army){
+    try{
+      const wid = (typeof currentWorldId==='function' ? currentWorldId() : (window.currentWorld||'1'));
+      const key = allianceServerKey(wid, allianceId);
+      const payload = {
+        type:'alliance_army_state',
+        worldId:String(wid),
+        allianceId:String(allianceId),
+        army: army || {},
+        updatedAt:Date.now()
+      };
+      if(typeof mqttClient!=='undefined' && mqttClient && mqttClient.publish){
+        mqttClient.publish(key, JSON.stringify(payload), {qos:1, retain:true});
+      }
+      if(typeof store!=='undefined' && store.set) store.set(key, JSON.stringify(payload));
+    }catch(e){ console.warn('alliance army persist failed',e); }
+  };
+  window.loadAllianceArmyServer = function(allianceId, cb){
+    try{
+      const wid = (typeof currentWorldId==='function' ? currentWorldId() : (window.currentWorld||'1'));
+      const key = allianceServerKey(wid, allianceId);
+      const local = (typeof store!=='undefined' && store.get) ? store.get(key) : null;
+      if(local){
+        try{ const x=JSON.parse(local); if(x && x.army){ cb&&cb(x.army); } }catch(e){}
+      }
+      if(typeof mqttClient!=='undefined' && mqttClient && mqttClient.subscribe){
+        mqttClient.subscribe(key, {qos:1});
+      }
+    }catch(e){ console.warn('alliance army load failed',e); }
+  };
+})();
+</script>
+
+
+<script id="alliance-army-auto-persist">
+(function(){
+  let last='';
+  setInterval(function(){
+    try{
+      const a = window.allianceArmy || window.allyArmy || window.currentAllianceArmy;
+      const id = window.currentAllianceId || (typeof me!=='undefined' && me && me.allianceId);
+      if(!a || !id || !window.persistAllianceArmyServer) return;
+      const sig=JSON.stringify(a);
+      if(sig!==last){
+        last=sig;
+        window.persistAllianceArmyServer(id,a);
+      }
+    }catch(e){}
+  },1000);
+})();
+</script>
 
 </body>
 </html>
